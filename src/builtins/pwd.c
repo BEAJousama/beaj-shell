@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/01 13:02:14 by obeaj            ###   ########.fr       */
+/*   Created: 2022/03/01 10:45:53 by obeaj             #+#    #+#             */
+/*   Updated: 2022/03/01 13:20:29 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+void    pwd_cmd(void)
 {
-    int i;
-    char *line;
+    char path[80000];
 
-    (void)av;
-    (void)env;
-    if (ac > 1)
-        return(0);
-    i = 0;
-    line = readline("obeaj->");
-    while (line)
-    {
-        if (*line)
-            add_history(line);
-        if (!ft_strncmp(line, "exit", 6))
-            return (0);
-        line =  readline("obeaj->");
-        // parsing(line);
-    }
-    return (0);
+    printf("%s\n",getcwd(path, 80000));
+    rl_on_new_line();
 }
