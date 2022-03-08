@@ -6,14 +6,14 @@
 #    By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/28 12:34:40 by obeaj             #+#    #+#              #
-#    Updated: 2022/03/01 18:13:42 by obeaj            ###   ########.fr        #
+#    Updated: 2022/03/02 16:07:56 by obeaj            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS =  minishell.c \
-		bulitins/pwd.c \
+		pwd.c \
 
 SRCS_B = 
 

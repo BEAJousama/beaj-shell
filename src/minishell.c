@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/01 13:02:14 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/08 09:43:46 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ int main(int ac, char **av, char **env)
     {
         if (*line)
             add_history(line);
-        if (!ft_strncmp(line, "exit", 6))
+        if (!ft_strncmp(line, "exit", 4))
+         {
+            write (1, "exit\n", 5); 
             return (0);
+         }   
+        if (!ft_strncmp(line, "pwd", 3))
+            pwd_cmd();
         line =  readline("obeaj->");
-        // parsing(line);
+        // runcmd(parsing(line));
     }
     return (0);
 }
