@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/08 18:24:43 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/11 18:38:12 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_backcmd {
 void pwd_cmd(void);
 char	*find_path(char **str);
 char	*get_path(char	**paths, char	**cmd);
-
+void    echo_cmd(char **cmd);
+void cd_cmd(char *cmd);
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/08 18:32:40 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/09 12:41:06 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,35 @@ char	*get_path(char	**paths, char	**cmd)
 	char	*path;
 	int		i;
 	int		j;
+	int		f;
+	int		a;
+	int		o;
+	char **new_cmd;
+	new_cmd = NULL;
 
 	j = 0;
+	f = 0;
 	i = 0;
+	a = 0;
+	o = 0;
+	// while(cmd[0][f])
+	// {
+	// 	puts("here");
+	// 	if(cmd[0][f] != 34)
+	// 		new_cmd[a][o] = cmd[0][f];
+	// 	f++;
+	// 	o++;
+	// }
+	// while(new_cmd[a])
+	// {
+	// 	o = 0;
+	// 	while(new_cmd[a][o])
+	// 	{
+	// 	printf("%c\n",new_cmd[a][o]);
+	// 	o++;	
+	// 	}
+	// 	a++;
+	// }
 	while (paths[i])
 	{
 		path = ft_strdup(paths[i]);
