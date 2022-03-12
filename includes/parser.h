@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/08 10:44:19 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/12 13:42:33 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,31 @@
 # define PIPE '|'
 # define LTHAN '<'
 # define GTHAN '>'
-# define GGTHAN '>>'
-# define HDOC  '<<'
+# define GGTHAN ">>"
+# define HDOC  "<<"
 # define BACK  '&'
+# define AND  "&&"
 # define SEMIC  ';'
 # define SPACES "\t \v \f \r"
-# define TERMES_1 "| ; & ( )"
-# define TERMES "> < | ; &"
+# define TERMES_1 "; ( ) \" \'"
+# define TERMES " > < | ( ; ) & \" \'"
 
 typedef struct s_token
 {
-	char	type[10];
-	char	val[10];
+	char	*type;
+	char	*data;
+	struct	s_token	*next;
+	struct	s_token	*prev;
 }	t_token;
 
-char	tokenizer(char **line, char *eline, char **tok, char **etok);
+typedef struct s_cmdline
+{
+	char	**line;
+	char	*eline;
+	char	**tok;
+	char	**etok;
+}	t_cmdline;
 
+char	tokenizer(char **line, char *eline, char **tok, char **etok);
 #endif
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/08 18:24:43 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/08 14:21:08 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,17 @@ typedef struct s_backcmd {
 	struct s_cmd *cmd;
 }	t_backcmd;
 
-void pwd_cmd(void);
-char	*find_path(char **str);
-char	*get_path(char	**paths, char	**cmd);
+struct orcmd {
+  int type;
+  struct cmd *left;
+  struct cmd *right;
+};
 
+struct andcmd {
+  int type;
+  struct cmd *left;
+  struct cmd *right;
+};
+void pwd_cmd(void);
 #endif
 

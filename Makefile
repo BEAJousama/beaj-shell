@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: imabid <imabid@student.42.fr>              +#+  +:+       +#+         #
+#    By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/28 12:34:40 by obeaj             #+#    #+#              #
-#    Updated: 2022/03/08 18:25:23 by imabid           ###   ########.fr        #
+#    Updated: 2022/03/02 16:07:56 by obeaj            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = minishell
 
 SRCS =  minishell.c \
 		pwd.c \
-		executor.c \
 
 SRCS_B = 
 
