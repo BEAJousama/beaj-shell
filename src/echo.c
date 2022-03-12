@@ -6,58 +6,58 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/11 20:21:01 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:07:19 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+static int	check_n(char *str)
+{
+	int	i;
+	int	j;
 
+	i = 0;
+	j = 0;
+	if (!str)
+		return (1);
+	if (str[j] == '-')
+	{
+		j++;
+		while (str[j] == 'n' && str[j])
+			j++;
+		if (str[j] == '\0')
+			i++;
+	}
+	return (i);
+}
 void    echo_cmd(char **cmd)
 {
-    int i;
-    int j;
-    if(!ft_strncmp(cmd[0], "echo",4) && !ft_strncmp(cmd[1], "-n",2))
+	int sign = 0;
+    int i = 1;
+   	int j = 0;
+	while(cmd[i])
 	{
-			i = 1;
-			j = 1;
+		j = check_n(cmd[i]);
+		if (j == 1)
+			sign = 1;
+		i++;
+	}
+	i = 1;
+	while(cmd[i])
+	{
+		j = check_n(cmd[i]);
+		if (j == 0)
+		{
 			while(cmd[i])
 			{
-				if(!ft_strncmp(cmd[i],"-n",2))
-					j++;
-				if(ft_strncmp(cmd[i],"-n",2))
-					break;
-				if()
-				i++;
+				ft_putstr_fd(cmd[i++], 1);
+				if(cmd[i] != '\0')
+					ft_putchar_fd(' ', 1);
 			}
-        while(cmd[j])
-        {
-            if(cmd[j + 1] != '\0')
-                printf("%s ",cmd[j]);
-            if(cmd[j + 1] == '\0')
-                printf("%s",cmd[j]);
-            j++;
-        }
-	}
-	else
-	{
-		i = 0;
-		while(cmd[++i])
-		{
-			if(cmd[i + 1] != '\0')
-    		printf("%s ",cmd[i]);
-    		if(cmd[i + 1] == '\0')
-    		 printf("%s",cmd[i]);
+			break ;
 		}
-		printf("\n");
+		i++;
 	}
-    // j++;
-    // while(cmd[j])
-    // {
-    //     if(cmd[j + 1] != '\0')
-    //         printf("%s ",cmd[j]);
-    //     if(cmd[j + 1] == '\0')
-    //         printf("%s",cmd[j]);
-            
-    //     j++;
-    // }
+	if (sign == 0)
+		ft_putchar_fd('\n', 1);
 }
