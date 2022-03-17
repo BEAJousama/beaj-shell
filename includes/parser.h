@@ -6,21 +6,16 @@
 /*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/15 20:10:09 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/17 20:10:40 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-# include "minishell.h"
-// # define PIPE '|'
-// # define LTHAN '<'
-// # define GTHAN '>'
-// # define GGTHAN ">>"
-// # define HDOC  "<<"
-// # define BACK  '&'
-// # define AND  "&&"
-// # define SEMIC  ';'
+# define UNEXPECTED_TOK "minishell : syntax error near unexpected token "
+# define UNCLOSED_PAR "minishell :  Unclosed parethesis\n"
+# define UNCLOSED_DQ "minishell :  Unclosed double quotes\n"
+# define UNCLOSED_SQ "minishell :  Unclosed simple quotes\n"
 # define SPACES "\t \v \f \r"
 
 typedef enum s_tok
@@ -42,7 +37,12 @@ typedef enum s_tok
 	TLD = 1 << 14,
 	STR = 1 << 15,
 	CMDBEG = 1 << 16,
-	REDIR = (OR | LTH | GGTH | GTH), 
+	CMDEND = 1 << 17,
+	DSC = 1 << 18,
+	BIND = (OR | AND | PP),
+	BFG = (BG | SC),
+	WORD = (STR | QT | DQT),
+	REDIR = (HDOC | LTH | GGTH | GTH), 
 }	t_tok;
 
 typedef struct s_token
@@ -69,5 +69,23 @@ typedef struct s_cmdline
 }	t_cmdline;
 
 char	tokenizer(char **line, char *eline, char **tok, char **etok);
+int		print_error(char *str, char *data);
+void	add_token_back(t_token **tok, t_token *newtok);
+void	insert_token(t_token **tok, t_token *newtok, int pos);
+void	add_token_front(t_token **tok, t_token *newtok);
+void	del_token(t_token **tok, t_token *token);
+t_token	*new_token(t_tok tok, char *data);
+int		peek(char **line, char *eline, char *toks);
+void	tokenize1(char **line, char *eline, t_token **tok);
+void	tokenize2(char **line, char *eline, t_token **tok);
+void	data_filtering(t_token **token);
+t_token	**tokens(char **line, char *eline);
+int		check_par_match(t_token **tokens);
+int		check_quotes_match(t_token **tokens);
+int		check_parethesis(t_token **tokens);
+int		check_binders(t_token **tokens);
+int		check_redirect(t_token **tokens);
+int		syntax_analyse(t_token **tokens);
+// char	*ft_strjoin(char *reste, char *buff);
 #endif
 

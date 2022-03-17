@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: obeaj <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 19:09:12 by obeaj             #+#    #+#              #
-#    Updated: 2021/11/09 17:30:01 by obeaj            ###   ########.fr        #
+#    Updated: 2022/03/17 19:41:06 by obeaj            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ FILES = ft_memset \
 		ft_strjoin \
 		ft_itoa \
 		ft_split \
-		ft_strtrim
+		ft_strtrim \
+		ft_strtok
 	
 FILES_B = ft_lstnew \
 		  ft_lstadd_front \
