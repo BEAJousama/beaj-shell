@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analyzer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:59:44 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/17 17:14:11 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/24 21:19:47 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,18 @@ int	check_parethesis(t_token **tokens)
 	{
 		right = first -> next;
 		left = first -> prev;
-		if (first -> tok == OPR)
-		{
-			if (!(left -> tok & (OPR | CMDBEG | BIND)))
-				return (print_error(UNEXPECTED_TOK, left -> data));
-			else if (!(right -> tok & (WORD | REDIR | OPR)))
-				return (print_error(UNEXPECTED_TOK, right -> data));
-		}
 		if (first -> tok == CPR)
 		{
 			if (!(left -> tok & (WORD | CPR)))
 				return (print_error(UNEXPECTED_TOK, left -> data));
-			else if (!(right -> tok & (CPR | BIND | CMDEND)))
+			else if (!(right -> tok & (CPR | BIND | BFG | CMDEND)))
+				return (print_error(UNEXPECTED_TOK, right -> data));
+		}
+		if (first -> tok == OPR)
+		{
+			if (!(left -> tok & (OPR | CMDBEG | BIND | BFG)))
+				return (print_error(UNEXPECTED_TOK, "("));
+			else if (!(right -> tok & (WORD | REDIR | OPR)))
 				return (print_error(UNEXPECTED_TOK, right -> data));
 		}
 		first = first -> next;
@@ -128,11 +128,13 @@ int	check_redirect(t_token **tokens)
 	t_token *right;
 	
 	first = *tokens;
-	while (first -> next -> next)
+	while (first -> next)
 	{
 		right = first -> next;
 		if ((first -> tok & REDIR))
 		{
+			if (right -> tok & CMDEND)
+				return (print_error(UNEXPECTED_TOK, "newline"));
 			if (!(right -> tok & WORD))
 				return (print_error(UNEXPECTED_TOK, right -> data));
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/17 19:52:48 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/25 16:59:41 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,105 +60,47 @@ void	add_token_front(t_token **tok, t_token *newtok)
 		*tok = newtok;
 }
 
-void	del_token(t_token **tok, t_token *token)
+t_token	**del_token(t_token **tok, t_token *token)
 {
 	t_token	*first;
 	int		len;
 
 	first = *tok;
 	len = ft_strlen(token -> data);
-	while (first -> next)
+	while (first)
 	{
 		if (!ft_strncmp(first -> data, token -> data, len)
-			&& first -> tok == token -> tok)
+			&& (first -> tok == token -> tok))
 			break ;
 		first = first -> next;
 	}
 	first -> prev -> next = first -> next;
 	first -> next -> prev = first -> prev;
-	first -> prev = NULL;
-	first -> next = NULL;
 	free(first -> data);
 	free (first);
+	return (tok);
 }
 
-// void analyzer(t_token **tokens)
-// {
-// 	t_token	*first;
-// 	t_token	*right;
-// 	t_token	*left;
-
-// 	first = *tokens;
-// 	while (first)
-// 	{
-// 		right = first -> next;
-// 		left = first -> prev; 
-// 		if (first -> tok == OPR)
-// 		{
-// 			if (right->tok != OPR  && right->tok != STR
-// 				&& right->tok != GTH && right->tok != GGTH
-// 				&& right->tok != LTH && right->tok != HDOC)
-// 			{
-// 				perror("SYntax Error");
-// 				printf ("  at %c\n", right ->data[0]);
-// 			}
-// 			if (left->tok != AND && left->tok != OR
-// 				&& left->tok != PP && left->tok != OPR)
-// 			{
-// 				perror("SYntax Error");
-// 				printf ("  at %c\n", left ->data[0]);
-// 			}
-// 		}
-// 		else if(first->tok == CPR)
-// 		{
-// 			if (right->tok != CPR && right->tok != STR)
-// 			{
-// 				perror("SYntax Error");
-// 				printf ("  at %c\n", right ->data[0]);
-// 			}
-// 			if (left->tok != AND && left->tok != OR
-// 				&& left->tok != PP && left->tok != CPR
-// 				&& left->tok != SC)
-// 			{
-// 				perror("SYntax Error");
-// 				printf ("  at %c\n", left ->data[0]);
-// 			}
-// 		}
-// 		else if(first->tok == GTH || first->tok == GGTH
-// 				|| first->tok == LTH || first->tok == HDOC)
-// 		{
-// 			if (right->tok != STR)
-// 			{
-// 				perror("SYntax Error");
-// 				printf ("  at %c\n", right ->data[0]);
-// 			}
-// 		}
-// 		else if(first->tok == AND || first->tok == OR
-// 				|| first->tok == PP)
-// 		{
-// 			if (right->tok != CPR && right->tok != STR)
-// 			{
-// 				perror("SYntax Error");
-// 				printf ("  at %c\n", right->data[0]);
-// 			}
-// 			if (right->tok != OPR && right->tok != STR
-// 				&& right->tok != GTH && right->tok != GGTH
-// 				&& right->tok != LTH && right->tok != HDOC)
-// 			{
-// 				perror("SYntax Error");
-// 				printf ("  at %c\n", left->data[0]);
-// 			}
-// 		}
-// 		first = first -> next;
-// 	}
-// }
+void	free_tokens(t_token **tokens)
+{
+	t_token	*first;
+	
+	first = NULL;
+	while (*tokens)
+	{
+		first = (*tokens)-> next;
+		free((*tokens)->data);
+		free(*tokens);
+		(*tokens) = first;
+	}
+	free(tokens);
+}
 
 t_token	*new_token(t_tok tok, char *data)
 {
 	t_token	*token;
 
 	token = malloc(sizeof(t_token) * 1);
-	token -> tok = (t_tok)malloc(sizeof(t_tok) * 1);
 	token -> data = ft_strdup(data);
 	token -> tok = tok;
 	token -> next = NULL;
@@ -185,28 +127,39 @@ void	tokenize1(char **line, char *eline, t_token **tok)
 	(t.s) = *line;
 	t.tok1 = (*t.s == '|') * PP + (*t.s == '>') * GTH + (*t.s == '<') * LTH \
 		+ (*t.s == '&') * BG + (*t.s == '(') * OPR + (*t.s == ')') * CPR \
-		+ (*t.s == ';') * SC + (*t.s == '\'') * QT + (*t.s == '\"') * DQT;
+		+ (*t.s == ';');
 	(t.s)++;
 	t.tok2 = (*t.s == '|') * OR + (*t.s == '>') * GGTH + (*t.s == '<') * HDOC \
 		+ (*t.s == '&') * AND + (*t.s == ';') * DSC;
-	if (t.tok2)
-	{
-		val[0] = *(t.s - 1);
-		val[1] = *(t.s - 1);
-		val[2] = 0;
-		add_token_back(tok, new_token(t.tok2, val));
-		t.s++;
-	}
-	else if (t.tok1)
-	{
-		val[0] = *((t.s) - 1);
+	if (t.tok1 & (OPR | CPR | QT | DQT))
+	{		
+		val[0] = *((t.s - 1));
 		val[1] = 0;
 		add_token_back(tok, new_token(t.tok1, val));
 	}
+	if (t.tok1 & (PP | GTH | LTH | BG | SC))
+	{
+		if (t.tok2 && *t.s == *(t.s - 1))
+		{
+			val[0] = *(t.s - 1);
+			val[1] = *(t.s - 1);
+			val[2] = 0;
+			add_token_back(tok, new_token(t.tok2, val));
+			t.s++;
+		}
+		else
+		{
+			val[0] = *((t.s - 1));
+			val[1] = 0;
+			add_token_back(tok, new_token(t.tok1, val));	
+		}
+	}
+	while (*t.s && ft_strchr(SPACES, *t.s))
+		t.s++;
 	*line = (t.s);
 }
 
-void	tokenize2(char **line, char *eline, t_token **tok)
+void	tokenize2(char **line, char *eline, t_token **tok, char *charset)
 {
 	char	*s;
 	char	*copy;
@@ -218,7 +171,7 @@ void	tokenize2(char **line, char *eline, t_token **tok)
 	copy = ft_strdup(*line);
 	while (*s)
 	{
-		if (ft_strchr("<>&\'\";()|", *s))
+		if (ft_strchr(charset, *s) && *s != ' ')
 			break ;
 		s++;
 		len++;
@@ -229,7 +182,7 @@ void	tokenize2(char **line, char *eline, t_token **tok)
 	free(copy);
 }
 
-void	data_filtering(t_token **token)
+void	data_filtering(t_token **token, char *charset)
 {
 	t_token	*first;
 	int		i;
@@ -242,7 +195,7 @@ void	data_filtering(t_token **token)
 			i = 0;
 			while (first->data[i])
 			{
-				if (ft_strchr("<>&\'\";()|", first->data[i]))
+				if (ft_strchr(charset, first->data[i]))
 				{
 					first->data[i] = 0;
 				}
@@ -253,46 +206,125 @@ void	data_filtering(t_token **token)
 	}
 }
 
-t_token	**tokens(char **line, char *eline)
+
+// char	*delete_quotes(char *line)
+// {
+// 	int	i;
+// 	int	j;
+// 	char	*copy;
+	
+// 	i = 0;
+// 	j = 0;
+// 	while (data[i])
+// 	{
+// 		if (data[i] == '\"' || data[i] == '\'')
+// 		{
+// 			j++;
+// 		}
+// 	}
+// }
+
+// t_token	**quotes_filter(t_token **tokens)
+// {
+// 	t_token	*first;
+
+// 	first = *tokens;
+// 	while (first)
+// 	{
+// 		if (first -> tok == STR)
+// 		{
+// 			while (first -> data[i])
+// 			{
+				
+// 			}
+// 		}
+// 		first = first -> next;
+// 	}
+// 	return (tokens);
+// }
+
+t_token	**token_init(t_token **token)
+{
+	token = malloc(sizeof(t_token **));
+	if (!token)
+		return (NULL);
+	*token = NULL;
+	return (token);
+}
+
+t_token	**tokens(char **line, char *eline, char *charset)
 {
 	t_token	**token;
 	t_tok	tok;
 
-	token = malloc(sizeof(t_token *) * 1);
+	token = token_init(token);
 	tok = CMDBEG;
 	*token = new_token(tok, "\0");
-	while (*line[0])
+	while (**line)
 	{
-		if (peek(line, eline, "<>&\'\";()|"))
+		if (peek(line, eline, charset))
 			tokenize1(line, eline, token);
 		else
-			tokenize2(line, eline, token);
+			tokenize2(line, eline, token, charset);
 	}
 	add_token_back(token, new_token(CMDEND, "\0"));
-	data_filtering(token);
+	data_filtering(token, charset);
 	return (token);
 }
 
+void	tokenizing(char **line, char *eline, char *charset)
+{
+}
+
+void	split_words_args(t_token **tokens)
+{
+	t_token *first;
+	
+	first = *tokens;
+	while (first)
+	{
+		if (first -> tok & STR)
+		{
+			first -> args = ft_split(first -> data, ' ');
+		}
+		first = first -> next;
+	}
+}
+void	freetab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+	{
+		free(tab[i]);
+	}
+	free(tab);
+}
 int	main(int ac, char **av, char **env)
 {
 	char	**line;
+	char	*s;
 	char	*eline;
 	t_token	**toks;
+	t_token *first;
 
 	line = malloc(sizeof(char *));
-	*line = ft_strdup("((\'cat\' *.c)) || cat file.txt > \"file1.txt\" || gcc -c main.c ;");
-	eline = *line + ft_strlen(*line);
-	toks = tokens(line, eline);
+	// *line = ft_strdup("(cat *.c) && > cat ||  \'file.txt\'");
+	s = *line;
+	// eline = *line + ft_strlen(*line);
+	*line = readline("obeaj->");
+	toks = tokens(line, eline, "<>&;()|");
 	syntax_analyse(toks);
-	// expand()
-	while ((*toks) -> next)
+	// toks = tokens(line, eline, "<>&;()| ");
+	// expander(tokens);
+	// toks = quotes_filter(toks);
+	split_words_args(toks);
+	first = *toks;
+	while (first)
 	{
-		// printf("%s ---->\n", (*toks)->data);
-		(*toks) = (*toks)-> next;
+		printf("%s ----> %u\n", first->data, first->tok);
+		first = first-> next;
 	}
-	while ((*toks))
-	{
-		printf("%s ---->\n", (*toks)->data);
-		(*toks) = (*toks)-> prev;
-	}
+	free_tokens(toks);
 }

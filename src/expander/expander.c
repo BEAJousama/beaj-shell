@@ -3,19 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/17 20:22:42 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/20 15:16:53 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char expand_wildcard(char *word)
+char	*expand_wildcard(char *word, char **env)
 {
+	struct dirent	*de;
+	int				len;
+    DIR				*dr;
+	char			*new;
 	
+	dr = opendir(".");
+	word = (ft_strtok(word, '*'));
+	len = ft_strlen(word);
+	new = ft_strdup("\0");
+	
+    if (dr == NULL)
+    {
+        printf("Could not open current directory" );
+    }
+    while ((de = readdir(dr)) != NULL)
+	{
+        if (ft_strnstr(de -> d_name, "\0", len))
+		{
+			new = ft_strjoin1(new, de->d_name);
+		}
+	}
+    // closedir(dr);
+	return (new); 
 }
+
+char	*expand_dollar(char *word, char **env)
+{
+	int	i;
+	char *var;	
+	i = 0;
+	while(env[i])
+	{
+		if (!ft_strncmp(env[i], word + 1, ft_strlen(word) - 1))
+		{
+			var = ft_strdup(env[i]);
+			var += ft_strlen(word);
+			break ;
+		}
+		i++;
+	}
+	return (var);
+}
+
 char	*expand_tilde(char *word, char **env)
 {
 	int	i;
@@ -26,25 +67,23 @@ char	*expand_tilde(char *word, char **env)
 	while(env[i])
 	{
 		if (!ft_strncmp(env[i], "HOME=",5))
-		{
-			// printf("%s\n", env[i]);
+		{	
 			home = ft_strdup(env[i]);
 			home += 5;
-			printf("%s\n", home);
 			break ;
 		}
 		i++;
 	}
 	newword = ft_strjoin(home, word + 1);
+	free(home - 5);
 	return (newword);
 }
+
 int main(int ac, char **av, char **env)
 {
-	char word[200] = "~/lsldd";
+	char word[200] = "*.c";
 	char *new;
-	// printf("%s", 
-	new = expand_tilde(word, env);
-	// printf("%s\n", ft_strtok(word, ' '));
-	// printf("%s\n", ft_strtok(NULL, ' '));
+	new = expand_wildcard(word, env);
+	// expand_wildcard(word, env);
 	printf("%s\n", new);
 }

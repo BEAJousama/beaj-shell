@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/17 20:10:40 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/24 19:25:58 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-# define UNEXPECTED_TOK "minishell : syntax error near unexpected token "
-# define UNCLOSED_PAR "minishell :  Unclosed parethesis\n"
-# define UNCLOSED_DQ "minishell :  Unclosed double quotes\n"
-# define UNCLOSED_SQ "minishell :  Unclosed simple quotes\n"
+# define UNEXPECTED_TOK "minishell : syntax error near unexpected token : "
+# define UNCLOSED_PAR "minishell :  Unclosed parethesis"
+# define UNCLOSED_DQ "minishell :  Unclosed double quotes"
+# define UNCLOSED_SQ "minishell :  Unclosed simple quotes"
 # define SPACES "\t \v \f \r"
 
 typedef enum s_tok
@@ -39,6 +39,7 @@ typedef enum s_tok
 	CMDBEG = 1 << 16,
 	CMDEND = 1 << 17,
 	DSC = 1 << 18,
+	NL = 1 << 19,
 	BIND = (OR | AND | PP),
 	BFG = (BG | SC),
 	WORD = (STR | QT | DQT),
@@ -50,6 +51,7 @@ typedef struct s_token
 	t_tok 	tok;
 	char	*type;
 	char	*data;
+	char	**args;
 	struct	s_token	*next;
 	struct	s_token	*prev;
 }	t_token;
@@ -73,19 +75,19 @@ int		print_error(char *str, char *data);
 void	add_token_back(t_token **tok, t_token *newtok);
 void	insert_token(t_token **tok, t_token *newtok, int pos);
 void	add_token_front(t_token **tok, t_token *newtok);
-void	del_token(t_token **tok, t_token *token);
+t_token	**del_token(t_token **tok, t_token *token);
 t_token	*new_token(t_tok tok, char *data);
 int		peek(char **line, char *eline, char *toks);
 void	tokenize1(char **line, char *eline, t_token **tok);
-void	tokenize2(char **line, char *eline, t_token **tok);
-void	data_filtering(t_token **token);
-t_token	**tokens(char **line, char *eline);
+void	tokenize2(char **line, char *eline, t_token **tok, char *charset);
+void	data_filtering(t_token **token, char *charset);
+t_token	**tokens(char **line, char *eline, char *charset);
 int		check_par_match(t_token **tokens);
 int		check_quotes_match(t_token **tokens);
 int		check_parethesis(t_token **tokens);
 int		check_binders(t_token **tokens);
 int		check_redirect(t_token **tokens);
 int		syntax_analyse(t_token **tokens);
-// char	*ft_strjoin(char *reste, char *buff);
+char	*ft_strjoin1(char *s1, char *s2);
 #endif
 

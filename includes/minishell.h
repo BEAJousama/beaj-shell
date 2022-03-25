@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/17 17:39:44 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/19 17:51:53 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <dirent.h>
 # include "libft.h"
 # include <unistd.h>
 # include <stdio.h>
@@ -62,17 +63,6 @@ typedef struct s_backcmd {
 	struct s_cmd *cmd;
 }	t_backcmd;
 
-struct orcmd {
-  int type;
-  struct cmd *left;
-  struct cmd *right;
-};
-
-struct andcmd {
-  int type;
-  struct cmd *left;
-  struct cmd *right;
-};
 void pwd_cmd(void);
 #endif
 
