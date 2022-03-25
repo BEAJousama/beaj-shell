@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: obeaj <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: imabid <imabid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 19:09:12 by obeaj             #+#    #+#              #
-#    Updated: 2021/11/09 17:30:01 by obeaj            ###   ########.fr        #
+#    Updated: 2022/03/24 18:42:18 by imabid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ FILES = ft_memset \
 		ft_putendl_fd \
 		ft_putnbr_fd \
 		ft_strncmp \
+		ft_strcmp \
 		ft_strjoin \
 		ft_itoa \
 		ft_split \

@@ -6,22 +6,11 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/09 12:41:06 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/16 16:38:36 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// typedef struct s_vars
-// {
-// 	char	**cmd1;
-// 	char	*path1;
-// 	char	**cmd2;
-// 	char	*path2;
-// 	char	**env;
-// 	int		f1;
-// 	int		f2;
-// }	t_vars;
 
 char	*find_path(char **str)
 {
@@ -89,24 +78,7 @@ char	*get_path(char	**paths, char	**cmd)
 	i = 0;
 	a = 0;
 	o = 0;
-	// while(cmd[0][f])
-	// {
-	// 	puts("here");
-	// 	if(cmd[0][f] != 34)
-	// 		new_cmd[a][o] = cmd[0][f];
-	// 	f++;
-	// 	o++;
-	// }
-	// while(new_cmd[a])
-	// {
-	// 	o = 0;
-	// 	while(new_cmd[a][o])
-	// 	{
-	// 	printf("%c\n",new_cmd[a][o]);
-	// 	o++;	
-	// 	}
-	// 	a++;
-	// }
+
 	while (paths[i])
 	{
 		path = ft_strdup(paths[i]);
@@ -120,18 +92,3 @@ char	*get_path(char	**paths, char	**cmd)
 	get_error(cmd[0]);
 	return (0);
 }
-
-// int main(int ac,char **av,char **env)
-// {
-//     char **paths;
-//     char	**cmd1;
-//     char	*path1;
-//     paths = ft_split(find_path(env), ':');
-//     cmd1 = ft_split(av[1], ' ');
-// 	path1 = get_path(paths, cmd1);
-//     execve(path1,cmd1,env);
-// }
-// void    executor(char *path, char **cmd, char **env)
-// {
-//     execve(path, cmd, env);
-// }

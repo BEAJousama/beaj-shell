@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/11 18:38:12 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/24 18:34:03 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,36 @@ typedef struct s_backcmd {
 	int type;
 	struct s_cmd *cmd;
 }	t_backcmd;
+typedef struct s_export {
+	char **tab;
+}	t_export;
+
+typedef struct s_mini
+{
+	char		**cmd;
+	char		*path;
+	char		**env;
+	char		**env_g;
+	int			f1;
+	int			f2;
+	int			a;
+	int			aca;
+	int			fd[2];
+	int 		i;
+	char 		*line;
+	char 		**paths;
+	char		**cmd1;
+	char		*path1;
+	char 		**echo;
+	int			status;
+	t_export 	export;
+}	t_mini;
 
 void pwd_cmd(void);
 char	*find_path(char **str);
 char	*get_path(char	**paths, char	**cmd);
 void    echo_cmd(char **cmd);
 void cd_cmd(char *cmd);
+void    export_cmd(t_mini *mini);
 #endif
 
