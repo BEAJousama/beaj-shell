@@ -38,6 +38,16 @@ int main(int ac, char **av, char **env)
 		}   
 		if (!ft_strncmp(mini.line, "pwd", 3))
 			pwd_cmd();
+		if (!ft_strncmp(mini.line, "env", 3))
+		{
+			mini.args = ft_split(mini.line,' ');
+			env_cmd(&mini);
+		}
+		if (!ft_strncmp(mini.line, "cd", 3))
+		{
+			mini.args = ft_split(mini.line,' ');
+			cd_cmd(&mini);
+		}
 		if (!ft_strncmp(mini.line, "export", 6))
 		{
 			mini.echo = ft_split(mini.line,' ');

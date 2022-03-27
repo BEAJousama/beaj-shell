@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/24 18:34:03 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/27 11:34:35 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_mini
 	char		**cmd1;
 	char		*path1;
 	char 		**echo;
+	char 		**args;
 	int			status;
 	t_export 	export;
 }	t_mini;
@@ -87,5 +88,6 @@ char	*get_path(char	**paths, char	**cmd);
 void    echo_cmd(char **cmd);
 void cd_cmd(char *cmd);
 void    export_cmd(t_mini *mini);
+void    env_cmd(t_mini *mini);
 #endif
 

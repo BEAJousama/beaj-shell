@@ -6,7 +6,7 @@
 #    By: imabid <imabid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/28 12:34:40 by obeaj             #+#    #+#              #
-#    Updated: 2022/03/24 18:34:48 by imabid           ###   ########.fr        #
+#    Updated: 2022/03/27 11:34:19 by imabid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS =  minishell.c \
 		echo.c \
 		cd.c \
 		export.c \
+		env.c \
 
 SRCS_B = 
 

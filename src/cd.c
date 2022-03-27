@@ -6,14 +6,15 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/11 18:07:57 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/27 15:38:04 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void cd_cmd(char *cmd)
+void cd_cmd(t_mini *mini)
 {
-    if (chdir(cmd) != 0) 
-    perror("chdir() to path failed");
+    // if (chdir(cmd) != 0) 
+    // perror("chdir() to path failed");
+    
 }

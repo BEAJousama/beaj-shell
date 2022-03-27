@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/24 19:20:14 by imabid           ###   ########.fr       */
+/*   Updated: 2022/03/27 15:28:37 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,28 @@ void	sort_env(t_mini *mini)
 	export_print(mini);
 }
 
+void	export_go(t_mini *mini,int i)
+{
+	printf("%s\n",ft_strchr(mini->echo[i],'='));
+}
+void	check_args(t_mini *mini)
+{
+	int i;
+	
+	i = 1;
+	while (mini->echo[i] && mini->echo[i][0] != '=')
+	{
+		if(ft_isalpha(mini->echo[i][0]) || mini->echo[i][0] == '_')
+			export_go(mini,i);
+		else
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(mini->echo[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+		}
+		i++;
+	}
+}
 void	export_cmd(t_mini *mini)
 {
 	if (!mini->echo[1])
@@ -95,6 +117,6 @@ void	export_cmd(t_mini *mini)
 	}
 	else
 	{
-		
+		check_args(mini);
 	}
 }
