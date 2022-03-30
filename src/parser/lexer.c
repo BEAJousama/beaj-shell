@@ -1,44 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 14:02:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 02:49:48 by obeaj            ###   ########.fr       */
+/*   Created: 2022/03/30 02:24:10 by obeaj             #+#    #+#             */
+/*   Updated: 2022/03/30 03:09:43 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	print_error(char *str, char *data)
+t_token    **lexer(char **line)
 {
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(data, 2);
-	ft_putchar_fd('\n', 2);
-	return (1);
-}
-
-void	freetab(char **tab)
-{
-	int	i;
-
-	i = -1;
-	while (tab[++i])
-	{
-		free(tab[i]);
-	}
-	free(tab);
-}
-
-int	peek(char **line, char *eline, char *toks)
-{
-	char	*s;
-
-	s = *line;
-	while (s < eline && ft_strchr(SPACES, *s))
-		s++;
-	*line = s;
-	return (*s && ft_strchr(toks, *s));
+    t_token **tokens;
+    
+    if (!line || !*line || !**line)
+		return (NULL);
+	if (**line)
+		add_history(line);
+	tokens = tokenizer(line);
+	if (!syntax_analyse(tokens))
+		return (NULL);
+    tokens = quotes_filter(tokens);
+	tokens = expander(tokens);
+    return (tokens);
 }

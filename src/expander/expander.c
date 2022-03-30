@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/20 15:16:53 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/30 02:41:39 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ char	*expand_tilde(char *word, char **env)
 	newword = ft_strjoin(home, word + 1);
 	free(home - 5);
 	return (newword);
+}
+
+t_token **expander(t_token **tokens)
+{
+	
 }
 
 int main(int ac, char **av, char **env)

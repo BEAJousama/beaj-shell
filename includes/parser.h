@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/24 19:25:58 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/30 03:59:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,20 @@ typedef enum s_tok
 	DR = 1 << 9,
 	QT = 1 << 10,
 	DQT = 1 << 11,
-	OPR = 1 << 12,
-	CPR = 1 << 13,
-	TLD = 1 << 14,
-	STR = 1 << 15,
+	OPR = 1 << 12, /*   (   */
+	CPR = 1 << 13, /*   )   */
+	TLD = 1 << 14, /*Tilde*/
+	STR = 1 << 15, 
 	CMDBEG = 1 << 16,
 	CMDEND = 1 << 17,
-	DSC = 1 << 18,
-	NL = 1 << 19,
+	DSC = 1 << 18, /* Double semicolon */
+	NL = 1 << 19, /* Newline */
+	WSC = 1 << 20, /* White space */
+	VAR = 1 << 21, /*   Dollar $   */
+	WC = 1 << 22, /* wildcard */
 	BIND = (OR | AND | PP),
 	BFG = (BG | SC),
-	WORD = (STR | QT | DQT),
+	WORD = (STR | QT | DQT | WSC),
 	REDIR = (HDOC | LTH | GGTH | GTH), 
 }	t_tok;
 
@@ -77,9 +80,16 @@ void	insert_token(t_token **tok, t_token *newtok, int pos);
 void	add_token_front(t_token **tok, t_token *newtok);
 t_token	**del_token(t_token **tok, t_token *token);
 t_token	*new_token(t_tok tok, char *data);
+void	free_tokens(t_token **tokens);
+t_token	**token_init(t_token **token);
 int		peek(char **line, char *eline, char *toks);
-void	tokenize1(char **line, char *eline, t_token **tok);
-void	tokenize2(char **line, char *eline, t_token **tok, char *charset);
+void	tokenize_0(char **line, char *eline, t_token **tok);
+void	tokenize_1(char **line, char *eline, t_token **tok);
+void	tokenize_2(char **line, char *eline, t_token **tok);
+void	tokenize_3(char **line, char *eline, t_token **tok);
+char	*tokenize_4(char **line, char *eline, t_token **tok);
+void	tokenize_5(char **line, char *eline, t_token **tok, char *charset);
+t_token	**concat_words(t_token **tokens);
 void	data_filtering(t_token **token, char *charset);
 t_token	**tokens(char **line, char *eline, char *charset);
 int		check_par_match(t_token **tokens);
@@ -88,6 +98,7 @@ int		check_parethesis(t_token **tokens);
 int		check_binders(t_token **tokens);
 int		check_redirect(t_token **tokens);
 int		syntax_analyse(t_token **tokens);
+t_token	**quotes_filter(t_token **tokens);
 char	*ft_strjoin1(char *s1, char *s2);
 #endif
 
