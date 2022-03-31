@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 03:59:03 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/31 12:14:07 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef enum s_tok
 	WC = 1 << 22, /* wildcard */
 	BIND = (OR | AND | PP),
 	BFG = (BG | SC),
-	WORD = (STR | QT | DQT | WSC),
+	WORD = (STR | QT | DQT | WSC | VAR | WC | VAR),
 	REDIR = (HDOC | LTH | GGTH | GTH), 
 }	t_tok;
 
@@ -73,12 +73,26 @@ typedef struct s_cmdline
 	char	**etok;
 }	t_cmdline;
 
+typedef struct s_map
+{
+	char *key;
+	char *value;
+}	t_map;
+
+typdef struct s_global
+{
+	char			**env;
+	struct s_map	**vars;
+	int				status;
+}	t_global;
+
 char	tokenizer(char **line, char *eline, char **tok, char **etok);
 int		print_error(char *str, char *data);
 void	add_token_back(t_token **tok, t_token *newtok);
 void	insert_token(t_token **tok, t_token *newtok, int pos);
 void	add_token_front(t_token **tok, t_token *newtok);
 t_token	**del_token(t_token **tok, t_token *token);
+void	del_token_0(t_token *token);
 t_token	*new_token(t_tok tok, char *data);
 void	free_tokens(t_token **tokens);
 t_token	**token_init(t_token **token);

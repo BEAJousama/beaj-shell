@@ -6,32 +6,58 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:54:13 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 04:43:22 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/31 03:19:20 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	**concat_words(t_token **tokens)
+t_token	**concat_words_utils(t_token **tokens, t_token *token)
+{
+	t_token	*sec;
+	sec = token -> next;
+	while (sec -> tok & STR)
+	{
+		token -> data = ft_strjoin(token -> data, sec -> data);
+		sec = sec -> next;
+	}
+	return (tokens);
+}
+
+void	del_unused(t_token **tokens)
 {
 	t_token	*first;
 	t_token	*sec;
-
+	
 	first = *tokens;
 	while (first)
 	{
-		if (first -> tok & STR && first -> next -> tok & STR)
+		if (first -> tok & STR)
 		{
 			sec = first -> next;
 			while (sec -> tok & STR)
 			{
-				first -> data = ft_strjoin(first -> data, sec -> data);
-				del_token(tokens, sec);
+				del_token_0(sec);
 				sec = sec -> next;
 			}
 		}
 		first = first -> next;
 	}
+}
+
+t_token	**concat_words(t_token **tokens)
+{
+	t_token *first;
+	t_token	*sec;
+	
+	first = *tokens;
+	while (first)
+	{
+		if (first -> tok == STR)
+			tokens = concat_words_utils(tokens, first);
+		first = first -> next;
+	}
+	del_unused(tokens);
 	return (tokens);
 }
 

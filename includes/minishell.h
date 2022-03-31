@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/19 17:51:53 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/31 12:00:38 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,9 @@
 # include <stdio.h>
 # include "parser.h"
 
-typedef	struct s_glob
-{
-	char **env;
-}	t_glob;
-
 typedef struct s_cmd
 {
-		int type;
+	int type;
 }	t_cmd;
 
 typedef struct s_execcmd {

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 02:41:39 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/03/31 11:52:37 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*expand_wildcard(char *word, char **env)
 char	*expand_dollar(char *word, char **env)
 {
 	int	i;
-	char *var;	
+	char *var;
+	
 	i = 0;
 	while(env[i])
 	{
