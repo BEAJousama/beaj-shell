@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:02:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 02:49:48 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/03 21:26:01 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ void	freetab(char **tab)
 	free(tab);
 }
 
-int	peek(char **line, char *eline, char *toks)
+int	peek(char **line, char *toks)
 {
 	char	*s;
 
 	s = *line;
-	while (s < eline && ft_strchr(SPACES, *s))
-		s++;
 	*line = s;
 	return (*s && ft_strchr(toks, *s));
 }

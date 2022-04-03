@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/31 12:00:38 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/03 18:12:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <dirent.h>
+# include <dirent.h>
 # include "libft.h"
 # include <unistd.h>
 # include <stdio.h>
 # include "parser.h"
+# include "expander.h"
 
 typedef struct s_cmd
 {

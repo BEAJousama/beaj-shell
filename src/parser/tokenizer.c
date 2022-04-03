@@ -6,25 +6,25 @@
 /*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/03 13:50:11 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/03 22:02:29 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenize_0(char **line, char *eline, t_token **tok)
+void	tokenize_0(char **line, t_token **tok)
 {
 	char	*s;
 
 	s = *line;
-	while (ft_strchr(SPACES, *s))
+	while (*s && ft_strchr(SPACES, *s))
 		s++;
 	if (*s != **line)
 		add_token_back(tok, new_token(WSC, ft_strdup("")));
 	*line = s;
 }
 
-void	tokenize_2(char **line, char *eline, t_token **tok)
+void	tokenize_2(char **line, t_token **tok)
 {
 	int		len;
 	char	*s;
@@ -43,7 +43,7 @@ void	tokenize_2(char **line, char *eline, t_token **tok)
 	*line = s;
 }
 
-char	*tokenize_4(char **line, char *eline, t_token **tok)
+char	*tokenize_4(char **line, t_token **tok)
 {
 	int		len;
 	char	*s;
@@ -66,7 +66,7 @@ char	*tokenize_4(char **line, char *eline, t_token **tok)
 	return (*line);
 }
 
-void	tokenize_5(char **line, char *eline, t_token **tok, char *charset)
+void	tokenize_5(char **line, t_token **tok, char *charset)
 {
 	char	*s;
 	char	*copy;
@@ -94,7 +94,7 @@ void	tokenize_5(char **line, char *eline, t_token **tok, char *charset)
 }
 
 
-char	*tokenize_6(char **line, char *eline, t_token **tok)
+char	*tokenize_6(char **line, t_token **tok)
 {
 	char	*s;
 	char	*copy;
@@ -113,7 +113,7 @@ char	*tokenize_6(char **line, char *eline, t_token **tok)
 	return (*line);
 }
 
-t_token	**tokens(char **line, char *eline, char *charset)
+t_token	**tokens(char **line, char *charset)
 {
 	t_token	**token;
 
@@ -121,20 +121,20 @@ t_token	**tokens(char **line, char *eline, char *charset)
 	*token = new_token(CMDBEG, ft_strdup(""));
 	while (**line)
 	{
-		if (peek(line, eline, SPACES))
-			tokenize_0(line, eline, token);
+		if (peek(line, SPACES))
+			tokenize_0(line, token);
 		else if (**line == '\'')
-			tokenize_2(line, eline, token);
+			tokenize_2(line, token);
 		else if (**line == '"')
-			tokenize_3(line, eline, token);
+			tokenize_3(line, token);
 		else if (**line == '\\')
-			tokenize_6(line, eline, token);
-		else if (peek(line, eline, "$"))
-			*line = tokenize_4(line, eline, token);
-		else if (peek(line, eline, charset))
-			tokenize_1(line, eline, token);
+			tokenize_6(line, token);
+		else if (peek(line, "$"))
+			*line = tokenize_4(line, token);
+		else if (peek(line, charset))
+			tokenize_1(line, token);
 		else
-			tokenize_5(line, eline, token, charset);
+			tokenize_5(line, token, charset);
 	}
 	add_token_back(token, new_token(CMDEND, ft_strdup("")));
 	return (token);
@@ -144,17 +144,18 @@ int	main(int ac, char **av, char **env)
 {
 	char	**line;
 	char	*s;
-	char	*eline;
 	t_token	**toks;
 	t_token	*first;
 
 	line = malloc(sizeof(char *));
 	s = *line;
 	*line = readline("obeaj->");
-	toks = tokens(line, eline, "<>&;()|");
+	toks = tokens(line, "<>&;()|");
 	syntax_analyse(toks);
 	toks = quotes_filter(toks);
 	toks = concat_words(toks);
+	set_global_env(env);
+	toks = expander(toks);
 	first = *toks;
 	while (first)
 	{

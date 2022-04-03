@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/31 11:52:37 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/03 23:33:24 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_wildcard(char *word, char **env)
+static char	*expand_wildcard(char *word, char **env)
 {
 	struct dirent	*de;
 	int				len;
@@ -31,65 +31,42 @@ char	*expand_wildcard(char *word, char **env)
     while ((de = readdir(dr)) != NULL)
 	{
         if (ft_strnstr(de -> d_name, "\0", len))
-		{
 			new = ft_strjoin1(new, de->d_name);
-		}
 	}
     // closedir(dr);
 	return (new); 
 }
 
-char	*expand_dollar(char *word, char **env)
+static t_token	**expand_dollar(t_token **tokens)
 {
-	int	i;
-	char *var;
+	t_token *first;
+	char	*data;
 	
-	i = 0;
-	while(env[i])
+	first = *tokens;
+	while (first)
 	{
-		if (!ft_strncmp(env[i], word + 1, ft_strlen(word) - 1))
+		if (first -> tok & VAR)
 		{
-			var = ft_strdup(env[i]);
-			var += ft_strlen(word);
-			break ;
+			data = get_venv(first -> data);
+			free(first -> data);
+			first -> data = data;
+			first -> tok = STR;
 		}
-		i++;
-	}
-	return (var);
-}
-
-char	*expand_tilde(char *word, char **env)
-{
-	int	i;
-	char *home;
-	char *newword;
-	
-	i = 0;
-	while(env[i])
-	{
-		if (!ft_strncmp(env[i], "HOME=",5))
-		{	
-			home = ft_strdup(env[i]);
-			home += 5;
-			break ;
+		else if (first -> tok & TLD)
+		{
+			free(first -> data);
+			first -> data = get_venv("HOME");
+			first -> tok = STR;
 		}
-		i++;
+		if (!first -> data)
+			del_token_0(first);
+		first = first -> next;
 	}
-	newword = ft_strjoin(home, word + 1);
-	free(home - 5);
-	return (newword);
+	return (tokens);
 }
 
 t_token **expander(t_token **tokens)
 {
-	
-}
-
-int main(int ac, char **av, char **env)
-{
-	char word[200] = "*.c";
-	char *new;
-	new = expand_wildcard(word, env);
-	// expand_wildcard(word, env);
-	printf("%s\n", new);
+	tokens = expand_dollar(tokens);
+	return (tokens);	
 }

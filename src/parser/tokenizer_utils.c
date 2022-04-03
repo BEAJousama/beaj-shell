@@ -6,13 +6,13 @@
 /*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/02 16:38:31 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/03 21:22:25 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenize_1(char **line, char *eline, t_token **tok)
+void	tokenize_1(char **line, t_token **tok)
 {
 	char		val[3];
 	t_tokenizer	t;
@@ -52,7 +52,7 @@ void	tokenize_1(char **line, char *eline, t_token **tok)
 	*line = (t.s);
 }
 
-void	tokenize_3(char **line, char *eline, t_token **tok)
+void	tokenize_3(char **line, t_token **tok)
 {
 	int		len;
 	char	*s;
@@ -76,7 +76,7 @@ void	tokenize_3(char **line, char *eline, t_token **tok)
 		{
 			if (len > 1)
 				add_token_back(tok, new_token(STR, ft_strndup(*line + 1, len)));
-			*line = tokenize_4(&s, eline, tok);
+			*line = tokenize_4(&s, tok);
 			s = *line;
 			len = 1;
 		}
@@ -84,7 +84,7 @@ void	tokenize_3(char **line, char *eline, t_token **tok)
 		{
 			if (len > 1)
 				add_token_back(tok, new_token(STR, ft_strndup(*line + 1, len)));
-			*line = tokenize_6(&s, eline, tok);
+			*line = tokenize_6(&s, tok);
 			s = *line;
 			check = 0;
 			len = 1;

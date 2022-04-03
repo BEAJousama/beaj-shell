@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/31 12:14:07 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/03 21:23:37 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,15 @@ typedef struct s_tokenizer
 	t_tok	tok2;
 	char	*s;
 }	t_tokenizer;
+
 typedef struct s_cmdline
 {
 	char	**line;
-	char	*eline;
 	char	**tok;
 	char	**etok;
 }	t_cmdline;
 
-typedef struct s_map
-{
-	char *key;
-	char *value;
-}	t_map;
-
-typdef struct s_global
-{
-	char			**env;
-	struct s_map	**vars;
-	int				status;
-}	t_global;
-
-char	tokenizer(char **line, char *eline, char **tok, char **etok);
+char	tokenizer(char **line, char **tok, char **etok);
 int		print_error(char *str, char *data);
 void	add_token_back(t_token **tok, t_token *newtok);
 void	insert_token(t_token **tok, t_token *newtok, int pos);
@@ -96,16 +83,17 @@ void	del_token_0(t_token *token);
 t_token	*new_token(t_tok tok, char *data);
 void	free_tokens(t_token **tokens);
 t_token	**token_init(t_token **token);
-int		peek(char **line, char *eline, char *toks);
-void	tokenize_0(char **line, char *eline, t_token **tok);
-void	tokenize_1(char **line, char *eline, t_token **tok);
-void	tokenize_2(char **line, char *eline, t_token **tok);
-void	tokenize_3(char **line, char *eline, t_token **tok);
-char	*tokenize_4(char **line, char *eline, t_token **tok);
-void	tokenize_5(char **line, char *eline, t_token **tok, char *charset);
+int		peek(char **line, char *toks);
+void	tokenize_0(char **line, t_token **tok);
+void	tokenize_1(char **line, t_token **tok);
+void	tokenize_2(char **line, t_token **tok);
+void	tokenize_3(char **line, t_token **tok);
+char	*tokenize_6(char **line, t_token **tok);
+char	*tokenize_4(char **line, t_token **tok);
+void	tokenize_5(char **line, t_token **tok, char *charset);
 t_token	**concat_words(t_token **tokens);
 void	data_filtering(t_token **token, char *charset);
-t_token	**tokens(char **line, char *eline, char *charset);
+t_token	**tokens(char **line, char *charset);
 int		check_par_match(t_token **tokens);
 int		check_quotes_match(t_token **tokens);
 int		check_parethesis(t_token **tokens);
