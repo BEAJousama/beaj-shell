@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 03:00:18 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/02 16:38:31 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	tokenize_1(char **line, char *eline, t_token **tok)
 	(t.s) = *line;
 	t.tok1 = (*t.s == '|') * PP + (*t.s == '>') * GTH + (*t.s == '<') * LTH \
 		+ (*t.s == '&') * BG + (*t.s == '(') * OPR + (*t.s == ')') * CPR \
-		+ (*t.s == ';');
+		+ (*t.s == ';') * SC;
 	(t.s)++;
 	t.tok2 = (*t.s == '|') * OR + (*t.s == '>') * GGTH + (*t.s == '<') * HDOC \
 		+ (*t.s == '&') * AND + (*t.s == ';') * DSC;
@@ -56,8 +56,10 @@ void	tokenize_3(char **line, char *eline, t_token **tok)
 {
 	int		len;
 	char	*s;
+	int		check;
 
 	s = *line;
+	check = 1;
 	len = 1;
 	add_token_back(tok, new_token(DQT, ft_strdup("\"")));
 	if (*(s + 1) == '\"')
@@ -78,6 +80,15 @@ void	tokenize_3(char **line, char *eline, t_token **tok)
 			s = *line;
 			len = 1;
 		}
+		else if (*s == '\\')
+		{
+			if (len > 1)
+				add_token_back(tok, new_token(STR, ft_strndup(*line + 1, len)));
+			*line = tokenize_6(&s, eline, tok);
+			s = *line;
+			check = 0;
+			len = 1;
+		}
 		else
 		{
 			len++;
@@ -85,7 +96,7 @@ void	tokenize_3(char **line, char *eline, t_token **tok)
 		}
 	}
 	if (len > 1)
-		add_token_back(tok, new_token(STR, ft_strndup(*line + 1, len)));
+		add_token_back(tok, new_token(STR, ft_strndup(*line + check  ,len)));
 	if (*s++ == '\"')
 	{
 		add_token_back(tok, new_token(DQT, ft_strdup("\"")));

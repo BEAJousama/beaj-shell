@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 04:34:15 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/03 13:50:11 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	tokenize_5(char **line, char *eline, t_token **tok, char *charset)
 	int		len;
 
 	s = *line;
+	len = 0;
 	copy = ft_strdup(*line);
 	while (*s)
 	{
@@ -81,15 +82,35 @@ void	tokenize_5(char **line, char *eline, t_token **tok, char *charset)
 		s++;
 		len++;
 	}
-	copy[len - 1] = '\0';
+	copy[len] = '\0';
 	if (copy[0] == '~' && (copy[1] == '/' || !copy[1]))
-		add_token_back(tok, new_token(TLD, ft_strdup(copy)));
+		add_token_back(tok, new_token(TLD, ft_strndup(copy, 1 + (copy[1] == '/'))));
 	else if (ft_strchr(copy, '*'))
 		add_token_back(tok, new_token(WC, ft_strdup(copy)));
 	else
 		add_token_back(tok, new_token(STR, ft_strdup(copy)));
 	*line = s;
 	free(copy);
+}
+
+
+char	*tokenize_6(char **line, char *eline, t_token **tok)
+{
+	char	*s;
+	char	*copy;
+	int		len;
+
+	*line += 1;
+	s = *line;
+	if (!s || !*s)
+		return (0);
+	len = 1;
+	copy = ft_strdup(*line);
+	copy[len] = '\0';
+	add_token_back(tok, new_token(STR, ft_strdup(copy)));
+	*line = s + 1;
+	free(copy);
+	return (*line);
 }
 
 t_token	**tokens(char **line, char *eline, char *charset)
@@ -104,10 +125,12 @@ t_token	**tokens(char **line, char *eline, char *charset)
 			tokenize_0(line, eline, token);
 		else if (**line == '\'')
 			tokenize_2(line, eline, token);
-		else if (**line == '\"')
+		else if (**line == '"')
 			tokenize_3(line, eline, token);
+		else if (**line == '\\')
+			tokenize_6(line, eline, token);
 		else if (peek(line, eline, "$"))
-			tokenize_4(line, eline, token);
+			*line = tokenize_4(line, eline, token);
 		else if (peek(line, eline, charset))
 			tokenize_1(line, eline, token);
 		else
