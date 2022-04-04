@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/03 21:22:25 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/04 18:27:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ void	tokenize_3(char **line, t_token **tok)
 	}
 	if (len > 1)
 		add_token_back(tok, new_token(STR, ft_strndup(*line + check  ,len)));
-	if (*s++ == '\"')
+	if (*s == '\"')
 	{
 		add_token_back(tok, new_token(DQT, ft_strdup("\"")));
+		s++;
 	}
 	*line = s;
 }

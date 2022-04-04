@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:54:13 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/31 03:19:20 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/04 18:26:54 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	del_unused(t_token **tokens)
 		if (first -> tok & STR)
 		{
 			sec = first -> next;
-			while (sec -> tok & STR)
+			while (sec && (sec -> tok & STR))
 			{
 				del_token_0(sec);
 				sec = sec -> next;
@@ -73,7 +73,7 @@ t_token	**quotes_filter(t_token **tokens)
 		{
 			todel = first;
 			first = first -> next;
-			del_token(tokens, todel);
+			del_token_0(todel);
 		}
 		else
 			first = first -> next;

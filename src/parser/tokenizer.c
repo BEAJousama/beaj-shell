@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/03 22:02:29 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/04 23:29:12 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ void	tokenize_2(char **line, t_token **tok)
 		s++;
 	}
 	add_token_back(tok, new_token(STR, ft_strndup(*line + 1, len + 1)));
-	if (*s++ == '\'')
+	if (*s == '\'')
+	{
 		add_token_back(tok, new_token(QT, ft_strdup("\'")));
+		s++;
+	}
 	*line = s;
 }
 
@@ -53,8 +56,12 @@ char	*tokenize_4(char **line, t_token **tok)
 	if (*s == '$' || *s == '?' || ft_isdigit(*s))
 	{
 		add_token_back(tok, new_token(VAR, ft_strndup(*line + 1, 2)));
-		*line += 2;
-		return (*line);
+		return (*line + 2);
+	}
+	else if(*s == '\n' || ft_strchr(SPACES, *s) || *s == '\"')
+	{
+		add_token_back(tok, new_token(STR, ft_strndup(*line, 2)));
+		return (*line + 1);
 	}
 	while (*s && (ft_isalnum(*s) || *s == '_'))
 	{
