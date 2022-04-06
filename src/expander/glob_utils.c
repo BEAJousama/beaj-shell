@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 18:26:42 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/06 03:26:49 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,15 @@ void	add_global_venv(char *key, char *value)
 {
 	int		len;
 	t_venv	*venv;
+	char	*tmp;
 
 	len = 0;
-	venv = new_venv(key, value);
-	venv_add_back(glob.venv, venv);
+	tmp = get_venv(key);
+	if (!tmp || (*tmp && ft_strcmp(tmp, value)))
+	{
+		venv = new_venv(key, value);
+		venv_add_back(glob.venv, venv);		
+	}
 }
 
 char	*get_venv(char *key)

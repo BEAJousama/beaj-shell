@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 18:28:14 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/06 03:02:11 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	add_global_venv(char *key, char *value);
 char	*get_venv(char *key);
 char	*get_var(char *key);
 char	*get_key(char *env);
+void	show_vars(void);
 char	*get_value(char *env);
 t_venv	**init_venv(t_venv **venv);
 t_venv	*new_venv(char *key, char *value);

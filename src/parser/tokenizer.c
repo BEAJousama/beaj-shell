@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/05 21:03:37 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/06 03:16:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,5 +177,8 @@ int	main(int ac, char **av, char **env)
 		}
 		first = first-> next;
 	}
+	add_global_venv("lolo", "cuuuuute");
+	add_global_venv("lolo", "cuuute");
+	show_vars();
 	free_tokens(toks);
 }
