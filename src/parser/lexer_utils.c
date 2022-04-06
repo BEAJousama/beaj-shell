@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:54:13 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 18:26:54 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/05 17:25:54 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,17 @@ t_token	**quotes_filter(t_token **tokens)
 	return (tokens);
 }
 
-void	split_words_args(t_token **tokens)
-{
-	t_token *first;
+// void	split_words_args(t_token **tokens)
+// {
+// 	t_token *first;
 	
-	first = *tokens;
-	while (first)
-	{
-		if (first -> tok & STR)
-		{
-			first -> args = ft_split(first -> data, ' ');
-		}
-		first = first -> next;
-	}
-}
+// 	first = *tokens;
+// 	while (first)
+// 	{
+// 		if (first -> tok & STR)
+// 		{
+// 			first -> args = ft_split(first -> data, ' ');
+// 		}
+// 		first = first -> next;
+// 	}
+// }

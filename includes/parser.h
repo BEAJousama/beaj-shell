@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 18:28:19 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/05 17:41:37 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,17 @@ typedef enum s_tok
 	REDIR = (HDOC | LTH | GGTH | GTH), 
 }	t_tok;
 
+typedef struct s_group
+{
+	char			*data;
+	struct s_group	*next;
+}	t_group;
+
 typedef struct s_token
 {
-	t_tok 	tok;
-	char	*type;
-	char	*data;
-	char	**args;
+	t_tok			tok;
+	char			*data;
+	t_group			**group;
 	struct	s_token	*next;
 	struct	s_token	*prev;
 }	t_token;
@@ -102,5 +107,8 @@ int		check_redirect(t_token **tokens);
 int		syntax_analyse(t_token **tokens);
 t_token	**quotes_filter(t_token **tokens);
 char	*ft_strjoin1(char *s1, char *s2);
+t_group	**init_group(t_group **group);
+t_group	*new_gnode(char *data);
+void	gnode_add_back(t_group **group, t_group *new);
 #endif
 

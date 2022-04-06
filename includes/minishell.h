@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 18:28:10 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/05 18:24:53 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "libft.h"
 # include <unistd.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include "parser.h"
 # include "expander.h"
 

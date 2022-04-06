@@ -6,35 +6,60 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 18:26:21 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/06 00:58:52 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expand_wildcard(char *word, char **env)
+bool charMatching(char *s1, char * s2)
+{
+    if (*s1 == '\0' && *s2 == '\0')
+        return (true);
+    if (*s1 == '?' && *s2 == '\0')
+        return (false);
+    if ((*s1 == '*' || *s1 == '?') && *(s1 + 1) != '\0' && *s2 == '\0')
+        return (false);
+    if (*s1 == '?' || *s1 == *s2)
+        return charMatching(s1 + 1, s2+1);
+    if (*s1 == '*')
+        return (charMatching(s1 + 1, s2) || charMatching(s1, s2 + 1));
+    return (false);
+}
+
+t_group	**expand_group(t_token *token)
 {
 	struct dirent	*de;
-	int				len;
     DIR				*dr;
-	char			*new;
+	char			*s;
 	
 	dr = opendir(".");
-	word = (ft_strtok(word, '*'));
-	len = ft_strlen(word);
-	new = ft_strdup("\0");
-	
-    if (dr == NULL)
-    {
-        printf("Could not open current directory" );
-    }
+	token -> group = init_group(token -> group);
+	if (dr == NULL || !token -> group)
+		return (NULL);
     while ((de = readdir(dr)) != NULL)
 	{
-        if (ft_strnstr(de -> d_name, "\0", len))
-			new = ft_strjoin1(new, de->d_name);
+		s = ft_strdup(de -> d_name);
+        if (charMatching(token -> data, s) == true)
+			gnode_add_back(token -> group, new_gnode(s));
 	}
-    // closedir(dr);
-	return (new); 
+	return (token -> group);
+}
+
+static t_token	**expand_wildcard(t_token **tokens)
+{
+	t_token	*first;
+
+	first = *tokens;
+	while (first)
+	{
+		if (first -> tok & WC)
+		{
+			first -> group = expand_group(first);
+		}
+		first = first -> next;
+	}
+	return (tokens);
 }
 
 static t_token	**expand_dollar(t_token **tokens)
@@ -68,5 +93,6 @@ static t_token	**expand_dollar(t_token **tokens)
 t_token **expander(t_token **tokens)
 {
 	tokens = expand_dollar(tokens);
+	tokens = expand_wildcard(tokens);
 	return (tokens);	
 }

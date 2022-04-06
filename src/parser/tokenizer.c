@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 23:29:12 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/05 21:03:37 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	tokenize_5(char **line, t_token **tok, char *charset)
 	copy[len] = '\0';
 	if (copy[0] == '~' && (copy[1] == '/' || !copy[1]))
 		add_token_back(tok, new_token(TLD, ft_strndup(copy, 1 + (copy[1] == '/'))));
-	else if (ft_strchr(copy, '*'))
+	else if (ft_strchr(copy, '*') || ft_strchr(copy, '?'))
 		add_token_back(tok, new_token(WC, ft_strdup(copy)));
 	else
 		add_token_back(tok, new_token(STR, ft_strdup(copy)));
@@ -167,6 +167,14 @@ int	main(int ac, char **av, char **env)
 	while (first)
 	{
 		printf("%s ----> %u\n", first->data, first->tok);
+		if (first -> tok & WC)
+		{
+			while (*first -> group)
+			{
+				printf("######## %s ###########\n", (*first->group)->data );
+				(*first -> group) = (*first ->group) -> next;
+			}
+		}
 		first = first-> next;
 	}
 	free_tokens(toks);

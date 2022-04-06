@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   glob_utils_1.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/05 17:25:05 by obeaj             #+#    #+#             */
+/*   Updated: 2022/04/05 17:25:22 by obeaj            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_key(char *env)
@@ -34,8 +46,8 @@ t_venv	*new_venv(char *key, char *value)
 	t_venv	*venv;
 	
 	venv = malloc(sizeof(t_venv) * 1);
-	venv -> key = ft_strdup(key);
-	venv -> value = ft_strdup(value);
+	venv -> key = key;
+	venv -> value = value;
 	venv -> next = NULL; 
 	return (venv);
 }
