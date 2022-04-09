@@ -6,109 +6,156 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/05 17:41:37 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/09 01:44:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-# define UNEXPECTED_TOK "minishell : syntax error near unexpected token : "
-# define UNCLOSED_PAR "minishell :  Unclosed parethesis"
-# define UNCLOSED_DQ "minishell :  Unclosed double quotes"
-# define UNCLOSED_SQ "minishell :  Unclosed simple quotes"
-# define SPACES "\t \v \f \r"
+# include "ast.h"
+# include "tokenizer.h"
 
-typedef enum s_tok
-{
-	PP = 1 << 0,
-	OR = 1 << 1,
-	AND = 1 << 2,
-	LTH = 1 << 3,
-	GTH = 1 << 4,
-	GGTH = 1 << 5,
-	HDOC = 1 << 6,
-	BG = 1 << 7,
-	SC = 1 << 8,
-	DR = 1 << 9,
-	QT = 1 << 10,
-	DQT = 1 << 11,
-	OPR = 1 << 12, /*   (   */
-	CPR = 1 << 13, /*   )   */
-	TLD = 1 << 14, /*Tilde*/
-	STR = 1 << 15, 
-	CMDBEG = 1 << 16,
-	CMDEND = 1 << 17,
-	DSC = 1 << 18, /* Double semicolon */
-	NL = 1 << 19, /* Newline */
-	WSC = 1 << 20, /* White space */
-	VAR = 1 << 21, /*   Dollar $   */
-	WC = 1 << 22, /* wildcard */
-	BIND = (OR | AND | PP),
-	BFG = (BG | SC),
-	WORD = (STR | QT | DQT | WSC | VAR | WC | VAR),
-	REDIR = (HDOC | LTH | GGTH | GTH), 
-}	t_tok;
-
-typedef struct s_group
-{
-	char			*data;
-	struct s_group	*next;
-}	t_group;
-
-typedef struct s_token
-{
-	t_tok			tok;
-	char			*data;
-	t_group			**group;
-	struct	s_token	*next;
-	struct	s_token	*prev;
-}	t_token;
-
-typedef struct s_tokenizer
-{
-	t_tok	tok1;
-	t_tok	tok2;
-	char	*s;
-}	t_tokenizer;
-
-typedef struct s_cmdline
-{
-	char	**line;
-	char	**tok;
-	char	**etok;
-}	t_cmdline;
-
-char	tokenizer(char **line, char **tok, char **etok);
-int		print_error(char *str, char *data);
-void	add_token_back(t_token **tok, t_token *newtok);
-void	insert_token(t_token **tok, t_token *newtok, int pos);
-void	add_token_front(t_token **tok, t_token *newtok);
-t_token	**del_token(t_token **tok, t_token *token);
-void	del_token_0(t_token *token);
-t_token	*new_token(t_tok tok, char *data);
-void	free_tokens(t_token **tokens);
-t_token	**token_init(t_token **token);
-int		peek(char **line, char *toks);
-void	tokenize_0(char **line, t_token **tok);
-void	tokenize_1(char **line, t_token **tok);
-void	tokenize_2(char **line, t_token **tok);
-void	tokenize_3(char **line, t_token **tok);
-char	*tokenize_6(char **line, t_token **tok);
-char	*tokenize_4(char **line, t_token **tok);
-void	tokenize_5(char **line, t_token **tok, char *charset);
-t_token	**concat_words(t_token **tokens);
-void	data_filtering(t_token **token, char *charset);
-t_token	**tokens(char **line, char *charset);
-int		check_par_match(t_token **tokens);
-int		check_quotes_match(t_token **tokens);
-int		check_parethesis(t_token **tokens);
-int		check_binders(t_token **tokens);
-int		check_redirect(t_token **tokens);
-int		syntax_analyse(t_token **tokens);
-t_token	**quotes_filter(t_token **tokens);
+/* parsing_utils.c */
 char	*ft_strjoin1(char *s1, char *s2);
-t_group	**init_group(t_group **group);
-t_group	*new_gnode(char *data);
-void	gnode_add_back(t_group **group, t_group *new);
-#endif
+t_split	find(t_token **tokens, t_tok tok);
+/*** Parsing functions ***/
+/* parse_cmd_line.c */
+t_ast	*cmd_line(void);
+t_ast	*cmd_line_1(void);
+t_ast	*cmd_line_2(void);
+t_ast	*cmd_line_3(void);
 
+/* parse_and_or.c */
+t_ast	*and_or(void);
+t_ast	*and_or_1(void);
+t_ast	*and_or_2(void);
+t_ast	*and_or_3(void);
+t_ast	*and_or_4(void);
+t_ast	*and_or_5(void);
+t_ast	*and_or_6(void);
+
+/* parse_job.c */
+t_ast	*job(void);
+t_ast	*job_1(void);
+t_ast	*job_2(void);
+t_ast	*job_3(void);
+t_ast	*job_4(void);
+
+/* parse_cmd.c */
+t_ast	*cmd(void);
+t_ast	*cmd_1(void);
+
+/* parse_redir.c */
+t_ast	*redir(void);
+t_ast	*redir_1(void);
+t_ast	*redir_2(void);
+
+/* parse_redir_in.c */
+t_ast	*redir_in(void);
+t_ast	*redir_in_1(void);
+t_ast	*redir_in_2(void);
+
+/* parse_redir_out.c */
+t_ast	*redir_out(void);
+t_ast	*redir_out_1(void);
+t_ast	*redir_out_2(void);
+
+/* parse_tok_lst.c */
+t_ast	*tok_lst(void);
+t_ast	*tok_lst_1(void);
+t_ast	*tok_lst_2(void);
+t_ast	*tok_lst_3(void);
+t_ast	*tok_lst_4(void);
+
+/*** INFO ***/
+
+/*
+ * Grammar
+ *
+ * <command line>		:	<and or> ';' or '&' <command line>
+ * 						|	<and or> '; or &'
+ * 						|	<and or>
+ * 						;
+ *
+ * <and or>				:	<job> && <and or>
+ * 						|	<job> || <and or>
+ * 						|	<job>
+ * 						|	'(' <command line> ')' && <and or>
+ * 						|	'(' <command line> ')' || <and or>
+ * 						|	'(' <command line> ')'
+ * 						;
+ *
+ * <job>				:	'(' <command> ')' '|' <job>
+ * 						|	    <command>     '|' <job>
+ * 						|	'(' <command> ')'
+ * 						|	    <command>
+ * 						;
+ *
+ * <command>			:	<token list>
+ * 						;
+ *
+ * <token list>			:	<name> <token list>
+ * 						|	<token> <token list>
+ * 						|	<redir> <token list>
+ * 						|	(null)
+ * 						;
+ *
+ * <redir>				:	<redir in>
+ * 						|	<redir out>
+ * 						;
+ *
+ * <redir in>			:	'<<' <file>
+ * 						|	'<' <file>
+ * 						;
+ *
+ * <redir in>			:	'<<' <file>
+ * 						|	'<' <file>
+ * 						;
+ *
+ */
+
+/*
+ * Create an ast recursively:
+ *
+ * cmd_line()		=> test all command line in order
+ * cmd_line_1()		=> <and or> ';' <command line>
+ * cmd_line_2()		=> <and or> ';'
+ * cmd_line_3()		=> <and or>
+ *
+ * and_or()			=> test all "and or" in order
+ * and_or_1()		=> <job> && <and or>
+ * and_or_2()		=> <job> || <and or>
+ * and_or_3()		=> <job>
+ * and_or_4()		=> '(' <command line> ')' && <and or>
+ * and_or_5()		=> '(' <command line> ')' || <and or>
+ * and_or_6()		=> '(' <command line> ')'
+ *
+ * job()			=> test all job in order
+ * job_1()			=> '(' <command> ')' '|' <job>
+ * job_2()			=>     <command>     '|' <job>
+ * job_3()			=> '(' <command> ')'
+ * job_4()			=>     <command>
+ *
+ * cmd()			=> test all command in order
+ * cmd_1()			=> <token list>
+ *
+ * tok_lst()		=> test token list
+ * tok_lst_1()		=> <name> <token list>
+ * tok_lst_2()		=> <token> <token list>
+ * tok_lst_3()		=> <redir> <token list>
+ * tok_lst_4()		=> (null)
+ *
+ * redir()			=> test all redirections in order
+ * redir_1()		=> <redir in>
+ * redir_2()		=> <redir out>
+ *
+ * redir_in()		=> test all in redirections in order
+ * redir_in_1()		=> '<<' <file>
+ * redir_in_2()		=> '<' <file>
+ *
+ * redir_out()		=> test all out redirections in order
+ * redir_out_1()	=> '>>' <file>
+ * redir_out_2()	=> '>' <file>
+ *
+ */
+#endif

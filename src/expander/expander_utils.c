@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:28:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/06 03:06:30 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/06 17:25:41 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,19 @@ t_group	*new_gnode(char *data)
 	group -> data = data;
 	group -> next = NULL; 
 	return (group);
+}
+
+void	free_group(t_group **group)
+{
+	t_group *first;
+
+	first = *group;
+	while (first)
+	{
+		free(first);
+		first = first -> next;
+	}
+	free(*group);
 }
 
 void	gnode_add_back(t_group **group, t_group *new)

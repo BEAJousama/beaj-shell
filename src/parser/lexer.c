@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:24:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/30 03:09:43 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/06 20:40:30 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_token    **lexer(char **line)
 	if (!syntax_analyse(tokens))
 		return (NULL);
     tokens = quotes_filter(tokens);
+	tokens = concat_words(tokens);
+	set_global_env(env);
 	tokens = expander(tokens);
     return (tokens);
 }

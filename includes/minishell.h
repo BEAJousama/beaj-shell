@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/05 18:24:53 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/09 01:34:19 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include "parser.h"
+# include "tokenizer.h"
 # include "expander.h"
 
 typedef struct s_cmd
@@ -31,14 +32,12 @@ typedef struct s_cmd
 typedef struct s_execcmd {
 	int type;
 	char *argv[10];
-	char *eargv[10];
 }	t_execcmd;
 
 typedef struct s_redircmd {
 	int type;
 	struct s_cmd *cmd;
 	char *file;
-	char *efile;
 	int mode;
 	int fd;
 }	t_redircmd;

@@ -6,13 +6,13 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/06 03:26:49 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/08 02:34:13 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_glob	glob = {.venv = NULL, .vars = NULL, .status = 0};
+t_glob	glob = {.venv = NULL, .vars = NULL, .status = 0, .tokens = NULL};
 
 void	set_global_env(char **env)
 {
@@ -48,10 +48,20 @@ void	add_global_venv(char *key, char *value)
 
 	len = 0;
 	tmp = get_venv(key);
-	if (!tmp || (*tmp && ft_strcmp(tmp, value)))
+	if (!tmp)
 	{
 		venv = new_venv(key, value);
 		venv_add_back(glob.venv, venv);		
+	}
+	else if ((*tmp && ft_strcmp(tmp, value)))
+	{
+		venv = *glob.venv;
+		while (venv)
+		{
+			if (!ft_strcmp(key, venv -> key))
+				venv -> value = value;
+			venv = venv -> next;
+		}		
 	}
 }
 

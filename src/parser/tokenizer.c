@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/06 03:16:03 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/09 01:19:49 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	tokenize_5(char **line, t_token **tok, char *charset)
 	}
 	copy[len] = '\0';
 	if (copy[0] == '~' && (copy[1] == '/' || !copy[1]))
-		add_token_back(tok, new_token(TLD, ft_strndup(copy, 1 + (copy[1] == '/'))));
+		add_token_back(tok, new_token(TLD,
+			ft_strndup(copy, 1 + (copy[1] == '/'))));
 	else if (ft_strchr(copy, '*') || ft_strchr(copy, '?'))
 		add_token_back(tok, new_token(WC, ft_strdup(copy)));
 	else
@@ -164,10 +165,13 @@ int	main(int ac, char **av, char **env)
 	set_global_env(env);
 	toks = expander(toks);
 	first = *toks;
-	while (first)
+	t_split sp;
+	sp = find(toks, OR);
+	first = *sp.right;
+	while (first && !(first -> tok & CMDEND))
 	{
 		printf("%s ----> %u\n", first->data, first->tok);
-		if (first -> tok & WC)
+		if (first -> tok & WC && first -> group)
 		{
 			while (*first -> group)
 			{
@@ -177,8 +181,9 @@ int	main(int ac, char **av, char **env)
 		}
 		first = first-> next;
 	}
-	add_global_venv("lolo", "cuuuuute");
-	add_global_venv("lolo", "cuuute");
-	show_vars();
-	free_tokens(toks);
+	// add_global_venv("lolo", "cuuuuute");
+	// add_global_venv("PATH", "c123");
+	// add_global_venv("lolo", "cuuute");
+	// show_vars();
+	// free_tokens(toks);
 }

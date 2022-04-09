@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:31:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/31 03:15:24 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/06 17:28:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	free_tokens(t_token **tokens)
 	while (*tokens)
 	{
 		first = (*tokens)-> next;
+		if ((*tokens)-> group)
+			free_group((*tokens)-> group);
 		free((*tokens)->data);
 		free(*tokens);
 		(*tokens) = first;
