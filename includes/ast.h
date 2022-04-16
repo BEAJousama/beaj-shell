@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:50:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/08 01:51:12 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/13 16:36:59 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@
 
 typedef enum e_asttype{
 	AST_PIPE =		(1 << 0),
-	AST_SEQ =		(1 << 1),
+	AST_SC =		(1 << 1),
 	AST_AND =		(1 << 2),
 	AST_OR =		(1 << 3),
 	AST_REDIR =		(1 << 4),
-	AST_RD_INFILE =	(1 << 5),
-	AST_RD_HDOC =	(1 << 6),
-	AST_RD_TRUNC =	(1 << 7),
-	AST_RD_APPEND =	(1 << 8),
+	AST_GTH	 =		(1 << 5),
+	AST_GGTH =		(1 << 6),
+	AST_LTH =		(1 << 7),
+	AST_HDOC =		(1 << 8),
 	AST_CMD =		(1 << 9),
 	AST_ARG =		(1 << 10),
-	AST_DATA =		(1 << 11)
+	AST_DATA =		(1 << 11),
+	AST_BG =		(1 << 12),
+	AST_SUB = 		(1 << 13)
 }	t_asttype;
 
 typedef struct s_ast	t_ast;

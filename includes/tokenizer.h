@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/09 01:36:31 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/12 17:21:49 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_split
 {
 	t_token **right;
 	t_token **left;
-	int		check;
+	t_tok	tok;
 }	t_split;
 
 char	tokenizer(char **line, char **tok, char **etok);

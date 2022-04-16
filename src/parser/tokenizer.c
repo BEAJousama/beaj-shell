@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/09 01:19:49 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/15 23:58:25 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int	main(int ac, char **av, char **env)
 	toks = expander(toks);
 	first = *toks;
 	t_split sp;
-	sp = find(toks, OR);
+	sp = find(toks, OPR, 1);
 	first = *sp.right;
 	while (first && !(first -> tok & CMDEND))
 	{
@@ -183,7 +183,9 @@ int	main(int ac, char **av, char **env)
 	}
 	// add_global_venv("lolo", "cuuuuute");
 	// add_global_venv("PATH", "c123");
+	// add_global_venv("A", "");
 	// add_global_venv("lolo", "cuuute");
+	// del_venv("lolo");
 	// show_vars();
 	// free_tokens(toks);
 }

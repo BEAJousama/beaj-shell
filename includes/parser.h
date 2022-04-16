@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/09 01:44:16 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/12 23:46:29 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 /* parsing_utils.c */
 char	*ft_strjoin1(char *s1, char *s2);
-t_split	find(t_token **tokens, t_tok tok);
+t_split	find(t_token **tokens, t_tok tok, int isbloc);
+int	is_there(t_token **tokens, t_tok tok, int isbloc);
 /*** Parsing functions ***/
 /* parse_cmd_line.c */
 t_ast	*cmd_line(void);

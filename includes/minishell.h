@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/09 01:34:19 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/13 16:31:17 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 typedef struct s_cmd
 {
 	int type;
+	struct s_cmd *left;
+	struct s_cmd *right;
 }	t_cmd;
 
 typedef struct s_execcmd {
