@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/12 17:21:49 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/16 17:21:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum s_tok
 	WC = 1 << 22, /* wildcard */
 	BIND = (OR | AND | PP),
 	BFG = (BG | SC),
-	WORD = (STR | QT | DQT | WSC | VAR | WC | VAR | TLD),
+	WORD = (STR | QT | DQT | WSC | VAR | WC | TLD),
 	REDIR = (HDOC | LTH | GGTH | GTH), 
 }	t_tok;
 

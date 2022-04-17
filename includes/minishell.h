@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/13 16:31:17 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/16 17:43:39 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "parser.h"
 # include "tokenizer.h"
 # include "expander.h"
+# define ARG_MAX 262144
 
 typedef struct s_cmd
 {
@@ -33,7 +34,7 @@ typedef struct s_cmd
 
 typedef struct s_execcmd {
 	int type;
-	char *argv[10];
+	char *argv[ARG_MAX];
 }	t_execcmd;
 
 typedef struct s_redircmd {

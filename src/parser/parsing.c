@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/14 01:33:14 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/17 00:24:45 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,32 @@ t_cmd	*NewAstNode(t_tok tok)
 	return (cmd);
 }
 
-t_cmd	*NewRediNode(t_split sp)
+t_cmd	*NewExecNode(t_tok tok)
+{
+	t_execcmd	*cmd;
+	
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	ft_memset(cmd, 0, sizeof(*cmd));
+	cmd -> type = AST_EXEC;
+	return ((t_cmd *)cmd);
+}
+
+t_cmd	*NewRediNode(t_tok tok)
 {
 	t_redircmd	*cmd;
 	
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	if ((sp.tok & GTH) & GTH)
+	if (tok & GTH)
 		cmd -> type = AST_GTH;
-	else if ((sp.tok & GGTH) & GGTH)
+	else if ((tok & GGTH) & GGTH)
 		cmd -> type = AST_GGTH;
-	else if ((sp.tok & LTH) & LTH)
+	else if (tok & LTH)
 		cmd -> type = AST_LTH;
-	else if ((sp.tok & HDOC) & HDOC)
+	else if (tok  & HDOC)
 		cmd -> type = AST_HDOC;
 	cmd -> file = (*sp.left) -> data;
 	if (!(sp.right))
@@ -125,28 +137,63 @@ t_cmd	*parseblock(t_token **tokens)
 	return (cmd);
 }
 
-t_cmd	*parseredir(t_token **tokens)
+t_tok	redir_tok(t_token *token)
 {
-	t_cmd	*cmd;
-	t_split sp;
+	t_tok	tok;
 	
-	sp = find(tokens, REDIR);
-	cmd = NewRediNode(sp);
-	if (!cmd)
-		return (NULL);
-	cmd -> right = parseline(sp.right);
-	cmd -> left = parseline(sp.left);	
+	if ((token -> tok & GTH) & GTH)
+		tok = GTH;
+	else if (t(oken ->tok & GGTH) & GGTH)
+		tok = GGTH;
+	else if ((token ->tok & LTH) & LTH)
+		tok = LTH;
+	else if ((token ->tok & HDOC) & HDOC)
+		tok = HDOC;
+	return (tok);
+}
+
+t_cmd	*parseredir(t_cmd *cmd, t_token **tokens)
+{
+	t_cmd	*cmd1;
+	t_tok	token;
+	
+	if ((*tokens)-> tok & REDIR)
+	{
+		token = redir_tok(t_token *tok);
+		cmd = NewRediNode(token);	
+		if (!cmd)
+			return (NULL);
+		
+	}
 	return (cmd);
 }
 
 t_cmd	*parsecmd(t_token **tokens)
 {
-	t_cmd	*cmd;
+	t_execcmd	*cmd;
+	t_token	*first;
+	int		ac;
 	
-	cmd = newlistnode();
-	cmd -> right = parseline(right_toks);
-	cmd -> left = parseline(right_toks);	
-	return (cmd);
+	ac = 0;
+	first = *tokens;
+	cmd = NewExecNode(tokens);
+	cmd = parseredir(cmd, tokens);
+	while (first -> tok != CMDEND)
+	{
+		if (first -> tok & WC && first -> group)
+		{
+			while ((*first -> group))
+			{
+				cmd -> argv[ac] = ft_strdup((*first -> group) -> data);
+				ac++;
+				(*first -> group) = (*first -> group) -> next;
+			}
+		}
+		else if (first & WORD)
+			cmd -> argv[ac] = ft_strdup(first -> data);
+		cmd = parseredir(cmd, tokens);
+	}
+	return ((t_cmd *)cmd);
 }
 
 t_cmd	*parseline(t_token **tokens)
@@ -161,8 +208,6 @@ t_cmd	*parseline(t_token **tokens)
 		cmd = parsepipe(tokens);
 	else if(is_there(tokens, OPR, 1))
 		cmd = parseblock(tokens);
-	else if (is_there(tokens, REDIR, 0))
-		cmd = parseredir(tokens);
 	else
 		cmd = parsecmd(tokens);
 	return (cmd);

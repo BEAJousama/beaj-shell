@@ -3,6 +3,7 @@
     "42header.email": "obeaj@student.1337.ma",
     "42header.username": "obeaj",
     "files.associations": {
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "libft.h": "c"
     }
 }

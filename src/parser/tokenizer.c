@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/15 23:58:25 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/16 17:34:12 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,9 @@ int	main(int ac, char **av, char **env)
 	set_global_env(env);
 	toks = expander(toks);
 	first = *toks;
-	t_split sp;
-	sp = find(toks, OPR, 1);
-	first = *sp.right;
+	// t_split sp;
+	// sp = find(toks, OPR, 1);
+	// first = *sp.right;
 	while (first && !(first -> tok & CMDEND))
 	{
 		printf("%s ----> %u\n", first->data, first->tok);
