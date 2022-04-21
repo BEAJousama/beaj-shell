@@ -6,55 +6,64 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:52:23 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/08 01:52:32 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 01:51:17 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* insert and ast node */
-void	ast_insert(t_ast *root, t_ast *node, t_bool on_right)
+t_cmd	*parselist(t_token **tokens)
 {
-	t_ast	*aux;
+	t_cmd	*cmd;
+	t_split	sp;
 
-	if (root == NULL || node == NULL)
-		return ;
-	if (on_right)
-	{
-		aux = root->right;
-		root->right = node;
-		node->right = aux;
-		node->left = NULL;
-	}
-	else
-	{
-		aux = root->left;
-		root->left = node;
-		node->left = aux;
-		node->right = NULL;
-	}
+	sp = find(tokens, SC | BG, 0);
+	cmd = new_ast_node(SC | BG);
+	if (!cmd)
+		return (NULL);
+	cmd -> right = parseline(sp.right);
+	cmd -> left = parseline(sp.left);
+	return (cmd);
 }
 
-/* insert "and or" node on top */
-void	ast_insert_and_or(t_ast **root, t_ast *new_root, t_bool last)
+t_cmd	*parsecondition(t_token **tokens)
 {
-	if (root == NULL || new_root == NULL)
-		return ;
-	if (*root == NULL)
-	{
-		*root = new_root;
-	}
-	else
-	{
-		if (last == FALSE)
-		{
-			(*root)->right = new_root->left;
-			new_root->left = (*root);
-			*root = new_root;
-		}
-		else
-		{
-			(*root)->right = new_root;
-		}
-	}
+	t_cmd	*cmd;
+	t_split	sp;
+
+	sp = find(tokens, OR | AND, 0);
+	cmd = new_ast_node(AND | OR);
+	if (!cmd)
+		return (NULL);
+	cmd -> right = parseline(sp.right);
+	cmd -> left = parseline(sp.left);
+	return (cmd);
+}
+
+t_cmd	*parsepipe(t_token **tokens)
+{
+	t_cmd	*cmd;
+	t_split	sp;
+
+	sp = find(tokens, PP, 0);
+	cmd = new_ast_node(PP);
+	if (!cmd)
+		return (NULL);
+	cmd -> right = parseline(sp.right);
+	cmd -> left = parseline(sp.left);
+	return (cmd);
+}
+
+t_cmd	*parseblock(t_token **tokens)
+{
+	t_cmd	*cmd;
+	t_split	sp;
+
+	sp = find(tokens, OPR, 1);
+	cmd = new_ast_node(OPR);
+	if (!cmd)
+		return (NULL);
+	cmd -> left = NULL;
+	cmd -> right = parseline(sp.right);
+	return (cmd);
 }

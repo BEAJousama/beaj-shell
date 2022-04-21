@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/16 17:43:39 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 02:07:32 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,7 @@
 # include "parser.h"
 # include "tokenizer.h"
 # include "expander.h"
-# define ARG_MAX 262144
 
-typedef struct s_cmd
-{
-	int type;
-	struct s_cmd *left;
-	struct s_cmd *right;
-}	t_cmd;
+void    pwd_cmd(void);
 
-typedef struct s_execcmd {
-	int type;
-	char *argv[ARG_MAX];
-}	t_execcmd;
-
-typedef struct s_redircmd {
-	int type;
-	struct s_cmd *cmd;
-	char *file;
-	int mode;
-	int fd;
-}	t_redircmd;
-
-typedef struct s_pipecmd {
-	int type;
-	struct s_cmd *left;
-	struct s_cmd *right;
-}	t_pipecmd;
-
-typedef struct s_listcmd {
-	int type;
-	struct s_cmd *left;
-	struct s_cmd *right;
-}	t_listcmd;
-
-typedef struct s_backcmd {
-	int type;
-	struct s_cmd *cmd;
-}	t_backcmd;
-
-void pwd_cmd(void);
 #endif
-

@@ -6,20 +6,20 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:54:49 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/06 16:09:21 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 01:57:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_glob glob;
+extern t_glob	g_glob;
 
 void	del_venv(char *key)
 {
 	t_venv	*venv;
 	t_venv	*vnext;
 
-	venv = *glob.venv;
+	venv = *g_glob.venv;
 	while (venv -> next)
 	{
 		vnext = venv -> next;
@@ -36,8 +36,8 @@ void	free_glob(void)
 	t_venv	**venv;
 	t_venv	**var;
 
-	venv = glob.venv;
-	var = glob.vars;
+	venv = g_glob.venv;
+	var = g_glob.vars;
 	while (*venv)
 	{
 		free(*venv);

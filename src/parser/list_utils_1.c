@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   list_utils_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 14:02:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 21:31:40 by obeaj            ###   ########.fr       */
+/*   Created: 2022/04/21 16:43:25 by obeaj             #+#    #+#             */
+/*   Updated: 2022/04/21 16:46:43 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	print_error(char *str, char *data)
+void	free_tokens(t_token **tokens)
 {
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(data, 2);
-	ft_putchar_fd('\n', 2);
-	return (1);
-}
+	t_token	*first;
 
-void	freetab(char **tab)
-{
-	int	i;
-
-	i = -1;
-	while (tab[++i])
+	first = NULL;
+	while (*tokens)
 	{
-		free(tab[i]);
+		first = (*tokens)-> next;
+		if ((*tokens)-> group)
+			free_group((*tokens)-> group);
+		free((*tokens)->data);
+		free(*tokens);
+		(*tokens) = first;
 	}
-	free(tab);
-}
-
-int	peek(char **line, char *toks)
-{
-	char	*s;
-
-	s = *line;
-	*line = s;
-	return (*s && ft_strchr(toks, *s));
+	free(tokens);
 }

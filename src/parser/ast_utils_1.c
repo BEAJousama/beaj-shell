@@ -6,52 +6,92 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/08 01:51:57 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 21:26:22 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* get node type */
-int	ast_gettype(t_ast *ast)
+t_cmd	*new_ast_node(t_tok tok)
 {
-	return (ast->type & (~AST_DATA));
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	if ((tok & SC) & SC)
+		cmd -> type = AST_SC;
+	else if ((tok & BG) & BG)
+		cmd -> type = AST_BG;
+	else if (tok & PP)
+		cmd -> type = AST_PIPE;
+	else if ((tok & OR) & OR)
+		cmd -> type = AST_OR;
+	else if ((tok & AND) & AND)
+		cmd -> type = AST_AND;
+	else if (tok & OPR)
+		cmd -> type = AST_SUB;
+	return (cmd);
 }
 
-/* delete tree */
-void	ast_del(t_ast *ast)
+t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens)
 {
-	if (ast == NULL)
-		return ;
-	if (ast->type & AST_DATA)
-		free(ast->data);
-	ast_del(ast->left);
-	ast_del(ast->right);
-	free(ast);
+	t_token	*first;
+	int		ac;
+
+	ac = 0;
+	first = *tokens;
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd -> type = AST_EXEC;
+	while (!(first -> tok & CMDEND))
+	{
+		if (first -> tok & REDIR)
+		{
+			if (first -> next -> next)
+			{	
+				first = first -> next -> next;
+				continue ;
+			}
+		}
+		if (first -> tok & WC && first -> group)
+		{
+			while ((*first -> group))
+			{
+				cmd -> argv[ac] = (*first -> group)-> data;
+				ac++;
+				(*first -> group) = (*first -> group)-> next;
+			}
+		}
+		else if (first -> tok & STR)
+		{
+			cmd -> argv[ac] = first -> data;
+			ac++;
+		}
+		first = first -> next;
+	}
+	cmd -> argv[ac] = 0;
+	return (cmd);
 }
 
-/* attach leafs to node */
-void	ast_attach(t_ast *root, t_ast *left, t_ast *right)
+t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok)
 {
-	if (root == NULL)
-		return ;
-	root->left = left;
-	root->right = right;
-}
+	t_cmd	*cmd;
 
-/* set node type */
-void	ast_settype(t_ast *ast, t_asttype type)
-{
-	if (ast == NULL)
-		return ;
-	ast->type = type;
-}
-
-/* set node data */
-void	ast_setdata(t_ast *ast, char *data)
-{
-	if (ast == NULL || data == NULL)
-		return ;
-	ast->data = data;
-	ast->type |= AST_DATA;
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (cmd1);
+	if (tok & GTH)
+		cmd -> type = AST_GTH;
+	else if ((tok & GGTH) & GGTH)
+		cmd -> type = AST_GGTH;
+	else if (tok & LTH)
+		cmd -> type = AST_LTH;
+	else if (tok & HDOC)
+		cmd -> type = AST_HDOC;
+	cmd -> file = (*toks)-> next -> data;
+	cmd -> right = cmd1;
+	// fill_redir(cmd, tok)
+	return (cmd);
 }

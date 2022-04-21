@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/16 17:21:23 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 02:28:28 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ typedef enum s_tok
 	DR = 1 << 9,
 	QT = 1 << 10,
 	DQT = 1 << 11,
-	OPR = 1 << 12, /*   (   */
-	CPR = 1 << 13, /*   )   */
-	TLD = 1 << 14, /* Tilde ~ */
+	OPR = 1 << 12,
+	CPR = 1 << 13,
+	TLD = 1 << 14,
 	STR = 1 << 15, 
 	CMDBEG = 1 << 16,
 	CMDEND = 1 << 17,
-	DSC = 1 << 18, /* Double semicolon */
-	NL = 1 << 19, /* Newline */
-	WSC = 1 << 20, /* White space */
-	VAR = 1 << 21, /*   Dollar $   */
-	WC = 1 << 22, /* wildcard */
+	DSC = 1 << 18,
+	NL = 1 << 19,
+	WSC = 1 << 20,
+	VAR = 1 << 21,
+	WC = 1 << 22,
 	BIND = (OR | AND | PP),
 	BFG = (BG | SC),
 	WORD = (STR | QT | DQT | WSC | VAR | WC | TLD),
-	REDIR = (HDOC | LTH | GGTH | GTH), 
+	REDIR = (HDOC | LTH | GGTH | GTH),
 }	t_tok;
 
 typedef struct s_group
@@ -61,8 +61,8 @@ typedef struct s_token
 	t_tok			tok;
 	char			*data;
 	t_group			**group;
-	struct	s_token	*next;
-	struct	s_token	*prev;
+	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_tokenizer
@@ -74,12 +74,12 @@ typedef struct s_tokenizer
 
 typedef struct s_split
 {
-	t_token **right;
-	t_token **left;
+	t_token	**right;
+	t_token	**left;
 	t_tok	tok;
 }	t_split;
 
-char	tokenizer(char **line, char **tok, char **etok);
+t_token	**tokenizer(char **line, char *charset);
 int		print_error(char *str, char *data);
 void	add_token_back(t_token **tok, t_token *newtok);
 void	insert_token(t_token **tok, t_token *newtok, int pos);
@@ -107,5 +107,5 @@ int		check_binders(t_token **tokens);
 int		check_redirect(t_token **tokens);
 int		syntax_analyse(t_token **tokens);
 t_token	**quotes_filter(t_token **tokens);
-
+t_token	**lexer(char **line, char **env);
 #endif

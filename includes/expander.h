@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/09 01:30:31 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 02:07:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_group	**init_group(t_group **group);
 t_group	*new_gnode(char *data);
 void	free_group(t_group **group);
 void	gnode_add_back(t_group **group, t_group *new);
-t_token **expander(t_token **tokens);
+t_token	**expander(t_token **tokens);
 
 #endif
-

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:54:13 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/13 16:54:42 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/20 14:25:46 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_token	**concat_words_utils(t_token **tokens, t_token *token)
 {
 	t_token	*sec;
+
 	sec = token -> next;
 	while (sec -> tok & STR)
 	{
@@ -28,7 +29,7 @@ void	del_unused(t_token **tokens)
 {
 	t_token	*first;
 	t_token	*sec;
-	
+
 	first = *tokens;
 	while (first)
 	{
@@ -47,9 +48,9 @@ void	del_unused(t_token **tokens)
 
 t_token	**concat_words(t_token **tokens)
 {
-	t_token *first;
+	t_token	*first;
 	t_token	*sec;
-	
+
 	first = *tokens;
 	while (first)
 	{
@@ -65,7 +66,7 @@ t_token	**quotes_filter(t_token **tokens)
 {
 	t_token	*first;
 	t_token	*todel;
-	
+
 	first = *tokens;
 	while (first)
 	{
@@ -80,18 +81,3 @@ t_token	**quotes_filter(t_token **tokens)
 	}
 	return (tokens);
 }
-
-// void	split_words_args(t_token **tokens)
-// {
-// 	t_token *first;
-	
-// 	first = *tokens;
-// 	while (first)
-// 	{
-// 		if (first -> tok & STR)
-// 		{
-// 			first -> args = ft_split(first -> data, ' ');
-// 		}
-// 		first = first -> next;
-// 	}
-// }

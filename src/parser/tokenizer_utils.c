@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/05 15:01:15 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/20 14:36:06 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	tokenize_3(char **line, t_token **tok)
 		}
 	}
 	if (len > 1)
-		add_token_back(tok, new_token(STR, ft_strndup(*line + check  ,len)));
+		add_token_back(tok, new_token(STR, ft_strndup(*line + check, len)));
 	if (*s == '\"')
 	{
 		add_token_back(tok, new_token(DQT, ft_strdup("\"")));

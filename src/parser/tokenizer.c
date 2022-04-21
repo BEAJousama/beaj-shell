@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/16 17:34:12 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 21:29:21 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*tokenize_4(char **line, t_token **tok)
 		add_token_back(tok, new_token(VAR, ft_strndup(*line + 1, 2)));
 		return (*line + 2);
 	}
-	else if(*s == '\n' || ft_strchr(SPACES, *s) || *s == '\"')
+	else if (*s == '\n' || ft_strchr(SPACES, *s) || *s == '\"')
 	{
 		add_token_back(tok, new_token(STR, ft_strndup(*line, 2)));
 		return (*line + 1);
@@ -92,7 +92,7 @@ void	tokenize_5(char **line, t_token **tok, char *charset)
 	copy[len] = '\0';
 	if (copy[0] == '~' && (copy[1] == '/' || !copy[1]))
 		add_token_back(tok, new_token(TLD,
-			ft_strndup(copy, 1 + (copy[1] == '/'))));
+				ft_strndup(copy, 1 + (copy[1] == '/'))));
 	else if (ft_strchr(copy, '*') || ft_strchr(copy, '?'))
 		add_token_back(tok, new_token(WC, ft_strdup(copy)));
 	else
@@ -100,7 +100,6 @@ void	tokenize_5(char **line, t_token **tok, char *charset)
 	*line = s;
 	free(copy);
 }
-
 
 char	*tokenize_6(char **line, t_token **tok)
 {
@@ -121,7 +120,7 @@ char	*tokenize_6(char **line, t_token **tok)
 	return (*line);
 }
 
-t_token	**tokens(char **line, char *charset)
+t_token	**tokenizer(char **line, char *charset)
 {
 	t_token	**token;
 
@@ -144,8 +143,28 @@ t_token	**tokens(char **line, char *charset)
 		else
 			tokenize_5(line, token, charset);
 	}
-	add_token_back(token, new_token(CMDEND, ft_strdup("")));
+	add_token_back(token, new_token(CMDEND, ft_strdup("newline")));
 	return (token);
+}
+
+void print_tree(t_cmd *c)
+{
+	if (c)
+	{
+		printf("----%d----\n", c ->type);
+	}
+	else
+		return ;
+	if (c -> right)
+	{
+		puts("right : \n");
+		print_tree(c->right);
+	}
+	if (c -> left)
+	{
+		puts("left : \n");
+		print_tree(c->left);
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -158,17 +177,33 @@ int	main(int ac, char **av, char **env)
 	line = malloc(sizeof(char *));
 	s = *line;
 	*line = readline("obeaj->");
-	toks = tokens(line, "<>&;()|");
-	syntax_analyse(toks);
-	toks = quotes_filter(toks);
-	toks = concat_words(toks);
-	set_global_env(env);
-	toks = expander(toks);
+	toks = lexer(line, env);
+	if (!toks)
+		return 0;
+	puts("heere");
+	// toks = tokenizer(line, "<>&;()|");
+	// if (syntax_analyse(toks))
+	// 	return 0;
+	// toks = quotes_filter(toks);
+	// toks = concat_words(toks);
+	// set_global_env(env);
+	// toks = expander(toks);
 	first = *toks;
-	// t_split sp;
-	// sp = find(toks, OPR, 1);
-	// first = *sp.right;
-	while (first && !(first -> tok & CMDEND))
+	t_cmd **cmd;
+	cmd = parsing(toks);
+	if (!cmd)
+		return 0;
+	while (*cmd) 
+	{
+		printf ("%d\n", (*cmd)->type);
+		if ((*cmd)->type & AST_EXEC)
+			printf ("%s\n", (*cmd)->argv[2]);	
+		if ((*cmd)->type & AST_REDIR)
+			printf ("%s\n", (*cmd)->file);	
+		*cmd = (*cmd) -> right;	
+	}
+	print_tree(*cmd);
+	while (first)
 	{
 		printf("%s ----> %u\n", first->data, first->tok);
 		if (first -> tok & WC && first -> group)
@@ -181,11 +216,4 @@ int	main(int ac, char **av, char **env)
 		}
 		first = first-> next;
 	}
-	// add_global_venv("lolo", "cuuuuute");
-	// add_global_venv("PATH", "c123");
-	// add_global_venv("A", "");
-	// add_global_venv("lolo", "cuuute");
-	// del_venv("lolo");
-	// show_vars();
-	// free_tokens(toks);
 }

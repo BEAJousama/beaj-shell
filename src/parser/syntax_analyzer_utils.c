@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:36:00 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/04 18:28:46 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 16:56:09 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_par_match(t_token **tokens)
 		first = first -> next;
 	}
 	if (pcount)
-		return (print_error(UNCLOSED_PAR, "\n"));
+		return (print_error(UNCLOSED_PAR, "\0"));
 	return (0);
 }
 
@@ -99,7 +99,7 @@ int	check_binders(t_token **tokens)
 	t_token	*left;
 
 	first = *tokens;
-	while (first -> next -> next)
+	while (first -> next)
 	{
 		right = first -> next;
 		left = first -> prev;
@@ -107,14 +107,14 @@ int	check_binders(t_token **tokens)
 		{
 			if (!(left -> tok & (WORD | CPR)))
 				return (print_error(UNEXPECTED_TOK, left -> data));
-			else if (!(right -> tok & (WORD | REDIR | OPR)))
+			if (!(right -> tok & (WORD | REDIR | OPR)))
 				return (print_error(UNEXPECTED_TOK, right -> data));
 		}
 		if (first -> tok & BFG)
 		{
 			if (!(left -> tok & (WORD | CPR)))
 				return (print_error(UNEXPECTED_TOK, left -> data));
-			else if (!(right -> tok & (WORD | REDIR | OPR | CMDEND)))
+			if (!(right -> tok & (WORD | REDIR | OPR | CMDEND)))
 				return (print_error(UNEXPECTED_TOK, right -> data));
 		}
 		first = first -> next;
@@ -133,8 +133,6 @@ int	check_redirect(t_token **tokens)
 		right = first -> next;
 		if ((first -> tok & REDIR))
 		{
-			if (right -> tok & CMDEND)
-				return (print_error(UNEXPECTED_TOK, "newline"));
 			if (!(right -> tok & WORD))
 				return (print_error(UNEXPECTED_TOK, right -> data));
 		}

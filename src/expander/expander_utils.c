@@ -6,19 +6,19 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:28:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/06 17:25:41 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 02:08:59 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_glob glob;
+extern t_glob	g_glob;
 
 void	show_vars(void)
 {
-	t_venv *var;
-	
-	var = (*glob.venv);
+	t_venv	*var;
+
+	var = (*g_glob.venv);
 	while (var)
 	{
 		printf("%s=%s\n", var->key, var->value);
@@ -38,16 +38,16 @@ t_group	**init_group(t_group **group)
 t_group	*new_gnode(char *data)
 {
 	t_group	*group;
-	
+
 	group = malloc(sizeof(t_group) * 1);
 	group -> data = data;
-	group -> next = NULL; 
+	group -> next = NULL;
 	return (group);
 }
 
 void	free_group(t_group **group)
 {
-	t_group *first;
+	t_group	*first;
 
 	first = *group;
 	while (first)

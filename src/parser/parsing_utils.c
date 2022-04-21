@@ -6,14 +6,13 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:20:15 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/15 23:57:50 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/21 01:38:41 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-t_token	*escape_block(t_token *first)
+static t_token	*escape_block(t_token *first)
 {
 	int		count;
 	t_token	*save;
@@ -23,18 +22,19 @@ t_token	*escape_block(t_token *first)
 	while (save && save -> tok != CMDEND)
 	{
 		if (save -> tok & OPR)
-			count++;	
+			count++;
 		save = save -> next;
 	}
 	while (first && count)
 	{
 		if (first -> tok & CPR)
 			count--;
-		first = first -> next;	
+		first = first -> next;
 	}
 	return (first);
 }
-void	del_parethesis(t_token **tokens)
+
+static void	del_parethesis(t_token **tokens)
 {
 	t_token	*first;
 
@@ -46,15 +46,16 @@ void	del_parethesis(t_token **tokens)
 	if (first && first -> tok == CPR)
 		del_token_0(first);
 }
+
 t_split	find(t_token **tokens, t_tok tok, int isbloc)
 {
 	t_token	*first;
 	t_split	sp;
-	
+
 	first = *tokens;
 	sp.right = token_init(sp.right);
 	sp.left = token_init(sp.left);
-	while (first -> tok != CMDEND)
+	while (first && first -> tok != CMDEND)
 	{
 		if (first -> tok & OPR && !isbloc)
 			first = escape_block(first);
@@ -62,13 +63,9 @@ t_split	find(t_token **tokens, t_tok tok, int isbloc)
 			break ;
 		first = first -> next;
 	}
-	if (first -> tok & CMDEND)
-		*sp.right = NULL;
-	else
-		*(sp.right) = first -> next;
+	*(sp.right) = first -> next;
 	if (isbloc && *sp.right)
 		del_parethesis(sp.right);
-	free(first -> data);
 	first -> tok = CMDEND;
 	*(sp.left) = *tokens;
 	return (sp);
@@ -80,8 +77,10 @@ int	is_there(t_token **tokens, t_tok tok, int isbloc)
 	int		ret;
 
 	ret = 0;
+	if (!*tokens)
+		return (0);
 	first = *tokens;
-	while (first -> tok != CMDEND)
+	while (first && first -> tok != CMDEND)
 	{
 		if (first -> tok & OPR && !isbloc)
 			first = escape_block(first);
@@ -92,6 +91,5 @@ int	is_there(t_token **tokens, t_tok tok, int isbloc)
 		}
 		first = first -> next;
 	}
-	first -> tok = CMDEND;
 	return (ret);
 }
