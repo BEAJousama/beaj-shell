@@ -6,11 +6,12 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/12 18:07:19 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/20 16:59:00 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 static int	check_n(char *str)
 {
 	int	i;
@@ -30,34 +31,45 @@ static int	check_n(char *str)
 	}
 	return (i);
 }
-void    echo_cmd(char **cmd)
+
+void	while_norm(char **cmd, int i, int j)
 {
-	int sign = 0;
-    int i = 1;
-   	int j = 0;
-	while(cmd[i])
-	{
-		j = check_n(cmd[i]);
-		if (j == 1)
-			sign = 1;
-		i++;
-	}
-	i = 1;
-	while(cmd[i])
+	while (cmd[i])
 	{
 		j = check_n(cmd[i]);
 		if (j == 0)
 		{
-			while(cmd[i])
+			while (cmd[i])
 			{
 				ft_putstr_fd(cmd[i++], 1);
-				if(cmd[i] != '\0')
+				if (cmd[i] != '\0')
 					ft_putchar_fd(' ', 1);
 			}
 			break ;
 		}
 		i++;
 	}
+}
+
+void	echo_cmd(char **cmd)
+{
+	int	sign;
+	int	i;
+	int	j;
+
+	sign = 0;
+	i = 1;
+	while (cmd[i])
+	{
+		j = check_n(cmd[i]);
+		if (j != 1)
+			break ;
+		if (j == 1)
+			sign = 1;
+		i++;
+	}
+	i = 1;
+	while_norm(cmd, i, j);
 	if (sign == 0)
 		ft_putchar_fd('\n', 1);
 }

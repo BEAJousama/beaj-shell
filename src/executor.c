@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/16 16:38:36 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/16 17:25:46 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	get_error(char *s)
 	}
 	else
 	{
+		write(2, "minishell: ", 11);
 		while (s[i])
 		{
 			write(1, &s[i], 1);
@@ -62,23 +63,15 @@ int	get_error(char *s)
 	return (1);
 }
 
-char	*get_path(char	**paths, char	**cmd)
+char	*get_path(char	**paths, char **cmd)
 {
 	char	*path;
 	int		i;
-	int		j;
-	int		f;
-	int		a;
-	int		o;
 	char **new_cmd;
+
 	new_cmd = NULL;
 
-	j = 0;
-	f = 0;
 	i = 0;
-	a = 0;
-	o = 0;
-
 	while (paths[i])
 	{
 		path = ft_strdup(paths[i]);

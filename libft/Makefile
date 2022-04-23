@@ -6,7 +6,7 @@
 #    By: imabid <imabid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 19:09:12 by obeaj             #+#    #+#              #
-#    Updated: 2022/03/24 18:42:18 by imabid           ###   ########.fr        #
+#    Updated: 2022/04/12 18:26:35 by imabid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,9 @@ FILES = ft_memset \
 		ft_strjoin \
 		ft_itoa \
 		ft_split \
-		ft_strtrim
-	
+		ft_strtrim \
+		ft_strndup \
+		
 FILES_B = ft_lstnew \
 		  ft_lstadd_front \
 		  ft_lstsize \

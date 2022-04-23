@@ -6,114 +6,198 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/27 15:28:37 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/23 23:22:35 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**copy_env(t_mini *mini)
+int					if_egal(char *arg)
 {
-	int	l;
-	int	i;
+	int				i;
 
-	l = 0;
 	i = 0;
-	while (mini->env_g[l])
-		l++;
-	mini->export.tab = (char **)malloc(sizeof(char *) * (l + 1));
-	while (mini->env_g[i])
+	while (arg[i])
 	{
-		mini->export.tab[i] = ft_strdup(mini->env_g[i]);
+		if (arg[i] == '=')
+			return (1);
 		i++;
 	}
-	mini->export.tab[i] = NULL;
-	return (mini->export.tab);
+	return (0);
 }
-
-void	export_print(t_mini *mini)
+int					if_plusegal(char *arg)
 {
-	int	i;
-	int	j;
-	int	qts;
+	int				i;
 
 	i = 0;
-	while (mini->export.tab[i])
+	while (arg[i])
 	{
-		qts = 1;
-		j = 0;
+		if (arg[i] == '+' && arg[i + 1] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	export_print(t_venv **ve)
+{
+	t_venv *venv;
+	venv = *ve;
+	
+	while (venv)
+	{
 		ft_putstr_fd("declare -x ", 1);
-		while (mini->export.tab[i][j])
+		ft_putstr_fd(venv->key, 1);
+		if(glob.g == 1 && *venv->value == '\0')
 		{
-			ft_putchar_fd(mini->export.tab[i][j], 1);
-			if (mini->export.tab[i][j] == '=' && qts)
-			{
-				ft_putchar_fd('"', 1);
-				qts--;
-			}
-			j++;
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd("\"", 1);
+			ft_putstr_fd("\"", 1);
 		}
-		if (!qts)
-			ft_putchar_fd('"', 1);
-		ft_putchar_fd('\n', 1);
-		i++;
+		if(*venv->value != '\0')
+		{
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd("\"", 1);
+		}
+		ft_putstr_fd(venv->value, 1);
+		if(*venv->value != '\0')
+		{
+			ft_putstr_fd("\"", 1);
+		}
+		ft_putstr_fd("\n", 1);
+		venv = venv->next;
 	}
 }
 
-void	sort_env(t_mini *mini)
+void	sort_env( t_venv **venv)
 {
-	char	**c_env;
 	char	*tmp;
-	int		i;
-	int		j;
+	char	*tmpv;
+	t_venv	*j;
+	t_venv	*i;
 
-	c_env = copy_env(mini);
-	i = 0;
-	while (c_env[i])
+	i = *venv;
+	while (i)
 	{
-		j = i + 1;
-		while (c_env[j])
+		j = i->next;
+		while (j)
 		{
-			if (ft_strcmp(c_env[i], c_env[j]) > 0)
+			if (ft_strcmp(i->key, j->key) > 0)
 			{
-				tmp = c_env[i];
-				c_env[i] = c_env[j];
-				c_env[j] = tmp;
+				// tmp = ft_strdup(i -> key);
+				// free(i -> key);
+				// i -> key = ft_strdup(j -> key); 
+				// free(j -> key);
+				// j -> key = ft_strdup(tmp);
+				// free(tmp);
+
+				// tmpv = ft_strdup(i -> value);
+				// free(i -> value);
+				// i -> value = ft_strdup(j -> value); 
+				// free(j -> value);
+				// j -> value = ft_strdup(tmpv);
+				// free(tmpv);
+				tmp = i -> key;
+				i -> key = j -> key;
+				j -> key = tmp;
+
+				tmpv = i -> value;
+				i -> value = j -> value; 
+				j -> value = tmpv;	
 			}
-			j++;
+			j = j->next;
 		}
-		i++;
+		i = i->next;
 	}
-	export_print(mini);
+	export_print(venv);
 }
 
 void	export_go(t_mini *mini,int i)
 {
-	printf("%s\n",ft_strchr(mini->echo[i],'='));
+	char *key;
+	char *val;
+
+	key = get_key(mini->echo[i]);
+	val = get_value(mini->echo[i]);
+	add_global_venv(key, val, glob.venv);
+}
+
+void	env_go(char *arg)
+{
+	char *key;
+	char *val;
+	key = get_key(arg);
+	val = get_value(arg);
+	add_global_venv(key, val, glob.ennv);
+}
+
+void	addto_key(char *arg)
+{
+	char *key;
+	char *cokey;
+	char *val;
+	char *v;
+
+	int i = -1;
+	int j = 0;
+	key = get_key(arg);
+	val = get_value(arg);
+	key = malloc(ft_strlen(key));
+
+	while(arg[++i])
+	{
+		if(arg[i] != '+' && arg[i + 1] != '=')
+			key[j] = arg[i];
+		j++;
+	}
+	v = get_venv(key,glob.venv);
+	if(v)
+	{
+		cokey = ft_strjoin(get_venv(key,glob.venv),val);
+		add_global_venv(key, cokey, glob.ennv);
+		add_global_venv(key, cokey, glob.venv);
+	}
+	else
+	{
+		add_global_venv(key, val, glob.ennv);
+		add_global_venv(key, val, glob.venv);
+	}
 }
 void	check_args(t_mini *mini)
 {
 	int i;
+	int j;
 	
 	i = 1;
-	while (mini->echo[i] && mini->echo[i][0] != '=')
+	j = 0;
+	while (mini->echo[i])
 	{
 		if(ft_isalpha(mini->echo[i][0]) || mini->echo[i][0] == '_')
-			export_go(mini,i);
+		{
+			if(if_egal(mini->echo[i]) && !if_plusegal(mini->echo[i]))
+			{
+				env_go(mini->echo[i]);
+				export_go(mini,i);
+			}
+			if(if_plusegal(mini->echo[i]))
+				addto_key(mini->echo[i]);
+			if(!if_egal(mini->echo[i]))
+				export_go(mini,i);
+		}
 		else
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(mini->echo[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			print_error("export: `", mini->echo[i], "': not a valid identifier\n");
 		}
+		if(if_egal(mini->echo[i]))
+			glob.g = 1;
 		i++;
 	}
 }
 void	export_cmd(t_mini *mini)
 {
 	if (!mini->echo[1])
-	{		
-		sort_env(mini);
+	{	
+		sort_env(glob.venv);
 	}
 	else
 	{
