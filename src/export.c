@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 16:42:13 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/24 18:37:24 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,7 @@ void	check_args(t_m *m)
 void	export_cmd(t_m *m)
 {
 	if (!m->echo[1])
-	{	
 		sort_env(glob.venv);
-	}
 	else
-	{
 		check_args(m);
-	}
 }

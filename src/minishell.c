@@ -84,6 +84,5 @@ int main(int ac, char **av, char **env)
 		wait(&m.status);
 		m.line =  readline("minishell$ ");
 	}
-	while(1);
 	return (0);
 }
