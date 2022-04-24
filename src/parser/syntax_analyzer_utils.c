@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:36:00 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 16:56:09 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/23 19:52:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,90 +34,85 @@ int	check_par_match(t_token **tokens)
 
 int	check_quotes_match(t_token **tokens)
 {
-	t_token	*first;
-	int		count[2];
+	t_tok_util	t;
 
-	first = *tokens;
-	count[0] = 0;
-	count[1] = 0;
-	while (first -> next)
+	t.first = *tokens;
+	t.count[0] = 0;
+	t.count[1] = 0;
+	while (t.first -> next)
 	{
-		if (first->tok == DQT)
-			count[1] += 1;
-		if (first->tok == QT)
-			count[0] += 1;
-		first = first -> next;
+		if (t.first->tok == DQT)
+			t.count[1] += 1;
+		if (t.first->tok == QT)
+			t.count[0] += 1;
+		t.first = t.first -> next;
 	}
-	first = *tokens;
-	while (first && (first -> tok != DQT) && (first -> tok != QT))
-		first = first -> next;
-	if (count[1] % 2 && first -> tok == DQT)
+	t.first = *tokens;
+	while (t.first && (t.first -> tok != DQT) && (t.first -> tok != QT))
+		t.first = t.first -> next;
+	if (t.count[1] % 2 && t.first -> tok == DQT)
 		return (print_error(UNCLOSED_DQ, "\0"));
-	else if (count[0] % 2 && first -> tok == QT)
+	else if (t.count[0] % 2 && t.first -> tok == QT)
 		return (print_error(UNCLOSED_SQ, "\0"));
-	else if (count[1] % 2)
+	else if (t.count[1] % 2)
 		return (print_error(UNCLOSED_DQ, "\0"));
-	else if (count[0] % 2)
+	else if (t.count[0] % 2)
 		return (print_error(UNCLOSED_SQ, "\0"));
 	return (0);
 }
 
 int	check_parethesis(t_token **tokens)
 {
-	t_token	*first;
-	t_token	*right;
-	t_token	*left;
+	t_tok_util	t;
 
-	first = *tokens;
-	while (first -> next -> next)
+	t.first = *tokens;
+	while (t.first -> next -> next)
 	{
-		right = first -> next;
-		left = first -> prev;
-		if (first -> tok == CPR)
+		t.right = t.first -> next;
+		t.left = t.first -> prev;
+		if (t.first -> tok == CPR)
 		{
-			if (!(left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, left -> data));
-			else if (!(right -> tok & (CPR | BIND | BFG | CMDEND)))
-				return (print_error(UNEXPECTED_TOK, right -> data));
+			if (!(t.left -> tok & (WORD | CPR)))
+				return (print_error(UNEXPECTED_TOK, t.left -> data));
+			else if (!(t.right -> tok & (CPR | BIND | BFG | CMDEND)))
+				return (print_error(UNEXPECTED_TOK, t.right -> data));
 		}
-		if (first -> tok == OPR)
+		if (t.first -> tok == OPR)
 		{
-			if (!(left -> tok & (OPR | CMDBEG | BIND | BFG)))
+			if (!(t.left -> tok & (OPR | CMDBEG | BIND | BFG)))
 				return (print_error(UNEXPECTED_TOK, "("));
-			else if (!(right -> tok & (WORD | REDIR | OPR)))
-				return (print_error(UNEXPECTED_TOK, right -> data));
+			else if (!(t.right -> tok & (WORD | REDIR | OPR)))
+				return (print_error(UNEXPECTED_TOK, t.right -> data));
 		}
-		first = first -> next;
+		t.first = t.first -> next;
 	}
 	return (0);
 }
 
 int	check_binders(t_token **tokens)
 {
-	t_token	*first;
-	t_token	*right;
-	t_token	*left;
+	t_tok_util	t;
 
-	first = *tokens;
-	while (first -> next)
+	t.first = *tokens;
+	while (t.first -> next)
 	{
-		right = first -> next;
-		left = first -> prev;
-		if (first -> tok & BIND)
+		t.right = t.first -> next;
+		t.left = t.first -> prev;
+		if (t.first -> tok & BIND)
 		{
-			if (!(left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, left -> data));
-			if (!(right -> tok & (WORD | REDIR | OPR)))
-				return (print_error(UNEXPECTED_TOK, right -> data));
+			if (!(t.left -> tok & (WORD | CPR)))
+				return (print_error(UNEXPECTED_TOK, t.left -> data));
+			if (!(t.right -> tok & (WORD | REDIR | OPR)))
+				return (print_error(UNEXPECTED_TOK, t.right -> data));
 		}
-		if (first -> tok & BFG)
+		if (t.first -> tok & BFG)
 		{
-			if (!(left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, left -> data));
-			if (!(right -> tok & (WORD | REDIR | OPR | CMDEND)))
-				return (print_error(UNEXPECTED_TOK, right -> data));
+			if (!(t.left -> tok & (WORD | CPR)))
+				return (print_error(UNEXPECTED_TOK, t.left -> data));
+			if (!(t.right -> tok & (WORD | REDIR | OPR | CMDEND)))
+				return (print_error(UNEXPECTED_TOK, t.right -> data));
 		}
-		first = first -> next;
+		t.first = t.first -> next;
 	}
 	return (0);
 }

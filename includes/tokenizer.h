@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 02:28:28 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/23 20:33:27 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ typedef struct s_split
 	t_tok	tok;
 }	t_split;
 
+typedef struct s_tok_util
+{
+	t_token	*first;
+	t_token	*right;
+	t_token	*left;
+	int		count[2];
+}	t_tok_util;
+
 t_token	**tokenizer(char **line, char *charset);
 int		print_error(char *str, char *data);
 void	add_token_back(t_token **tok, t_token *newtok);
@@ -93,10 +101,11 @@ int		peek(char **line, char *toks);
 void	tokenize_0(char **line, t_token **tok);
 void	tokenize_1(char **line, t_token **tok);
 void	tokenize_2(char **line, t_token **tok);
-void	tokenize_3(char **line, t_token **tok);
+void	tokenize_3(char **line, t_token **tok, int len, int check);
+void	bslash_util(int *len, char **line, t_token **tok, char **s);
 char	*tokenize_6(char **line, t_token **tok);
 char	*tokenize_4(char **line, t_token **tok);
-void	tokenize_5(char **line, t_token **tok, char *charset);
+void	tokenize_5(char **line, t_token **tok);
 t_token	**concat_words(t_token **tokens);
 void	data_filtering(t_token **token, char *charset);
 t_token	**tokens(char **line, char *charset);

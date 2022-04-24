@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 02:07:16 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/24 00:39:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_value(char *env);
 t_venv	**init_venv(t_venv **venv);
 t_venv	*new_venv(char *key, char *value);
 void	venv_add_back(t_venv **venv, t_venv *new);
-t_group	**init_group(t_group **group);
+t_group	**init_group();
 t_group	*new_gnode(char *data);
 void	free_group(t_group **group);
 void	gnode_add_back(t_group **group, t_group *new);

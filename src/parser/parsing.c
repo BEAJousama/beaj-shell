@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 01:52:40 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/22 17:34:02 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_tok	redir_tok(t_token *token)
 {
 	t_tok	tok;
 
+	tok = 0;
 	if ((token -> tok & GTH) & GTH)
 		tok = GTH;
 	else if ((token ->tok & GGTH) & GGTH)
@@ -53,6 +54,7 @@ t_cmd	*parsecmd(t_token **tokens)
 	t_token	*first;
 	int		ac;
 
+	cmd = NULL;
 	ac = 0;
 	if (!*tokens)
 		return (NULL);
@@ -68,15 +70,14 @@ t_cmd	*parsecmd(t_token **tokens)
 	return (cmd);
 }
 
-int n;
-n = 0;
+int g_n = 0;
 
 t_cmd	*parseline(t_token **tokens)
 {
 	t_cmd	*cmd;
 
-	n++;
-	printf("%d  : ", n);
+	g_n++;
+	printf("%d  : ", g_n);
 	if (is_there(tokens, SC | BG, 0))
 	{	
 		puts("list");

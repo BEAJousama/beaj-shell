@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 21:26:22 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/22 01:33:08 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,34 @@ t_cmd	*new_ast_node(t_tok tok)
 	return (cmd);
 }
 
+void	new_exec_node_util(t_cmd *cmd, t_token *first, int *ac)
+{
+	while (!(first -> tok & CMDEND))
+	{
+		if (first -> tok & REDIR && first -> next -> next)
+		{
+			first = first -> next -> next;
+			continue ;
+		}
+		if (first -> tok & WC && first -> group)
+		{
+			while ((*first -> group))
+			{
+				cmd -> argv[*ac] = (*first -> group)-> data;
+				*ac += 1;
+				(*first -> group) = (*first -> group)-> next;
+			}
+		}
+		else if (first -> tok & STR)
+		{
+			cmd -> argv[*ac] = first -> data;
+			*ac += 1;
+		}
+		first = first -> next;
+	}
+	cmd -> argv[*ac] = 0;
+}
+
 t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens)
 {
 	t_token	*first;
@@ -45,33 +73,7 @@ t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens)
 	if (!cmd)
 		return (NULL);
 	cmd -> type = AST_EXEC;
-	while (!(first -> tok & CMDEND))
-	{
-		if (first -> tok & REDIR)
-		{
-			if (first -> next -> next)
-			{	
-				first = first -> next -> next;
-				continue ;
-			}
-		}
-		if (first -> tok & WC && first -> group)
-		{
-			while ((*first -> group))
-			{
-				cmd -> argv[ac] = (*first -> group)-> data;
-				ac++;
-				(*first -> group) = (*first -> group)-> next;
-			}
-		}
-		else if (first -> tok & STR)
-		{
-			cmd -> argv[ac] = first -> data;
-			ac++;
-		}
-		first = first -> next;
-	}
-	cmd -> argv[ac] = 0;
+	new_exec_node_util(cmd, first, &ac);
 	return (cmd);
 }
 
@@ -92,6 +94,5 @@ t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok)
 		cmd -> type = AST_HDOC;
 	cmd -> file = (*toks)-> next -> data;
 	cmd -> right = cmd1;
-	// fill_redir(cmd, tok)
 	return (cmd);
 }

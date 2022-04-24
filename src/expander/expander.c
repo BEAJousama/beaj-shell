@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 02:11:28 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/24 01:36:53 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,23 @@ t_group	**expand_group(t_token *token)
 	DIR				*dr;
 	char			*s;
 
+	token -> group = init_group();
 	dr = opendir(".");
-	token -> group = init_group(token -> group);
 	if (dr == NULL || !token -> group)
 		return (NULL);
 	de = readdir(dr);
 	while (de != NULL)
 	{
 		s = ft_strdup(de -> d_name);
-		if (char_matching(token -> data, s) == true)
-			gnode_add_back(token -> group, new_gnode(s));
+		if (ft_strcmp(s, ".") && ft_strcmp(s, ".."))
+		{
+			if (char_matching(token -> data, s) == true)
+				gnode_add_back(token -> group, new_gnode(s));
+		}
 		de = readdir(dr);
+		free(s);
 	}
+	closedir(dr);
 	return (token -> group);
 }
 
@@ -56,9 +61,7 @@ static t_token	**expand_wildcard(t_token **tokens)
 	while (first)
 	{
 		if (first -> tok & WC && !(first -> prev -> tok & REDIR))
-		{
 			first -> group = expand_group(first);
-		}
 		first = first -> next;
 	}
 	return (tokens);

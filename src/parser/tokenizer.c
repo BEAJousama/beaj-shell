@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 21:29:21 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/24 01:41:32 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*tokenize_4(char **line, t_token **tok)
 	return (*line);
 }
 
-void	tokenize_5(char **line, t_token **tok, char *charset)
+void	tokenize_5(char **line, t_token **tok)
 {
 	char	*s;
 	char	*copy;
@@ -101,29 +101,13 @@ void	tokenize_5(char **line, t_token **tok, char *charset)
 	free(copy);
 }
 
-char	*tokenize_6(char **line, t_token **tok)
-{
-	char	*s;
-	char	*copy;
-	int		len;
-
-	*line += 1;
-	s = *line;
-	if (!s || !*s)
-		return (0);
-	len = 1;
-	copy = ft_strdup(*line);
-	copy[len] = '\0';
-	add_token_back(tok, new_token(STR, ft_strdup(copy)));
-	*line = s + 1;
-	free(copy);
-	return (*line);
-}
-
 t_token	**tokenizer(char **line, char *charset)
 {
 	t_token	**token;
+	char	*s;
 
+	s = NULL;
+	token = NULL;
 	token = token_init(token);
 	*token = new_token(CMDBEG, ft_strdup(""));
 	while (**line)
@@ -133,17 +117,16 @@ t_token	**tokenizer(char **line, char *charset)
 		else if (**line == '\'')
 			tokenize_2(line, token);
 		else if (**line == '"')
-			tokenize_3(line, token);
-		else if (**line == '\\')
+			tokenize_3(line, token, 1, 1);
+		else if (**line == '\\' && !ft_isalnum(*(*line + 1)))
 			tokenize_6(line, token);
 		else if (peek(line, "$"))
 			*line = tokenize_4(line, token);
 		else if (peek(line, charset))
 			tokenize_1(line, token);
 		else
-			tokenize_5(line, token, charset);
+			tokenize_5(line, token);
 	}
-	add_token_back(token, new_token(CMDEND, ft_strdup("newline")));
 	return (token);
 }
 
@@ -173,6 +156,9 @@ int	main(int ac, char **av, char **env)
 	char	*s;
 	t_token	**toks;
 	t_token	*first;
+	
+	(void)av;
+	(void)ac;
 
 	line = malloc(sizeof(char *));
 	s = *line;
@@ -180,7 +166,6 @@ int	main(int ac, char **av, char **env)
 	toks = lexer(line, env);
 	if (!toks)
 		return 0;
-	puts("heere");
 	// toks = tokenizer(line, "<>&;()|");
 	// if (syntax_analyse(toks))
 	// 	return 0;
@@ -189,20 +174,20 @@ int	main(int ac, char **av, char **env)
 	// set_global_env(env);
 	// toks = expander(toks);
 	first = *toks;
-	t_cmd **cmd;
-	cmd = parsing(toks);
-	if (!cmd)
-		return 0;
-	while (*cmd) 
-	{
-		printf ("%d\n", (*cmd)->type);
-		if ((*cmd)->type & AST_EXEC)
-			printf ("%s\n", (*cmd)->argv[2]);	
-		if ((*cmd)->type & AST_REDIR)
-			printf ("%s\n", (*cmd)->file);	
-		*cmd = (*cmd) -> right;	
-	}
-	print_tree(*cmd);
+	// t_cmd **cmd;
+	// cmd = parsing(toks);
+	// if (!cmd)
+	// 	return 0;
+	// while (*cmd) 
+	// {
+	// 	printf ("%d\n", (*cmd)->type);
+	// 	if ((*cmd)->type & AST_EXEC)
+	// 		printf ("%s\n", (*cmd)->argv[2]);	
+	// 	if ((*cmd)->type & AST_REDIR)
+	// 		printf ("%s\n", (*cmd)->file);	
+	// 	*cmd = (*cmd) -> right;	
+	// }
+	// print_tree(*cmd);
 	while (first)
 	{
 		printf("%s ----> %u\n", first->data, first->tok);
@@ -210,10 +195,12 @@ int	main(int ac, char **av, char **env)
 		{
 			while (*first -> group)
 			{
-				printf("######## %s ###########\n", (*first->group)->data );
-				(*first -> group) = (*first ->group) -> next;
+				printf("######## %s ###########\n", (*first->group)-> data);
+				(*first -> group) = (*first -> group)-> next;
 			}
 		}
 		first = first-> next;
 	}
+	free(line);
+	free_tokens(toks);
 }

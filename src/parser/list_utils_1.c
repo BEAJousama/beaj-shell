@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:43:25 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 16:46:43 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/24 01:35:29 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,25 @@ void	free_tokens(t_token **tokens)
 {
 	t_token	*first;
 
-	first = NULL;
-	while (*tokens)
+	first = *tokens;
+	while (first)
 	{
-		first = (*tokens)-> next;
-		if ((*tokens)-> group)
-			free_group((*tokens)-> group);
-		free((*tokens)->data);
-		free(*tokens);
-		(*tokens) = first;
+		if (first-> tok & WC && first -> group)
+		{
+			while (*first -> group != NULL)
+			{
+				if ((*first -> group)->data)
+					free((*first -> group)->data);
+				free(*first -> group);
+				(*first -> group) = (*first -> group)->next;
+			}
+			free(first -> group);
+		}
+			// free_group(first-> group);
+		if (first->data)
+			free(first->data);
+		free(first);
+		first = first-> next;
 	}
 	free(tokens);
 }
