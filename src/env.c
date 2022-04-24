@@ -6,19 +6,29 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:45 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/20 17:47:47 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/24 16:42:17 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_cmd(t_mini *mini)
+void	env_go(char *arg)
+{
+	char	*key;
+	char	*val;
+
+	key = get_key(arg);
+	val = get_value(arg);
+	add_global_venv(key, val, glob.ennv);
+}
+
+void	env_cmd(t_m *m)
 {
 	int	i;
 
 	i = 1;
-	if (mini->args[1])
-		print_error("env: ", mini->args[1], ": No such file or directory\n");
+	if (m->args[1])
+		print_error("env: ", m->args[1], ": No such file or directory\n");
 	else
 		show_vars();
 }

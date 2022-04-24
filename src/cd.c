@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/22 17:38:34 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/24 16:18:56 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,23 @@ void	pwd_pwd(void)
 	add_global_venv("PWD", val, glob.venv);
 }
 
-void	cd_cmd(t_mini *mini)
+void	cd_cmd(t_m *m)
 {
 	char	*home;
 
 	old_pwd();
-	if (!mini->args[1] || !ft_strcmp(mini->args[1], "~")
-		|| !ft_strcmp(mini->args[1], "--"))
+	if (!m->args[1] || !ft_strcmp(m->args[1], "~")
+		|| !ft_strcmp(m->args[1], "--"))
 	{
 		home = get_venv("HOME", glob.venv);
 		if (!home)
 		{
-			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			ft_putstr_fd("mshell: cd: HOME not set\n", 2);
 			return ;
 		}
-		mini->args[1] = ft_strdup(get_venv("HOME", glob.venv));
+		m->args[1] = ft_strdup(get_venv("HOME", glob.venv));
 	}
-	if (chdir(mini->args[1]) == -1)
-		print_error("cd: ", mini->args[1], ": No such file or directory\n");
+	if (chdir(m->args[1]) == -1)
+		print_error("cd: ", m->args[1], ": No such file or directory\n");
 	pwd_pwd();
 }
