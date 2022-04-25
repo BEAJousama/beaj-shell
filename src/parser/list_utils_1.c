@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:43:25 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 01:35:29 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/25 01:28:04 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	free_tokens(t_token **tokens)
 			}
 			free(first -> group);
 		}
-			// free_group(first-> group);
 		if (first->data)
 			free(first->data);
 		free(first);

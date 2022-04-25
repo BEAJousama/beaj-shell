@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 02:07:45 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/24 17:15:44 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_cmd	*parsepipe(t_token **tokens);
 t_cmd	*parseblock(t_token **tokens);
 t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens);
 t_cmd	*new_ast_node(t_tok tok);
+void	free_tree(t_cmd *cmd);
 t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok);
 
 #endif

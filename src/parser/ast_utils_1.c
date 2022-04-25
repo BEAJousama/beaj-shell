@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/22 01:33:08 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/25 01:28:35 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,14 @@ t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok)
 	cmd -> file = (*toks)-> next -> data;
 	cmd -> right = cmd1;
 	return (cmd);
+}
+
+void	free_tree(t_cmd *cmd)
+{
+	if (cmd != NULL)
+	{
+		free_tree(cmd->right);
+		free_tree(cmd->left);
+		free(cmd);
+	}
 }

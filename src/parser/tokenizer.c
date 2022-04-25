@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 01:41:32 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/25 01:26:08 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_token	**tokenizer(char **line, char *charset)
 	}
 	return (token);
 }
-
+/*
 void print_tree(t_cmd *c)
 {
 	if (c)
@@ -166,18 +166,11 @@ int	main(int ac, char **av, char **env)
 	toks = lexer(line, env);
 	if (!toks)
 		return 0;
-	// toks = tokenizer(line, "<>&;()|");
-	// if (syntax_analyse(toks))
-	// 	return 0;
-	// toks = quotes_filter(toks);
-	// toks = concat_words(toks);
-	// set_global_env(env);
-	// toks = expander(toks);
 	first = *toks;
-	// t_cmd **cmd;
-	// cmd = parsing(toks);
-	// if (!cmd)
-	// 	return 0;
+	t_cmd **cmd;
+	cmd = parsing(toks);
+	if (!cmd)
+		return 0;
 	// while (*cmd) 
 	// {
 	// 	printf ("%d\n", (*cmd)->type);
@@ -188,19 +181,23 @@ int	main(int ac, char **av, char **env)
 	// 	*cmd = (*cmd) -> right;	
 	// }
 	// print_tree(*cmd);
-	while (first)
-	{
-		printf("%s ----> %u\n", first->data, first->tok);
-		if (first -> tok & WC && first -> group)
-		{
-			while (*first -> group)
-			{
-				printf("######## %s ###########\n", (*first->group)-> data);
-				(*first -> group) = (*first -> group)-> next;
-			}
-		}
-		first = first-> next;
-	}
+	// while (first)
+	// {
+	// 	printf("%s ----> %u\n", first->data, first->tok);
+	// 	if (first -> tok & WC && first -> group)
+	// 	{
+	// 		while (*first -> group)
+	// 		{
+	// 			printf("######## %s ###########\n", (*first->group)-> data);
+	// 			(*first -> group) = (*first -> group)-> next;
+	// 		}
+	// 	}
+	// 	first = first-> next;
+	// }
 	free(line);
 	free_tokens(toks);
+	free_glob();
+	free(*cmd);
+	free(cmd);
 }
+*/

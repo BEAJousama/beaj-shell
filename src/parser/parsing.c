@@ -6,13 +6,13 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/22 17:34:02 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/25 01:29:02 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_glob g_glob;
+extern t_glob	g_glob;
 
 t_tok	redir_tok(t_token *token)
 {
@@ -69,40 +69,22 @@ t_cmd	*parsecmd(t_token **tokens)
 	cmd -> argv[ac] = 0;
 	return (cmd);
 }
-
-int g_n = 0;
+/*int g_n = 0;*/
 
 t_cmd	*parseline(t_token **tokens)
 {
 	t_cmd	*cmd;
 
-	g_n++;
-	printf("%d  : ", g_n);
 	if (is_there(tokens, SC | BG, 0))
-	{	
-		puts("list");
 		cmd = parselist(tokens);
-	}
 	else if (is_there(tokens, OR | AND, 0))
-	{
-		puts("condition");
 		cmd = parsecondition(tokens);
-	}
 	else if (is_there(tokens, PP, 0))
-	{
-		puts("pipe");
 		cmd = parsepipe(tokens);
-	}
 	else if (is_there(tokens, OPR, 1))
-	{
-		puts("bloc");
 		cmd = parseblock(tokens);
-	}
 	else
-	{
-		puts("cmd");
 		cmd = parsecmd(tokens);
-	}
 	return (cmd);
 }
 

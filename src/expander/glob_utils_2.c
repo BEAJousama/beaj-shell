@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:54:49 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 01:57:16 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/24 17:23:58 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	free_glob(void)
 	var = g_glob.vars;
 	while (*venv)
 	{
+		free((*venv)-> key);
+		free((*venv)-> value);
 		free(*venv);
 		*venv = (*venv)-> next;
 	}
