@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:27:36 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/06 14:12:21 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:31:19 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 {
 	unsigned char	*s11;
 	unsigned char	*s22;
-	
+
 	s11 = (unsigned char *)s1;
 	s22 = (unsigned char *)s2;
 	if (!s11 && !s22)

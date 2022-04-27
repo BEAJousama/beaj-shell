@@ -6,13 +6,13 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/25 17:17:07 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:35:06 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	int		i;
 	char	*line;
