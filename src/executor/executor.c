@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 04:35:24 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 21:51:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ char	*get_path(char	**paths, char **cmd)
 	return (0);
 }
 
-int	runcmd(t_cmd **cmd)
+int	runcmd(t_cmd *cmd)
 {
 	t_cmd	*root;
 
-	root = *cmd;
+	root = cmd;
 	if (root -> type & AST_REDIR)
 		run_redir(root);
 	else if (root ->type & AST_SC)

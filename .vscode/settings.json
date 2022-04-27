@@ -4,6 +4,7 @@
     "42header.username": "obeaj",
     "files.associations": {
         "minishell.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "dirent.h": "c"
     }
 }

@@ -6,11 +6,11 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/26 16:16:48 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:47:13 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 t_cmd	*new_ast_node(t_tok tok)
 {
@@ -77,6 +77,25 @@ t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens)
 	return (cmd);
 }
 
+static void	fill_redir(t_cmd **cmd, t_tok tok)
+{
+	(*cmd)->fd = 0;
+	if (tok & GTH)
+	{
+		(*cmd)->fd = 1;
+		(*cmd)-> mode = O_CREAT | O_WRONLY | O_TRUNC;
+	}
+	else if (tok & GGTH)
+	{
+		(*cmd)-> mode = O_CREAT | O_WRONLY | O_APPEND;
+		(*cmd)->fd = 1;
+	}
+	else if (tok & HDOC)
+	{
+		(*cmd)->fd = 1;
+	}
+}
+
 t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok)
 {
 	t_cmd	*cmd;
@@ -84,25 +103,18 @@ t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (cmd1);
+	cmd -> mode = O_RDONLY;
+	cmd -> fd = 0;
 	if (tok & GTH)
 		cmd -> type = AST_GTH;
-	else if ((tok & GGTH) & GGTH)
+	else if (tok & GGTH)
 		cmd -> type = AST_GGTH;
 	else if (tok & LTH)
 		cmd -> type = AST_LTH;
 	else if (tok & HDOC)
 		cmd -> type = AST_HDOC;
+	fill_redir(&cmd, tok);
 	cmd -> file = (*toks)-> next -> data;
 	cmd -> right = cmd1;
 	return (cmd);
-}
-
-void	free_tree(t_cmd *cmd)
-{
-	if (cmd != NULL)
-	{
-		free_tree(cmd->right);
-		free_tree(cmd->left);
-		free(cmd);
-	}
 }
