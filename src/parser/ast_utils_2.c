@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:52:23 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 01:51:17 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 01:01:53 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_cmd	*parselist(t_token **tokens)
 	t_cmd	*cmd;
 	t_split	sp;
 
-	sp = find(tokens, SC | BG, 0);
-	cmd = new_ast_node(SC | BG);
+	sp = find(tokens, BG | SC, 0);
+	cmd = new_ast_node(sp.tok);
 	if (!cmd)
 		return (NULL);
 	cmd -> right = parseline(sp.right);
@@ -32,7 +32,7 @@ t_cmd	*parsecondition(t_token **tokens)
 	t_split	sp;
 
 	sp = find(tokens, OR | AND, 0);
-	cmd = new_ast_node(AND | OR);
+	cmd = new_ast_node(sp.tok);
 	if (!cmd)
 		return (NULL);
 	cmd -> right = parseline(sp.right);

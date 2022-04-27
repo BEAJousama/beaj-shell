@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/25 01:26:08 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:10:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_token	**tokenizer(char **line, char *charset)
 	}
 	return (token);
 }
-/*
+
 void print_tree(t_cmd *c)
 {
 	if (c)
@@ -171,33 +171,33 @@ int	main(int ac, char **av, char **env)
 	cmd = parsing(toks);
 	if (!cmd)
 		return 0;
-	// while (*cmd) 
-	// {
-	// 	printf ("%d\n", (*cmd)->type);
-	// 	if ((*cmd)->type & AST_EXEC)
-	// 		printf ("%s\n", (*cmd)->argv[2]);	
-	// 	if ((*cmd)->type & AST_REDIR)
-	// 		printf ("%s\n", (*cmd)->file);	
-	// 	*cmd = (*cmd) -> right;	
-	// }
-	// print_tree(*cmd);
-	// while (first)
-	// {
-	// 	printf("%s ----> %u\n", first->data, first->tok);
-	// 	if (first -> tok & WC && first -> group)
-	// 	{
-	// 		while (*first -> group)
-	// 		{
-	// 			printf("######## %s ###########\n", (*first->group)-> data);
-	// 			(*first -> group) = (*first -> group)-> next;
-	// 		}
-	// 	}
-	// 	first = first-> next;
-	// }
-	free(line);
-	free_tokens(toks);
-	free_glob();
-	free(*cmd);
-	free(cmd);
+	while (*cmd) 
+	{
+		printf ("%d\n", (*cmd)->type);
+		if ((*cmd)->type & AST_EXEC)
+			printf ("%s\n", (*cmd)->argv[2]);	
+		if ((*cmd)->type & AST_REDIR)
+			printf ("%s\n", (*cmd)->file);	
+		*cmd = (*cmd) -> right;	
+	}
+	print_tree(*cmd);
+	while (first)
+	{
+		printf("%s ----> %u\n", first->data, first->tok);
+		if (first -> tok & WC && first -> group)
+		{
+			while (*first -> group)
+			{
+				printf("######## %s ###########\n", (*first->group)-> data);
+				(*first -> group) = (*first -> group)-> next;
+			}
+		}
+		first = first-> next;
+	}
+	// free(line);
+	// free_tokens(toks);
+	// free_glob();
+	// free(*cmd);
+	// free(cmd);
 }
-*/
+

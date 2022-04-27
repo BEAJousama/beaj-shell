@@ -6,30 +6,31 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:28:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 01:36:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:12:13 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_glob	g_glob;
-
 void	show_vars(void)
 {
 	t_venv	*var;
 
-	var = (*g_glob.venv);
+	var = (*g_glob.ennv);
 	while (var)
 	{
-		printf("%s=%s\n", var->key, var->value);
+		ft_putstr_fd(var->key, 1);
+		ft_putstr_fd("=", 1);
+		ft_putstr_fd(var->value, 1);
+		ft_putstr_fd("\n", 1);
 		var = var -> next;
 	}
 }
 
-t_group	**init_group()
+t_group	**init_group(void)
 {
 	t_group	**group;
-	
+
 	group = malloc(sizeof(t_group *));
 	if (!group)
 		return (NULL);
@@ -41,6 +42,8 @@ t_group	*new_gnode(char *data)
 	t_group	*group;
 
 	group = malloc(sizeof(t_group));
+	if (!group)
+		return (NULL);
 	group -> data = ft_strdup(data);
 	group -> next = NULL;
 	return (group);

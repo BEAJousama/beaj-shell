@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:20:15 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 01:38:41 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 01:00:32 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ static t_token	*escape_block(t_token *first)
 	{
 		if (save -> tok & OPR)
 			count++;
-		save = save -> next;
-	}
-	while (first && count)
-	{
-		if (first -> tok & CPR)
+		if (save -> tok & CPR)
 			count--;
-		first = first -> next;
+		save = save -> next;
+		if (!count)
+			break ;
 	}
+	first = save;
 	return (first);
 }
 
@@ -63,6 +62,7 @@ t_split	find(t_token **tokens, t_tok tok, int isbloc)
 			break ;
 		first = first -> next;
 	}
+	sp.tok = first -> tok;
 	*(sp.right) = first -> next;
 	if (isbloc && *sp.right)
 		del_parethesis(sp.right);

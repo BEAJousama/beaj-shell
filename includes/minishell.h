@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 02:07:32 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 02:28:56 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include "tokenizer.h"
 # include "expander.h"
 
-void    pwd_cmd(void);
+extern t_glob	g_glob;
+
+void	pwd_cmd(void);
 
 #endif

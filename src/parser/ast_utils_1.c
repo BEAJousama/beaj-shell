@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/25 01:28:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/26 16:16:48 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_cmd	*new_ast_node(t_tok tok)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	if ((tok & SC) & SC)
-		cmd -> type = AST_SC;
-	else if ((tok & BG) & BG)
+	if (tok & BG)
 		cmd -> type = AST_BG;
+	else if (tok & SC)
+		cmd -> type = AST_SC;
 	else if (tok & PP)
 		cmd -> type = AST_PIPE;
 	else if ((tok & OR) & OR)

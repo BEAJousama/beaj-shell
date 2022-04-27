@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:31:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/22 14:30:03 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:11:25 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_token	*new_token(t_tok tok, char *data)
 	t_token	*token;
 
 	token = malloc(sizeof(t_token) * 1);
+	if (!token)
+		return (NULL);
 	token -> data = data;
 	token -> tok = tok;
 	token -> next = NULL;

@@ -6,56 +6,56 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 02:09:32 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:07:01 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_glob	g_glob = {.venv = NULL, .vars = NULL, .status = 0, .tokens = NULL};
+t_glob	g_glob = {.venv = NULL, .ennv = NULL, .vars = NULL, .status = 0,
+	.g = 0};
 
-void	set_global_env(char **env)
+t_venv	**set_global_env(char **env, t_venv **ennv)
 {
 	int		len;
 	t_venv	*new;
 
-	g_glob.venv = init_venv(g_glob.venv);
-	g_glob.vars = init_venv(g_glob.vars);
+	ennv = init_venv(ennv);
 	len = 0;
 	while (*(env + len))
 	{
 		new = new_venv(get_key(*(env + len)), get_value(*(env + len)));
-		venv_add_back(g_glob.venv, new);
+		venv_add_back(ennv, new);
 		len++;
 	}
+	return (ennv);
 }
 
-void	add_global_vars(char *key, char *value)
+t_venv	**set_global_vars(t_venv **vars)
 {
-	int		len;
-	t_venv	*var;
-
-	len = 0;
-	var = new_venv(key, value);
-	venv_add_back(g_glob.vars, var);
+	vars = init_venv(vars);
+	add_global_venv("?", ft_itoa(g_glob.status), vars);
+	add_global_venv("$", ft_itoa(g_glob.status), vars);
+	add_global_venv("0", "minishell", vars);
+	return (vars);
 }
 
-void	add_global_venv(char *key, char *value)
+void	add_global_venv(char *key, char *value, t_venv **all)
 {
 	int		len;
 	t_venv	*venv;
 	char	*tmp;
 
 	len = 0;
-	tmp = get_venv(key);
+	tmp = get_venv(key, all);
 	if (!tmp)
 	{
 		venv = new_venv(key, value);
-		venv_add_back(g_glob.venv, venv);
+		venv_add_back(all, venv);
 	}
-	else if ((*tmp && ft_strcmp(tmp, value)))
+	else if ((ft_strcmp(tmp, value)))
 	{
-		venv = *g_glob.venv;
+		venv = *all;
 		while (venv)
 		{
 			if (!ft_strcmp(key, venv -> key))
@@ -65,11 +65,11 @@ void	add_global_venv(char *key, char *value)
 	}
 }
 
-char	*get_venv(char *key)
+char	*get_venv(char *key, t_venv **all)
 {
 	t_venv	*venv;
 
-	venv = *g_glob.venv;
+	venv = *all;
 	while (venv)
 	{
 		if (!ft_strcmp(venv -> key, key))

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:25:05 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 02:10:06 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:12:30 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_venv	*new_venv(char *key, char *value)
 	t_venv	*venv;
 
 	venv = malloc(sizeof(t_venv) * 1);
+	if (!venv)
+		return (NULL);
 	venv -> key = key;
 	venv -> value = value;
 	venv -> next = NULL;

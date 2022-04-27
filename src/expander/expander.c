@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 01:36:53 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:24:01 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static t_token	**expand_dollar(t_token **tokens)
 	{
 		if (first -> tok & VAR)
 		{
-			data = get_venv(first -> data);
+			data = get_venv_all(first -> data);
 			free(first -> data);
 			first -> data = data;
 			first -> tok = STR;
@@ -85,7 +85,7 @@ static t_token	**expand_dollar(t_token **tokens)
 		else if (first -> tok & TLD)
 		{
 			free(first -> data);
-			first -> data = get_venv("HOME");
+			first -> data = get_venv("HOME", g_glob.venv);
 			first -> tok = STR;
 		}
 		if (!first -> data)

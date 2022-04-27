@@ -3,19 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+        */
+/*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:53 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/01 13:20:29 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/22 17:40:14 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    pwd_cmd(void)
+void	pwd_cmd(void)
 {
-    char path[80000];
+	char	*pwd;
 
-    printf("%s\n",getcwd(path, 80000));
-    rl_on_new_line();
+	if (getcwd(NULL, 0))
+		pwd = getcwd(NULL, 0);
+	else
+		pwd = get_venv("PWD", glob.ennv);
+	ft_putstr_fd(pwd, 1);
+	ft_putchar_fd('\n', 1);
 }
