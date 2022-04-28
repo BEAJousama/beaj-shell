@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 10:45:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/28 00:08:55 by obeaj            ###   ########.fr       */
+/*   Created: 2022/04/28 00:11:30 by obeaj             #+#    #+#             */
+/*   Updated: 2022/04/28 01:28:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include "minishell.h"
 
-int		runcmd(t_cmd **cmd);
-char	*get_path(char *cmd);
-int		ft_execve(char **cmd);
-
-#endif
+int	run_redir(t_cmd	*cmd)
+{
+	close(cmd->fd);
+	if (open(cmd->file, cmd->mode) < 0)
+	{
+		printf(2, "open %s failed\n", cmd->file);
+		exit();
+	}
+	runcmd(cmd->cmd);
+	return (0);
+}

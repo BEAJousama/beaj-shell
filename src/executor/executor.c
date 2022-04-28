@@ -6,83 +6,42 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 21:51:55 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/28 01:27:17 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_path(char **str)
+static bool	is_builtin(char *cmd, char **argv)
 {
-	int		i;
-	int		j;
-	int		x;
-	char	*to_find;
-
-	to_find = "PATH";
-	i = 0;
-	while (str[i])
-	{
-		j = 0;
-		x = 0;
-		while (to_find[j] == str[i][x])
-		{
-			if (str[i][j + 1] == '=')
-			{
-				return (&str[i][x + 2]);
-			}
-			j++;
-			x++;
-		}
-		i++;
-	}
-	return (0);
+	if (!ft_strncmp(cmd, "echo", sizeof("echo") + 1))
+		return (echo(argv), true);
+	else if (!ft_strncmp(cmd, "cd", sizeof("cd") + 1))
+		return (cd(argv, &g_glob.venv), true);
+	else if (!ft_strncmp(cmd, "pwd", sizeof("pwd") + 1))
+		return (pwd(argv, &g_glob.venv), true);
+	else if (!ft_strncmp(cmd, "export", sizeof("export") + 1))
+		return (export(argv, &g_glob.venv), true);
+	else if (!ft_strncmp(cmd, "unset", sizeof("unset") + 1))
+		return (unset(argv, &g_glob.venv), true);
+	else if (!ft_strncmp(cmd, "env", sizeof("env") + 1))
+		return (ft_env(argv, &g_glob.venv), true);
+	else if (!ft_strncmp(cmd, "exit", sizeof("exit") + 1))
+		return (ft_exit(argv), true);
+	return (false);
 }
 
-int	get_error(char *s)
+void	run_exec(t_cmd *cmd)
 {
-	int	i;
+	int	pid;
 
-	i = 0;
-	if (!s)
-	{
-		write(2, "invalid command!\n", 18);
-		return (1);
-	}
-	else
-	{
-		write(2, "minishell: ", 11);
-		while (s[i])
-		{
-			write(1, &s[i], 1);
-			i++;
-		}
-		write(2, ": Command not found\n", 20);
-		return (1);
-	}
-	return (1);
-}
-
-char	*get_path(char	**paths, char **cmd)
-{
-	char	*path;
-	int		i;
-	char	**new_cmd;
-
-	new_cmd = NULL;
-	i = 0;
-	while (paths[i])
-	{
-		path = ft_strdup(paths[i]);
-		path = ft_strjoin(path, "/");
-		path = ft_strjoin(path, cmd[0]);
-		if (access(path, X_OK) == 0)
-			return (path);
-		free(path);
-		i++;
-	}
-	get_error(cmd[0]);
-	return (0);
+	if (is_built(cmd ->argv[0], cmd ->argv))
+		return ;
+	pid = fork();
+	if (pid == -1)
+		return ;
+	else if (pid == 0)
+		ft_execve(cmd -> argv);
 }
 
 int	runcmd(t_cmd *cmd)
