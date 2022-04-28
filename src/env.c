@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:45 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 16:42:17 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/26 16:15:48 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,13 @@ void	env_cmd(t_m *m)
 
 	i = 1;
 	if (m->args[1])
+	{
 		print_error("env: ", m->args[1], ": No such file or directory\n");
+		glob.status = 127;
+	}
 	else
+	{
 		show_vars();
+		glob.status = 0;
+	}
 }

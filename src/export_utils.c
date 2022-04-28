@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 16:39:03 by imabid            #+#    #+#             */
-/*   Updated: 2022/04/24 16:42:35 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/26 16:12:51 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,12 @@ int	if_plusegal(char *arg)
 	return (0);
 }
 
-void	print_quotes(t_venv *venv)
-{
-	if (glob.g == 1 && *venv->value == '\0')
-	{
-		ft_putstr_fd("=", 1);
-		ft_putstr_fd("\"", 1);
-		ft_putstr_fd("\"", 1);
-	}
-}
+// void	print_quotes(void)
+// {
+// 		ft_putstr_fd("=", 1);
+// 		ft_putstr_fd("\"", 1);
+// 		ft_putstr_fd("\"", 1);
+// }
 
 void	export_print(t_venv **ve)
 {
@@ -59,7 +56,8 @@ void	export_print(t_venv **ve)
 	{
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(venv->key, 1);
-		print_quotes(venv);
+		// if (glob.g == 1 && *venv->value == '\0')
+		// 	print_quotes();
 		if (*venv->value != '\0')
 		{
 			ft_putstr_fd("=", 1);

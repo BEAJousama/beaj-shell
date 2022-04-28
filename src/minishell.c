@@ -2,22 +2,77 @@
 
 extern t_glob glob;
 
-int	env_copy(t_m *m, char **env)
+static int    venv_count(t_venv *venv)
 {
-	int i;
-	i = 0;
-	while (env[i])
-		i++;
-	if (!(m->env_g = (char **)malloc(sizeof(char *) * (i + 1))))
-		return (0);
-	i = 0;
-	while (env[i])
-	{
-		m->env_g[i] = ft_strdup(env[i]);
-		i++;
-	}
-	return 1;
+    int    counter;
+
+    counter = 0;
+    while (venv)
+    {
+        counter++;
+        venv = venv->next;
+    }
+    return (counter);
 }
+
+char    **venv_export_array(t_venv    *venv)
+{
+    int        i;
+    int        len;
+    char    *str;
+    char    **env;
+
+    i = 0;
+    len = venv_count(venv);
+    env = malloc(sizeof(char *) * (len + 1));
+    while (venv && i < len)
+    {    
+        str = ft_strjoin(venv->key, "=");
+        str = ft_strjoin(str, venv->value);
+        env[len - i++ - 1] = str;
+		venv = venv->next;
+    }
+    env[len] = NULL;
+    return (env);
+}
+
+int   ft_execve(char **cmd)
+{
+    char    *path;
+    char    **env;
+    int        pid;
+
+    env = venv_export_array(*glob.venv);
+    path = get_path(*cmd);
+    pid = fork();
+    if (pid == -1)
+        return (-2);
+    else if (pid == 0)
+    {
+        if (execve(path, cmd, env) == -1)
+            return (-1);
+    }
+    wait(&glob.status);
+    return (0);
+}
+
+void	shlvl_add(t_m *m)
+{
+	char *val;
+
+	m->shlvl = ft_atoi(get_venv("SHLVL",glob.venv));
+	m->shlvl++;
+	val = ft_itoa(m->shlvl);
+	add_global_venv("SHLVL",val,glob.venv);
+	add_global_venv("SHLVL",val,glob.ennv);
+
+}
+void	lets_start(char **env)
+{
+	glob.venv = set_global_env(env, glob.venv);
+	glob.ennv = set_global_env(env, glob.ennv);
+}
+
 int main(int ac, char **av, char **env)
 {
 	t_m m;
@@ -27,10 +82,8 @@ int main(int ac, char **av, char **env)
 	if (ac > 1)
 		return(0);
 	m.i = 0;
-	env_copy(&m,env);
-	glob.venv = set_global_env(env, glob.venv);
-	glob.ennv = set_global_env(env, glob.ennv);
-	// set_global_env(env, glob.ennv);
+	lets_start(env);
+	shlvl_add(&m);
 	m.line = readline("minishell$ ");
 	while (m.line)
 	{
@@ -63,6 +116,11 @@ int main(int ac, char **av, char **env)
 			m.echo = ft_split(m.line,' ');
 			echo_cmd(m.echo);
 		}
+		else if(!ft_strncmp(m.line, "exit",4))
+		{
+			m.args = ft_split(m.line,' ');
+			exit_cmd(&m);
+		}
 		else if(!ft_strncmp(m.line, "unset",4))
 		{
 			m.args = ft_split(m.line,' ');
@@ -70,18 +128,10 @@ int main(int ac, char **av, char **env)
 		}
 		else
 		{
-			int pid = fork();
-			if(pid == 0)
-			{
-				m.paths = ft_split(find_path(m.env_g), ':');
-				m.cmd1 = ft_split(m.line, ' ');
-				m.path1 = get_path(m.paths, m.cmd1);
-				// if(execve(m.path1,m.cmd1,m.env) == -1)
-				// 	perror("n_execve\n");
-				execve(m.path1,m.cmd1,m.env);
-			}
+			m.cmd1 = ft_split(m.line, ' ');
+			ft_execve(m.cmd1);
 		}
-		wait(&m.status);
+		printf("%d\n",glob.status);
 		m.line =  readline("minishell$ ");
 	}
 	return (0);

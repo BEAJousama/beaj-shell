@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 16:42:57 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/28 15:54:19 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,19 @@ typedef struct s_m
 	char	*cokey;
 	char	*val;
 	char	*v;
+	int		shlvl;
+	int		fshlvl;
 	t_export 	export;
 }	t_m;
 
 void pwd_cmd(void);
 char	*find_path(char **str);
-char	*get_path(char	**paths, char	**cmd);
+char    *get_path(char *cmd);
 void    echo_cmd(char **cmd);
 void cd_cmd(t_m *m);
 void    export_cmd(t_m *m);
 void    env_cmd(t_m *m);
+void    exit_cmd(t_m *m);
 void    unset_cmd(t_m *m);
 void	del_venv(char *key);
 void	del_ennv(char *key);
@@ -103,7 +106,7 @@ void	show_vars(void);
 void print_error(char *f, char *m, char *l);
 int	if_egal(char *arg);
 int	if_plusegal(char *arg);
-void	print_quotes(t_venv *venv);
+void	print_quotes(void);
 void	export_print(t_venv **ve);
 void	sort_env( t_venv **venv);
 void	env_go(char *arg);

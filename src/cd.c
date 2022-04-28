@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 16:18:56 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/26 16:42:39 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	cd_cmd(t_m *m)
 {
 	char	*home;
 
+	glob.status = 0;
 	old_pwd();
 	if (!m->args[1] || !ft_strcmp(m->args[1], "~")
 		|| !ft_strcmp(m->args[1], "--"))
@@ -52,11 +53,15 @@ void	cd_cmd(t_m *m)
 		if (!home)
 		{
 			ft_putstr_fd("mshell: cd: HOME not set\n", 2);
+			glob.status = 1;
 			return ;
 		}
 		m->args[1] = ft_strdup(get_venv("HOME", glob.venv));
 	}
 	if (chdir(m->args[1]) == -1)
+	{
+		glob.status = 1;
 		print_error("cd: ", m->args[1], ": No such file or directory\n");
+	}
 	pwd_pwd();
 }
