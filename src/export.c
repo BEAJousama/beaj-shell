@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 15:13:29 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 15:42:11 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,8 @@ void	addto_key(char *arg)
 void	check_args(char **args)
 {
 	int	i;
-	int	j;
 
 	i = 1;
-	j = 0;
 	while (args[i])
 	{
 		if (ft_isalpha(args[i][0]) || args[i][0] == '_')
@@ -75,7 +73,6 @@ void	check_args(char **args)
 			{
 				env_go(args[i]);
 				export_go(args, i);
-				glob.g = 1;
 			}
 			if (if_plusegal(args[i]))
 				addto_key(args[i]);
