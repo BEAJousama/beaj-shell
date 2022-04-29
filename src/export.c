@@ -6,19 +6,19 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/28 18:25:16 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 15:13:29 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_go(t_m *m, int i)
+void	export_go(char **args, int i)
 {
 	char	*key;
 	char	*val;
 
-	key = get_key(m->echo[i]);
-	val = get_value(m->echo[i]);
+	key = get_key(args[i]);
+	val = get_value(args[i]);
 	add_global_venv(key, val, glob.venv);
 }
 
@@ -60,44 +60,44 @@ void	addto_key(char *arg)
 	free(m.key);
 }
 
-void	check_args(t_m *m)
+void	check_args(char **args)
 {
 	int	i;
 	int	j;
 
 	i = 1;
 	j = 0;
-	while (m->echo[i])
+	while (args[i])
 	{
-		if (ft_isalpha(m->echo[i][0]) || m->echo[i][0] == '_')
+		if (ft_isalpha(args[i][0]) || args[i][0] == '_')
 		{
-			if (if_egal(m->echo[i]) && !if_plusegal(m->echo[i]))
+			if (if_egal(args[i]) && !if_plusegal(args[i]))
 			{
-				env_go(m->echo[i]);
-				export_go(m, i);
+				env_go(args[i]);
+				export_go(args, i);
 				glob.g = 1;
 			}
-			if (if_plusegal(m->echo[i]))
-				addto_key(m->echo[i]);
-			if (!if_egal(m->echo[i]))
-				export_go(m, i);
+			if (if_plusegal(args[i]))
+				addto_key(args[i]);
+			if (!if_egal(args[i]))
+				export_go(args, i);
 		}
 		else
 		{
-			print_error("export: `", m->echo[i], "': not a valid identifier\n");
+			print_error("export: `", args[i], "': not a valid identifier\n");
 			glob.status = 1;
 		}
 		i++;
 	}
 }
 
-void	export_cmd(t_m *m)
+void	export_cmd(char **args)
 {
-	if (!m->echo[1])
+	if (!args[1])
 	{
 		sort_env(glob.venv);
 		glob.status = 0;
 	}
 	else
-		check_args(m);
+		check_args(args);
 }

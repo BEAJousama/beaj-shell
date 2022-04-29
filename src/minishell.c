@@ -99,17 +99,17 @@ int main(int ac, char **av, char **env)
 		else if (!ft_strncmp(m.line, "env", 3))
 		{
 			m.args = ft_split(m.line,' ');
-			env_cmd(&m);
+			env_cmd(m.args);
 		}
 		else if (!ft_strncmp(m.line, "cd", 2))
 		{
 			m.args = ft_split(m.line,' ');
-			cd_cmd(&m);
+			cd_cmd(m.args);
 		}
 		else if (!ft_strncmp(m.line, "export", 6))
 		{
 			m.echo = ft_split(m.line,' ');
-			export_cmd(&m);
+			export_cmd(m.echo);
 		}
 		else if(!ft_strncmp(m.line, "echo",4))
 		{
@@ -124,14 +124,14 @@ int main(int ac, char **av, char **env)
 		else if(!ft_strncmp(m.line, "unset",4))
 		{
 			m.args = ft_split(m.line,' ');
-			unset_cmd(&m);
+			unset_cmd(m.args);
 		}
 		else
 		{
 			m.cmd1 = ft_split(m.line, ' ');
 			ft_execve(m.cmd1);
 		}
-		printf("%d\n",glob.status);
+		// printf("%d\n",glob.status);
 		m.line =  readline("minishell$ ");
 	}
 	return (0);

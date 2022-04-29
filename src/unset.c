@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:56 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/28 18:27:51 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 15:14:19 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	unvalid_arg(char *arg)
 	return (0);
 }
 
-void	unset_cmd(t_m *m)
+void	unset_cmd(char **args)
 {
 	int	i;
 	int	ind;
@@ -37,19 +37,19 @@ void	unset_cmd(t_m *m)
 	ind = 0;
 	i = 0;
 	glob.status = 0;
-	while (m->args[++i])
+	while (args[++i])
 	{
-		if (!unvalid_arg(m->args[i]))
+		if (!unvalid_arg(args[i]))
 		{
 			ind = -1;
 			break ;
 		}
-		del_venv(m->args[i]);
-		del_ennv(m->args[i]);
+		del_venv(args[i]);
+		del_ennv(args[i]);
 	}
 	if (ind == -1)
 	{
-		print_error("unset: `", m->args[i], "': not a valid identifier\n");
+		print_error("unset: `", args[i], "': not a valid identifier\n");
 		glob.status = 1;
 	}
 }

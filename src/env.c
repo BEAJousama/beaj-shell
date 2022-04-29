@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:45 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/26 16:15:48 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 15:10:37 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	env_go(char *arg)
 	add_global_venv(key, val, glob.ennv);
 }
 
-void	env_cmd(t_m *m)
+void	env_cmd(char **args)
 {
 	int	i;
 
 	i = 1;
-	if (m->args[1])
+	if (args[1])
 	{
-		print_error("env: ", m->args[1], ": No such file or directory\n");
+		print_error("env: ", args[1], ": No such file or directory\n");
 		glob.status = 127;
 	}
 	else

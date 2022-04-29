@@ -6,7 +6,7 @@
 /*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/26 16:42:39 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 15:11:16 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	pwd_pwd(void)
 	add_global_venv("PWD", val, glob.venv);
 }
 
-void	cd_cmd(t_m *m)
+void	cd_cmd(char **args)
 {
 	char	*home;
 
 	glob.status = 0;
 	old_pwd();
-	if (!m->args[1] || !ft_strcmp(m->args[1], "~")
-		|| !ft_strcmp(m->args[1], "--"))
+	if (!args[1] || !ft_strcmp(args[1], "~")
+		|| !ft_strcmp(args[1], "--"))
 	{
 		home = get_venv("HOME", glob.venv);
 		if (!home)
@@ -56,12 +56,12 @@ void	cd_cmd(t_m *m)
 			glob.status = 1;
 			return ;
 		}
-		m->args[1] = ft_strdup(get_venv("HOME", glob.venv));
+		args[1] = ft_strdup(get_venv("HOME", glob.venv));
 	}
-	if (chdir(m->args[1]) == -1)
+	if (chdir(args[1]) == -1)
 	{
 		glob.status = 1;
-		print_error("cd: ", m->args[1], ": No such file or directory\n");
+		print_error("cd: ", args[1], ": No such file or directory\n");
 	}
 	pwd_pwd();
 }
