@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 18:37:24 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 16:10:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_go(t_m *m, int i)
+void	export_go(char **args, int i)
 {
 	char	*key;
 	char	*val;
 
-	key = get_key(m->echo[i]);
-	val = get_value(m->echo[i]);
-	add_global_venv(key, val, glob.venv);
+	key = get_key(args[i]);
+	val = get_value(args[i]);
+	add_global_venv(key, val, g_glob.venv);
 }
 
 void	check_plusegal(char *arg, t_m *m)
@@ -45,54 +45,57 @@ void	addto_key(char *arg)
 	m.val = get_value(arg);
 	m.key = malloc(ft_strlen(m.key));
 	check_plusegal(arg, &m);
-	m.v = get_venv(m.key, glob.venv);
+	m.v = get_venv(m.key, g_glob.venv);
 	if (m.v)
 	{
-		m.cokey = ft_strjoin(get_venv(m.key, glob.venv), m.val);
-		add_global_venv(m.key, m.cokey, glob.ennv);
-		add_global_venv(m.key, m.cokey, glob.venv);
+		m.cokey = ft_strjoin(get_venv(m.key, g_glob.venv), m.val);
+		add_global_venv(m.key, m.cokey, g_glob.ennv);
+		add_global_venv(m.key, m.cokey, g_glob.venv);
 	}
 	else
 	{
-		add_global_venv(m.key, m.val, glob.ennv);
-		add_global_venv(m.key, m.val, glob.venv);
+		add_global_venv(m.key, m.val, g_glob.ennv);
+		add_global_venv(m.key, m.val, g_glob.venv);
 	}
 	free(m.key);
 }
 
-void	check_args(t_m *m)
+void	check_args(char **args)
 {
 	int	i;
-	int	j;
 
 	i = 1;
-	j = 0;
-	while (m->echo[i])
+	while (args[i])
 	{
-		if (ft_isalpha(m->echo[i][0]) || m->echo[i][0] == '_')
+		if (ft_isalpha(args[i][0]) || args[i][0] == '_')
 		{
-			if (if_egal(m->echo[i]) && !if_plusegal(m->echo[i]))
+			if (if_egal(args[i]) && !if_plusegal(args[i]))
 			{
-				env_go(m->echo[i]);
-				export_go(m, i);
+				env_go(args[i]);
+				export_go(args, i);
 			}
-			if (if_plusegal(m->echo[i]))
-				addto_key(m->echo[i]);
-			if (!if_egal(m->echo[i]))
-				export_go(m, i);
+			if (if_plusegal(args[i]))
+				addto_key(args[i]);
+			if (!if_egal(args[i]))
+				export_go(args, i);
 		}
 		else
-			print_error("export: `", m->echo[i], "': not a valid identifier\n");
-		if (if_egal(m->echo[i]))
-			glob.g = 1;
+		{
+			print_error_("export: `", args[i], "': not a valid identifier\n");
+			g_glob.status = 1;
+		}
 		i++;
 	}
 }
 
-void	export_cmd(t_m *m)
+void	export_cmd(char **args)
 {
-	if (!m->echo[1])
-		sort_env(glob.venv);
+
+	if (!args[1])
+	{
+		sort_env(g_glob.venv);
+		g_glob.status = 0;
+	}
 	else
-		check_args(m);
+		check_args(args);
 }

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 04:24:01 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/29 21:01:05 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,14 @@ static t_token	**expand_wildcard(t_token **tokens)
 	while (first)
 	{
 		if (first -> tok & WC && !(first -> prev -> tok & REDIR))
+		{
 			first -> group = expand_group(first);
+			if (!first -> group || !*first->group)
+			{
+				print_error("minishell: no matches found: ", first->data);
+				return (NULL);
+			}
+		}
 		first = first -> next;
 	}
 	return (tokens);

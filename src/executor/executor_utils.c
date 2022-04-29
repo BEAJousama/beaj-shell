@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/28 00:11:20 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/29 16:17:26 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	get_error(char *s)
 			i++;
 		}
 		write(2, ": Command not found\n", 20);
+		g_glob.status = 127;
 		return (1);
 	}
 	return (1);
@@ -39,17 +40,18 @@ int	get_error(char *s)
 char	*get_path(char *cmd)
 {
 	char	*path;
-	char	p;
+	char	*p;
 	int		i;
 	char	**new_cmd;
 
 	p = get_venv("PATH", g_glob.venv);
 	new_cmd = NULL;
 	i = 0;
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	path = ft_strtok(p, ':');
 	while (path)
 	{
-		path = ft_strdup(paths[i]);
 		path = ft_strjoin(path, "/");
 		path = ft_strjoin(path, cmd);
 		if (access(path, X_OK) == 0)

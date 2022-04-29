@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:59:44 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 21:32:15 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/29 16:39:07 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_unexpected(t_token **tokens)
 	while (first)
 	{
 		if (first -> tok == DSC)
-			return (print_error(UNEXPECTED_TOK, ";;"));
+			return (print_error(UNEXPECTED_TOK, ";;"), 1);
 		first = first -> next;
 	}
 	return (0);

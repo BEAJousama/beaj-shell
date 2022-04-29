@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:56 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/24 16:20:15 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 15:54:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unvalid_arg(char *arg)
+static int	unvalid_arg(char *arg)
 {
 	int	i;
 
@@ -29,23 +29,27 @@ int	unvalid_arg(char *arg)
 	return (0);
 }
 
-void	unset_cmd(t_m *m)
+void	unset_cmd(char **args)
 {
 	int	i;
 	int	ind;
 
 	ind = 0;
 	i = 0;
-	while (m->args[++i])
+	g_glob.status = 0;
+	while (args[++i])
 	{
-		if (!unvalid_arg(m->args[i]))
+		if (!unvalid_arg(args[i]))
 		{
 			ind = -1;
 			break ;
 		}
-		del_venv(m->args[i]);
-		del_ennv(m->args[i]);
+		del_venv(args[i]);
+		del_ennv(args[i]);
 	}
 	if (ind == -1)
-		print_error("unset: `", m->args[i], "': not a valid identifier\n");
+	{
+		print_error_("unset: `", args[i], "': not a valid identifier\n");
+		g_glob.status = 1;
+	}
 }

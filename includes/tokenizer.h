@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 04:31:53 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/29 21:15:48 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_tok_util
 }	t_tok_util;
 
 t_token	**tokenizer(char **line, char *charset);
-int		print_error(char *str, char *data);
+void	print_error(char *str, char *data);
 void	add_token_back(t_token **tok, t_token *newtok);
 void	insert_token(t_token **tok, t_token *newtok, int pos);
 void	add_token_front(t_token **tok, t_token *newtok);

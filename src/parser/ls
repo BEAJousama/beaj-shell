@@ -1,0 +1,21 @@
+total 232
+drwxr-xr-x  19 obeaj  candidate    646 Apr 29 20:07 .
+drwxr-xr-x   7 obeaj  candidate    238 Apr 29 15:42 ..
+-rwxr-xr-x   1 obeaj  candidate  49908 Apr 29 20:03 a.out
+-rw-r--r--   1 obeaj  candidate   2882 Apr 28 22:34 ast_utils_1.c
+-rw-r--r--   1 obeaj  candidate   1033 Apr 27 22:37 ast_utils_2.c
+-rw-r--r--   1 obeaj  candidate   1415 Apr 29 16:28 lexer.c
+-rw-r--r--   1 obeaj  candidate   1957 Apr 27 22:37 lexer_utils.c
+-rw-r--r--   1 obeaj  candidate   2105 Apr 27 22:37 list_utils.c
+-rw-r--r--   1 obeaj  candidate   1372 Apr 27 22:37 list_utils_1.c
+-rw-r--r--   1 obeaj  candidate      0 Apr 29 20:07 ls
+-rw-r--r--   1 obeaj  candidate   2686 Apr 29 16:26 parsing.c
+-rw-r--r--   1 obeaj  candidate   2340 Apr 27 22:37 parsing_utils.c
+-rw-r--r--   1 obeaj  candidate   1864 Apr 27 22:37 parsing_utils_1.c
+-rw-r--r--   1 obeaj  candidate   1373 Apr 29 16:39 syntax_analyzer.c
+-rw-r--r--   1 obeaj  candidate   3715 Apr 29 16:37 syntax_analyzer_utils.c
+-rw-r--r--   1 obeaj  candidate   4532 Apr 29 16:01 tokenizer.c
+-rw-r--r--   1 obeaj  candidate   2486 Apr 27 22:37 tokenizer_utils.c
+-rw-r--r--   1 obeaj  candidate   2131 Apr 27 22:37 tokenizer_utils_1.c
+-rw-r--r--   1 obeaj  candidate   1243 Apr 29 16:38 utils.c
+obeaj->

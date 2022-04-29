@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:36:00 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/23 19:52:55 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/29 16:37:17 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_par_match(t_token **tokens)
 		first = first -> next;
 	}
 	if (pcount)
-		return (print_error(UNCLOSED_PAR, "\0"));
+		return (print_error(UNCLOSED_PAR, "\0"), 1);
 	return (0);
 }
 
@@ -51,13 +51,13 @@ int	check_quotes_match(t_token **tokens)
 	while (t.first && (t.first -> tok != DQT) && (t.first -> tok != QT))
 		t.first = t.first -> next;
 	if (t.count[1] % 2 && t.first -> tok == DQT)
-		return (print_error(UNCLOSED_DQ, "\0"));
+		return (print_error(UNCLOSED_DQ, "\0"), 1);
 	else if (t.count[0] % 2 && t.first -> tok == QT)
-		return (print_error(UNCLOSED_SQ, "\0"));
+		return (print_error(UNCLOSED_SQ, "\0"), 1);
 	else if (t.count[1] % 2)
-		return (print_error(UNCLOSED_DQ, "\0"));
+		return (print_error(UNCLOSED_DQ, "\0"), 1);
 	else if (t.count[0] % 2)
-		return (print_error(UNCLOSED_SQ, "\0"));
+		return (print_error(UNCLOSED_SQ, "\0"), 1);
 	return (0);
 }
 
@@ -73,16 +73,16 @@ int	check_parethesis(t_token **tokens)
 		if (t.first -> tok == CPR)
 		{
 			if (!(t.left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, t.left -> data));
+				return (print_error(UNEXPECTED_TOK, t.left -> data), 1);
 			else if (!(t.right -> tok & (CPR | BIND | BFG | CMDEND)))
-				return (print_error(UNEXPECTED_TOK, t.right -> data));
+				return (print_error(UNEXPECTED_TOK, t.right -> data), 1);
 		}
 		if (t.first -> tok == OPR)
 		{
 			if (!(t.left -> tok & (OPR | CMDBEG | BIND | BFG)))
-				return (print_error(UNEXPECTED_TOK, "("));
+				return (print_error(UNEXPECTED_TOK, "("), 1);
 			else if (!(t.right -> tok & (WORD | REDIR | OPR)))
-				return (print_error(UNEXPECTED_TOK, t.right -> data));
+				return (print_error(UNEXPECTED_TOK, t.right -> data), 1);
 		}
 		t.first = t.first -> next;
 	}
@@ -101,16 +101,16 @@ int	check_binders(t_token **tokens)
 		if (t.first -> tok & BIND)
 		{
 			if (!(t.left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, t.left -> data));
+				return (print_error(UNEXPECTED_TOK, t.left -> data), 1);
 			if (!(t.right -> tok & (WORD | REDIR | OPR)))
-				return (print_error(UNEXPECTED_TOK, t.right -> data));
+				return (print_error(UNEXPECTED_TOK, t.right -> data), 1);
 		}
 		if (t.first -> tok & BFG)
 		{
 			if (!(t.left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, t.left -> data));
+				return (print_error(UNEXPECTED_TOK, t.left -> data), 1);
 			if (!(t.right -> tok & (WORD | REDIR | OPR | CMDEND)))
-				return (print_error(UNEXPECTED_TOK, t.right -> data));
+				return (print_error(UNEXPECTED_TOK, t.right -> data), 1);
 		}
 		t.first = t.first -> next;
 	}
@@ -129,7 +129,7 @@ int	check_redirect(t_token **tokens)
 		if ((first -> tok & REDIR))
 		{
 			if (!(right -> tok & WORD))
-				return (print_error(UNEXPECTED_TOK, right -> data));
+				return (print_error(UNEXPECTED_TOK, right -> data), 1);
 		}
 		first = first -> next;
 	}

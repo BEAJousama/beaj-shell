@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 01:45:17 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/29 16:26:17 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_cmd	*parseredir(t_cmd *cmd, t_token **tokens)
 	if ((*tokens)-> tok & REDIR)
 	{
 		token = redir_tok(*tokens);
-		cmd1 = new_redir_node(cmd1, tokens, token);
+		cmd1 = new_redir_node(cmd, tokens, token);
 		if (!cmd1)
 			return (cmd);
 	}
@@ -52,21 +52,22 @@ t_cmd	*parsecmd(t_token **tokens)
 {
 	t_cmd	*cmd;
 	t_token	*first;
-	int		ac;
+	t_token	*tmp;
 
 	cmd = NULL;
-	ac = 0;
 	if (!*tokens)
 		return (NULL);
 	first = *tokens;
+	tmp = *tokens;
 	cmd = new_exec_node(cmd, tokens);
-	cmd = parseredir(cmd, tokens);
+	// cmd = parseredir(cmd, tokens);	
 	while (!(first -> tok & CMDEND))
+		first = first -> next;
+	while (first != tmp)
 	{
 		cmd = parseredir(cmd, &first);
-		first = first -> next;
+		first = first -> prev;
 	}
-	cmd -> argv[ac] = 0;
 	return (cmd);
 }
 /*int g_n = 0;*/
@@ -77,27 +78,27 @@ t_cmd	*parseline(t_token **tokens)
 
 	if (is_there(tokens, SC | BG, 0))
 	{
-		puts("list");
+		// puts("list");
 		cmd = parselist(tokens);
 	}
 	else if (is_there(tokens, OR | AND, 0))
 	{
-		puts("condition");
+		// puts("condition");
 		cmd = parsecondition(tokens);
 	}
 	else if (is_there(tokens, PP, 0))
 	{
-		puts("pipe");
+		// puts("pipe");
 		cmd = parsepipe(tokens);
 	}
 	else if (is_there(tokens, OPR, 1))
 	{
-		puts("Bloc");
+		// puts("Bloc");
 		cmd = parseblock(tokens);
 	}
 	else
 	{
-		puts("cmd");
+		// puts("cmd");
 		cmd = parsecmd(tokens);
 	}
 	return (cmd);
@@ -108,6 +109,8 @@ t_cmd	**parsing(t_token **tokens)
 	t_cmd	**cmd;
 	t_token	*tok;
 
+	if (!tokens || !*tokens)
+		return (NULL);
 	cmd = malloc(sizeof(t_cmd *));
 	if (!cmd)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:53 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/22 17:40:14 by imabid           ###   ########.fr       */
+/*   Updated: 2022/04/29 15:56:12 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	pwd_cmd(void)
 	if (getcwd(NULL, 0))
 		pwd = getcwd(NULL, 0);
 	else
-		pwd = get_venv("PWD", glob.ennv);
+		pwd = get_venv("PWD", g_glob.ennv);
 	ft_putstr_fd(pwd, 1);
 	ft_putchar_fd('\n', 1);
 }

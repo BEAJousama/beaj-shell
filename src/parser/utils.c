@@ -6,18 +6,17 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:02:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/21 21:31:40 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/29 16:38:33 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	print_error(char *str, char *data)
+void	print_error(char *str, char *data)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(data, 2);
 	ft_putchar_fd('\n', 2);
-	return (1);
 }
 
 void	freetab(char **tab)

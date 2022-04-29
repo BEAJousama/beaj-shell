@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 18:47:13 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/28 22:34:31 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens)
 	new_exec_node_util(cmd, first, &ac);
 	return (cmd);
 }
+
 
 static void	fill_redir(t_cmd **cmd, t_tok tok)
 {
