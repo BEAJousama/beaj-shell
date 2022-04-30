@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 16:10:55 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 16:55:57 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	check_args(char **args)
 
 void	export_cmd(char **args)
 {
-
 	if (!args[1])
 	{
 		sort_env(g_glob.venv);

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 16:24:18 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 15:38:22 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static bool	is_builtin(char *cmd, char **argv)
 		return (unset_cmd(argv), true);
 	else if (!ft_strncmp(cmd, "env", sizeof("env") + 1))
 		return (env_cmd(argv), true);
-	// else if (!ft_strncmp(cmd, "exit", sizeof("exit") + 1))
-	// 	return (exit_cmd(argv), true);
+	else if (!ft_strncmp(cmd, "exit", sizeof("exit") + 1))
+		return (exit_cmd(argv), true);
 	return (false);
 }
 

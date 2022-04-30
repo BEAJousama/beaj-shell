@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 20:41:17 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 16:47:17 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	ft_execve(char **cmd)
 	char	*path;
 	char	**env;
 	int		pid;
+	int		status;
+	
 
 	env = venv_export_array(*g_glob.venv);
 	path = get_path(*cmd);
@@ -62,6 +64,8 @@ int	ft_execve(char **cmd)
 		if (execve(path, cmd, env) == -1)
 			return (-1);
 	}
-	wait(&g_glob.status);
+	waitpid(pid, &status, 0);
+	if(WIFEXITED(status))
+		g_glob.status = WEXITSTATUS(status);
 	return (0);
 }

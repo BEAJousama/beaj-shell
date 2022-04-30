@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 15:53:25 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 15:39:11 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	echo_cmd(char **cmd);
 void	cd_cmd(char **args);
 void	export_cmd(char **args);
 void	env_cmd(char **args);
-void	exit_cmd(t_m *m);
+void    exit_cmd(char **args);
 void	unset_cmd(char **args);
 void	del_venv(char *key);
 void	del_ennv(char *key);
