@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 16:26:17 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 21:14:34 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_cmd	*parsecmd(t_token **tokens)
 	first = *tokens;
 	tmp = *tokens;
 	cmd = new_exec_node(cmd, tokens);
-	// cmd = parseredir(cmd, tokens);	
 	while (!(first -> tok & CMDEND))
 		first = first -> next;
 	while (first != tmp)
@@ -78,27 +77,22 @@ t_cmd	*parseline(t_token **tokens)
 
 	if (is_there(tokens, SC | BG, 0))
 	{
-		// puts("list");
 		cmd = parselist(tokens);
 	}
 	else if (is_there(tokens, OR | AND, 0))
 	{
-		// puts("condition");
 		cmd = parsecondition(tokens);
 	}
 	else if (is_there(tokens, PP, 0))
 	{
-		// puts("pipe");
 		cmd = parsepipe(tokens);
 	}
 	else if (is_there(tokens, OPR, 1))
 	{
-		// puts("Bloc");
 		cmd = parseblock(tokens);
 	}
 	else
 	{
-		// puts("cmd");
 		cmd = parsecmd(tokens);
 	}
 	return (cmd);
