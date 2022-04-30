@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 17:18:36 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 16:59:05 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	lets_start(env);
 	shlvl_add(&m);
-	line = readline("obeaj->");
+	line = readline("minishell->");
 	while (line)
 	{
 		if (*line)
@@ -49,16 +49,16 @@ int	main(int ac, char **av, char **env)
 		toks = lexer(&line, env);
 		if (!toks)
 		{
-			line = readline("obeaj->");
+			line = readline("minishell->");
 			continue ;
 		}
 		cmd = parsing(toks);
 		if (runcmd(*cmd) || !cmd)
 		{
-			line = readline("obeaj->");
+			line = readline("minishell->");
 			continue ;
 		}
-		line = readline("obeaj->");
+		line = readline("minishell->");
 	}
 	return (0);
 }

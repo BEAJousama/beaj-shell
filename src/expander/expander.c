@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 21:01:05 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 17:06:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ static t_token	**expand_wildcard(t_token **tokens)
 	first = *tokens;
 	while (first)
 	{
+		if (first -> tok & WC && first -> prev -> tok != WSC)
+		{
+			first -> tok = STR;
+			first = first -> next;
+			continue ;
+		}
 		if (first -> tok & WC && !(first -> prev -> tok & REDIR))
 		{
 			first -> group = expand_group(first);
