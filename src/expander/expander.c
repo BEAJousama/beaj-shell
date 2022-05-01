@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 17:06:55 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 15:43:52 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ bool	char_matching(char *s1, char *s2)
 		return (true);
 	if (*s1 == '?' && *s2 == '\0')
 		return (false);
-	if ((*s1 == '*' || *s1 == '?') && *(s1 + 1) != '\0' && *s2 == '\0')
-		return (false);
+	if (s1 + 1)
+	{
+		if ((*s1 == '*' || *s1 == '?') && *(s1 + 1) != '\0' && *s2 == '\0')
+			return (false);
+	}
 	if (*s1 == '?' || *s1 == *s2)
 		return (char_matching(s1 + 1, s2 + 1));
 	if (*s1 == '*')
@@ -60,20 +63,14 @@ static t_token	**expand_wildcard(t_token **tokens)
 	first = *tokens;
 	while (first)
 	{
-		if (first -> tok & WC && first -> prev -> tok != WSC)
+		if (first -> tok & WC && (first -> prev -> tok != WSC))
 		{
 			first -> tok = STR;
 			first = first -> next;
-			continue ;
 		}
-		if (first -> tok & WC && !(first -> prev -> tok & REDIR))
+		if (first -> tok & WC)
 		{
 			first -> group = expand_group(first);
-			if (!first -> group || !*first->group)
-			{
-				print_error("minishell: no matches found: ", first->data);
-				return (NULL);
-			}
 		}
 		first = first -> next;
 	}
@@ -92,13 +89,13 @@ static t_token	**expand_dollar(t_token **tokens)
 		{
 			data = get_venv_all(first -> data);
 			free(first -> data);
-			first -> data = data;
+			first -> data = ft_strdup(data);
 			first -> tok = STR;
 		}
 		else if (first -> tok & TLD)
 		{
 			free(first -> data);
-			first -> data = get_venv("HOME", g_glob.venv);
+			first -> data = ft_strdup(get_venv("HOME", g_glob.venv));
 			first -> tok = STR;
 		}
 		if (!first -> data)

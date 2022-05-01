@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 21:14:48 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 14:46:12 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	new_exec_node_util(t_cmd *cmd, t_token *first, int *ac)
 		}
 		if (first -> tok & WC && first -> group)
 		{
-			while ((*first -> group))
+			while ((*first -> group) && (*first -> group)-> data)
 			{
 				cmd -> argv[*ac] = (*first -> group)-> data;
 				*ac += 1;

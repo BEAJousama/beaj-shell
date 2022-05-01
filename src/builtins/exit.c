@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:47 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 16:55:40 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 16:52:22 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exit_err(char *arg)
 	exit(ft_atoi(arg));
 }
 
-void	check_num(char **args)
+void	exit_num(char **args)
 {
 	int	i;
 
@@ -37,7 +37,8 @@ void	check_num(char **args)
 		}
 		i++;
 	}
-	exit_err(args[1]);
+	if (!args[2])
+		exit_err(args[1]);
 }
 
 void	exit_cmd(char **args)
@@ -47,11 +48,11 @@ void	exit_cmd(char **args)
 		exit(0);
 	if (args[1])
 	{
-		check_num(args);
+		exit_num(args);
 	}
 	if (args[2])
 	{
 		g_glob.status = 1;
-		print_error_("exit", ": too many argument", "\n");
+		print_error_("exit", ": too many arguments", "\n");
 	}
 }

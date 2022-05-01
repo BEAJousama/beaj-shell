@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 15:39:11 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 17:37:13 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	echo_cmd(char **cmd);
 void	cd_cmd(char **args);
 void	export_cmd(char **args);
 void	env_cmd(char **args);
-void    exit_cmd(char **args);
+void	exit_num(char **args);
+void	exit_cmd(char **args);
 void	unset_cmd(char **args);
 void	del_venv(char *key);
 void	del_ennv(char *key);
@@ -64,5 +65,13 @@ char	*get_path(char *cmd);
 int		ft_execve(char **cmd);
 void	run_exec(t_cmd *cmd);
 int		run_redir(t_cmd	*cmd);
+int		run_and(t_cmd	*cmd);
+int		run_or(t_cmd	*cmd);
+int		run_back(t_cmd	*cmd);
+pid_t	run_pipe_util(t_cmd *cmd, int fd[2], int s);
+int		get_status(int status);
+void	close_pipe(int fds[2]);
+pid_t	ft_fork(void);
+int		ft_pipe(int fildes[2]);
 
 #endif

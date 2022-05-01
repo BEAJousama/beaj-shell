@@ -6,11 +6,28 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:24:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 17:00:44 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 15:39:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_token	**filter_wc(t_token **toks)
+{
+	t_token	*first;
+
+	first = *toks;
+	while (first)
+	{
+		if (first -> tok & WC)
+		{
+			if (!first ->group || !*first -> group || !(*first -> group)-> data)
+				first -> tok = STR;
+		}
+		first = first -> next;
+	}
+	return (toks);
+}
 
 t_token	**lexer(char **line, char **env)
 {
@@ -31,6 +48,7 @@ t_token	**lexer(char **line, char **env)
 	tokens = quotes_filter(tokens);
 	tokens = concat_words(tokens);
 	tokens = expander(tokens);
+	tokens = filter_wc(tokens);
 	tokens = concat_words(tokens);
 	return (tokens);
 }

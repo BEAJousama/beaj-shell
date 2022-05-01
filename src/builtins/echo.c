@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 21:05:54 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/04/30 18:14:25 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	echo_cmd(char **cmd)
 	while_norm(cmd, i, j);
 	if (sign == 0)
 		ft_putchar_fd('\n', 1);
+	g_glob.status = 0;
 }

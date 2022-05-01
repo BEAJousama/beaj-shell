@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 21:10:15 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 14:12:26 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ t_token	**tokenizer(char **line, char *charset)
 	token = NULL;
 	token = token_init(token);
 	*token = new_token(CMDBEG, ft_strdup(""));
+	*token = new_token(WSC, ft_strdup(""));
 	while (**line)
 	{
 		if (peek(line, SPACES))

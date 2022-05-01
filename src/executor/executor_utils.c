@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 16:17:26 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 16:51:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,7 @@ int	get_error(char *s)
 	}
 	else
 	{
-		write(2, "minishell: ", 11);
-		while (s[i])
-		{
-			write(1, &s[i], 1);
-			i++;
-		}
-		write(2, ": Command not found\n", 20);
-		g_glob.status = 127;
+		print_error_("minishell: ", s, ": Command not found\n");
 		return (1);
 	}
 	return (1);
@@ -62,4 +55,25 @@ char	*get_path(char *cmd)
 	}
 	get_error(cmd);
 	return (0);
+}
+
+int	get_status(int status)
+{
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	else if (WIFSTOPPED(status))
+		return (128 + WSTOPSIG(status));
+	else if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
+}
+
+pid_t	ft_fork(void)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (print_error("fork", strerror(errno)), -1);
+	return (pid);
 }

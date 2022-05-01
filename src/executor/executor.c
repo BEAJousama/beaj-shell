@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 15:38:22 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 17:50:02 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,64 +38,59 @@ void	run_exec(t_cmd *cmd)
 	if (is_builtin(cmd ->argv[0], cmd ->argv))
 		return ;
 	ret = ft_execve(cmd -> argv);
-	if (ret == -1)
-		return ;
+	if (ret == 127)
+		g_glob.status = 127;
 	if (ret == -2)
 		return ;
-	// exit(1);
 }
 
 void	run_list(t_cmd *cmd)
 {
-	if(fork() == 0)
+	int	status;
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
 		runcmd(cmd->left);
-	waitpid(-1, NULL, 0);
-	runcmd(cmd->right);
+	wait(&status);
+	if (cmd ->right && cmd->right->argv[0])
+		runcmd(cmd->right);
 }
 
 void	run_pipe(t_cmd *cmd)
 {
-	int	p[2];
+	int	status;
+	int	pid[2];
+	int	fd[2];
 
-/*
-	if (pipe(p) < 0)
-*/
-	pipe(p);
-	if (fork() == 0)
-	{
-		close(1);
-		dup(p[1]);
-		close(p[0]);
-		close(p[1]);
-		runcmd(cmd->left);
-	}
-	if (fork())
-	{
-		close(0);
-		dup(p[0]);
-		close(p[0]);
-		close(p[1]);
-		runcmd(cmd->right);
-	}
-	close(p[0]);
-	close(p[1]);
-	waitpid(-1, NULL, 0);
+	if (pipe(fd) == -1)
+		return ;
+	pid[0] = run_pipe_util(cmd, fd, 1);
+	if (pid[0] == -1)
+		return ;
+	pid[1] = run_pipe_util(cmd, fd, 2);
+	if (pid[1] == -1)
+		return ;
+	close_pipe(fd);
+	wait(&status);
+	wait(&status);
+	// g_glob.status = get_status(status);
 }
 
 int	runcmd(t_cmd *cmd)
 {
 	t_cmd	*root;
-	
+
 	if (!cmd)
 		return (1);
 	root = cmd;
-	// else if (root ->type & AST_AND)
-	// 	run_and(root);
-	// else if (root ->type & AST_OR)
-	// 	run_or(root);
-	// else if (root ->type & AST_BG)
-	// 	run_back(root);
-	if (root ->type & AST_EXEC)
+	if (root ->type & AST_AND)
+		run_and(root);
+	else if (root ->type & AST_OR)
+		run_or(root);
+	else if (root ->type & AST_BG)
+		run_back(root);
+	else if (root ->type & AST_EXEC)
 		run_exec(root);
 	else if (root ->type & AST_SC)
 		run_list(root);

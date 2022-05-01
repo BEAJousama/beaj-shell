@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 08:59:07 by obeaj             #+#    #+#             */
-/*   Updated: 2022/03/18 17:34:22 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 14:16:30 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *src)
 	int		i;
 
 	i = 0;
+	if (!src)
+		return (NULL);
 	dest = (char *)malloc(ft_strlen(src) + 1);
 	if (dest != NULL)
 	{
