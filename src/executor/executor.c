@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 01:09:02 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 01:45:02 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ int	runcmd(t_cmd *cmd)
 		run_redir(root);
 	else if (root ->type & AST_PIPE)
 		run_pipe(root);
+	else if (root ->type & AST_SUB)
+		run_sub(root);
 	return (0);
 }

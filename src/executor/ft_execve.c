@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/01 17:20:37 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 14:37:21 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_execve(char **cmd)
 	else if (pid == 0)
 	{
 		if (execve(path, cmd, env) == -1)
-			return (127);
+			exit (127);
 	}
 	wait(&status);
 	g_glob.status = get_status(status);

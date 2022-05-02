@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 01:07:02 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 15:23:19 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	tokenize_2(char **line, t_token **tok)
 	*line = s;
 }
 
-char	*tokenize_4(char **line, t_token **tok)
+char	*tokenize_4(char **line, t_token **tok, int q)
 {
 	int		len;
 	char	*s;
@@ -69,7 +69,7 @@ char	*tokenize_4(char **line, t_token **tok)
 		s++;
 	}
 	add_token_back(tok, new_token(VAR, ft_strndup(*line + 1, len + 1)));
-	*line = s;
+	*line = s - q;
 	return (*line);
 }
 
@@ -121,7 +121,7 @@ t_token	**tokenizer(char **line, char *charset)
 		else if (**line == '\\' && !ft_isalnum(*(*line + 1)))
 			tokenize_6(line, token);
 		else if (peek(line, "$"))
-			*line = tokenize_4(line, token);
+			*line = tokenize_4(line, token, 0);
 		else if (peek(line, charset))
 			tokenize_1(line, token);
 		else

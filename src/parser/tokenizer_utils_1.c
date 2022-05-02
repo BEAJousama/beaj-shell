@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:17:12 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/01 15:01:41 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 15:23:38 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	dollar_util(int *len, char **line, t_token **tok, char **s)
 {
 	if (*len >= 1)
 		add_token_back(tok, new_token(STR, ft_strndup(*line + 1, *len)));
-	*line = tokenize_4(s, tok);
+	*line = tokenize_4(s, tok, 1);
 	*s = *line;
 	*len = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 00:11:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 01:31:19 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 01:46:10 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ int	run_back(t_cmd	*cmd)
 		printf("open %s failed\n", cmd->file);
 		exit(1);
 	}
+	runcmd(cmd->right);
+	return (0);
+}
+
+int	run_sub(t_cmd	*cmd)
+{
 	runcmd(cmd->right);
 	return (0);
 }

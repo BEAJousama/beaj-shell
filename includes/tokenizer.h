@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 21:00:18 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 15:22:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	tokenize_2(char **line, t_token **tok);
 void	tokenize_3(char **line, t_token **tok, int len, int check);
 void	bslash_util(int *len, char **line, t_token **tok, char **s);
 char	*tokenize_6(char **line, t_token **tok);
-char	*tokenize_4(char **line, t_token **tok);
+char	*tokenize_4(char **line, t_token **tok, int q);
 void	tokenize_5(char **line, t_token **tok);
 t_token	**concat_words(t_token **tokens);
 void	data_filtering(t_token **token, char *charset);
