@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:53 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 15:56:12 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/01 18:03:30 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	pwd_cmd(void)
 {
 	char	*pwd;
 
+	g_glob.status = 0;
 	if (getcwd(NULL, 0))
 		pwd = getcwd(NULL, 0);
 	else
