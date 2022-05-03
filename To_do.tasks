@@ -1,0 +1,11 @@
+☐ 1 - delete White spaces before connectors (syntax analyze);
+✔ 2 - fix expansion in the ahead of line(ex : * -la); DONE @done (5/3/2022, 2:01:13 PM)
+✔ 3 - fix expansion after connectors (ls * | *); DONE @done (5/3/2022, 2:02:10 PM)
+☐ 4 - fix pipe exec;
+☐ 5 - create fg execution;
+☐ 5 - fix sub execution(fix or, and, sc, fg, pipe);
+☐ 6 - create heredoc exec;
+☐ 7 - handle signals;
+☐ 8 - create Makefile;
+☐ 9 - free(check leaks);
+☐ 10 - final tests and push;

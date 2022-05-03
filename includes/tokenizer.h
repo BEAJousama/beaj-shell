@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 23:31:26 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 13:44:01 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ typedef enum s_tok
 	BFG = (BG | SC),
 	WORD = (STR | QT | DQT | WSC | VAR | WC | TLD),
 	REDIR = (HDOC | LTH | GGTH | GTH),
-	NON_STR = (BIND | VAR | REDIR | BFG | OPR | CPR | TLD | CMDBEG | CMDEND
-			| DSC | NL | WSC | VAR),
+	NO_EXP = (WSC | BIND | BFG | CMDBEG),
 }	t_tok;
 
 typedef struct s_group
@@ -103,7 +102,7 @@ int		peek(char **line, char *toks);
 void	tokenize_0(char **line, t_token **tok);
 void	tokenize_1(char **line, t_token **tok);
 void	tokenize_2(char **line, t_token **tok);
-void	tokenize_3(char **line, t_token **tok, int len, int check);
+void	tokenize_3(char **line, t_token **tok, int len);
 void	bslash_util(int *len, char **line, t_token **tok, char **s);
 char	*tokenize_6(char **line, t_token **tok);
 char	*tokenize_4(char **line, t_token **tok, int q);

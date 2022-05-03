@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 23:06:07 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 13:20:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_token	**tokenizer(char **line, char *charset)
 		else if (**line == '\'')
 			tokenize_2(line, token);
 		else if (**line == '"')
-			tokenize_3(line, token, 1, 1);
+			tokenize_3(line, token, 1);
 		else if (peek(line, "$"))
 			*line = tokenize_4(line, token, 0);
 		else if (peek(line, charset))

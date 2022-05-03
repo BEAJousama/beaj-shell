@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:17:12 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 23:11:40 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 13:19:56 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*dollar_util(int *len, char **line, t_token **tok, char **s)
 	return (*s);
 }
 
-void	tokenize_3(char **line, t_token **tok, int len, int check)
+void	tokenize_3(char **line, t_token **tok, int len)
 {
 	char	*s;
 

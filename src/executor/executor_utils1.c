@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:46:07 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 23:55:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 13:25:08 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ pid_t	run_pipe_util(t_cmd *cmd, int fd[2], int s)
 		dup2(fd[i], io);
 		close_pipe(fd);
 		runcmd(cmd1);
+		exit(g_glob.status);
 	}
 	return (pid);
 }

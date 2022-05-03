@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 00:34:21 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 13:54:43 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ t_group	**expand_group(t_token *token)
 	struct dirent	*de;
 	DIR				*dr;
 	char			*s;
+	char			*data;
 
 	token -> group = init_group();
-	dr = opendir(".");
+	dr = opendir("./");
 	if (dr == NULL || !token -> group)
 		return (NULL);
+	if (*token->data == '.' && *(token -> data + 1) == '/')
+		token->data += 2;
 	de = readdir(dr);
 	while (de != NULL)
 	{
@@ -63,7 +66,7 @@ static t_token	**expand_wildcard(t_token **tokens)
 	first = *tokens;
 	while (first)
 	{
-		if (first -> tok & WC && (first -> prev -> tok != WSC))
+		if (first -> tok & WC && !((first -> prev -> tok) & NO_EXP))
 		{
 			first -> tok = STR;
 			first = first -> next;
