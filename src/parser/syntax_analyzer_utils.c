@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:36:00 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 16:37:17 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 23:39:22 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ int	check_binders(t_token **tokens)
 		if (t.first -> tok & BIND)
 		{
 			if (!(t.left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, t.left -> data), 1);
+				return (print_error(UNEXPECTED_TOK, t.first -> data), 1);
 			if (!(t.right -> tok & (WORD | REDIR | OPR)))
 				return (print_error(UNEXPECTED_TOK, t.right -> data), 1);
 		}
 		if (t.first -> tok & BFG)
 		{
 			if (!(t.left -> tok & (WORD | CPR)))
-				return (print_error(UNEXPECTED_TOK, t.left -> data), 1);
+				return (print_error(UNEXPECTED_TOK, t.first -> data), 1);
 			if (!(t.right -> tok & (WORD | REDIR | OPR | CMDEND)))
 				return (print_error(UNEXPECTED_TOK, t.right -> data), 1);
 		}

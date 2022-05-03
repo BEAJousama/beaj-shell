@@ -1,0 +1,10 @@
+1 - delete White spaces before connectors (syntax analyze);
+2 - fix expansion in the ahead of line(ex : * -la); 
+3 - fix expansion after connectors (ls * | *);
+4 - fix pipe exec;
+5 - create fg execution;
+5 - fix sub execution(fix or, and, sc, fg, pipe);
+6 - create heredoc exec;
+? - (??????????????)
+7 - create Makefile;
+8 - free(check leaks);

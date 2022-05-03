@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 15:23:19 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 23:06:07 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,18 @@ char	*tokenize_4(char **line, t_token **tok, int q)
 	if (*s == '$' || *s == '?' || ft_isdigit(*s))
 	{
 		add_token_back(tok, new_token(VAR, ft_strndup(*line + 1, 2)));
-		return (*line + 2);
+		return (*line + 2 - q);
 	}
-	else if (*s == '\n' || ft_strchr(SPACES, *s) || *s == '\"')
-	{
-		add_token_back(tok, new_token(STR, ft_strndup(*line, 2)));
-		return (*line + 1);
-	}
-	while (*s && (ft_isalnum(*s) || *s == '_'))
+	while (*s && (ft_isalnum(*s) || *s == '_') && *s != '\"')
 	{
 		len++;
 		s++;
 	}
-	add_token_back(tok, new_token(VAR, ft_strndup(*line + 1, len + 1)));
-	*line = s - q;
+	if (len)
+		add_token_back(tok, new_token(VAR, ft_strndup(*line + 1, len + 1)));
+	else
+		add_token_back(tok, new_token(STR, ft_strndup(*line, 2)));
+	*line = s;
 	return (*line);
 }
 
@@ -118,8 +116,6 @@ t_token	**tokenizer(char **line, char *charset)
 			tokenize_2(line, token);
 		else if (**line == '"')
 			tokenize_3(line, token, 1, 1);
-		else if (**line == '\\' && !ft_isalnum(*(*line + 1)))
-			tokenize_6(line, token);
 		else if (peek(line, "$"))
 			*line = tokenize_4(line, token, 0);
 		else if (peek(line, charset))

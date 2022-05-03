@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 18:17:12 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 15:23:38 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 23:11:40 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ void	dquote_util_1(char **s, t_token **tok)
 	}
 }
 
-void	dollar_util(int *len, char **line, t_token **tok, char **s)
+char	*dollar_util(int *len, char **line, t_token **tok, char **s)
 {
-	if (*len >= 1)
-		add_token_back(tok, new_token(STR, ft_strndup(*line + 1, *len)));
-	*line = tokenize_4(s, tok, 1);
+	if (*len > 1)
+		add_token_back(tok, new_token(STR, ft_strndup(*line, *len)));
+	*line = tokenize_4(s, tok, 0);
 	*s = *line;
-	*len = 0;
+	*len = 1;
+	return (*s);
 }
 
 void	tokenize_3(char **line, t_token **tok, int len, int check)
@@ -56,15 +57,12 @@ void	tokenize_3(char **line, t_token **tok, int len, int check)
 	s = *line;
 	if (tok_3_util(&s, line, tok))
 		return ;
+	*line += 1;
+	s = *line;
 	while (*s && *s != '\n' && *s != '\"')
 	{
 		if (*s == '$')
-			dollar_util(&len, line, tok, &s);
-		else if (*s == '\\' && !ft_isalnum(*s + 1))
-		{
-			bslash_util(&len, line, tok, &s);
-			check = 0;
-		}
+			s = dollar_util(&len, line, tok, &s);
 		else
 		{
 			len++;
@@ -72,7 +70,7 @@ void	tokenize_3(char **line, t_token **tok, int len, int check)
 		}
 	}
 	if (len > 1)
-		add_token_back(tok, new_token(STR, ft_strndup(*line + check, len)));
+		add_token_back(tok, new_token(STR, ft_strndup(*line, len)));
 	dquote_util_1(&s, tok);
 	*line = s;
 }

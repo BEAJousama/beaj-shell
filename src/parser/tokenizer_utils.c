@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/23 20:33:20 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/02 23:08:26 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	tokenize_1(char **line, t_token **tok)
 	*line = (t.s);
 }
 
+/***
 void	bslash_util(int *len, char **line, t_token **tok, char **s)
 {
 	if (*len > 1)
@@ -84,3 +85,4 @@ char	*tokenize_6(char **line, t_token **tok)
 	free(copy);
 	return (*line);
 }
+*/
