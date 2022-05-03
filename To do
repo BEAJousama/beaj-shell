@@ -5,6 +5,7 @@
 5 - create fg execution;
 5 - fix sub execution(fix or, and, sc, fg, pipe);
 6 - create heredoc exec;
-? - (??????????????)
-7 - create Makefile;
-8 - free(check leaks);
+7 - handle signals;
+8 - create Makefile;
+9 - free(check leaks);
+10 - final tests and push;
