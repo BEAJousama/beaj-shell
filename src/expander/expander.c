@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 13:54:43 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 14:04:25 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_group	**expand_group(t_token *token)
 	struct dirent	*de;
 	DIR				*dr;
 	char			*s;
-	char			*data;
 
 	token -> group = init_group();
 	dr = opendir("./");
