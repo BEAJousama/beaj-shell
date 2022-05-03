@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 15:43:08 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 17:27:07 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	run_list(t_cmd *cmd)
 	if (pid == 0)
 		runcmd(cmd->left);
 	wait(&status);
-	if (cmd ->right && cmd->right->argv[0])
+	if (cmd ->right && (cmd->right->argv[0] || cmd->right->type & AST_NOD))
 		runcmd(cmd->right);
 }
 
