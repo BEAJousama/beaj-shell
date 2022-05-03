@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 13:20:23 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 15:59:57 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	tokenize_5(char **line, t_token **tok)
 	copy = ft_strdup(*line);
 	while (*s)
 	{
-		if (ft_strchr("<>()|;\'\"$ ", *s))
+		if (ft_strchr("<>()|;\'\"$& ", *s))
 			break ;
 		s++;
 		len++;

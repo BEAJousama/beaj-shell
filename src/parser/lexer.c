@@ -6,13 +6,13 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 02:24:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 23:45:01 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 15:35:51 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	**filter_wc(t_token **toks)
+static t_token	**filter_wc(t_token **toks)
 {
 	t_token	*first;
 
@@ -29,6 +29,20 @@ t_token	**filter_wc(t_token **toks)
 	return (toks);
 }
 
+static t_token	**del_wspaces(t_token **tokens)
+{
+	t_token	*first;
+
+	first = *tokens;
+	while (first -> next)
+	{
+		if ((first -> tok & WSC) && first -> next -> tok & (BIND | BFG))
+			del_token_0(first);
+		first = first -> next;
+	}
+	return (tokens);
+}
+
 t_token	**lexer(char **line, char **env)
 {
 	t_token	**tokens;
@@ -39,6 +53,7 @@ t_token	**lexer(char **line, char **env)
 	if (**line)
 		add_history(*line);
 	tokens = tokenizer(line, "<>&;()|");
+	tokens = del_wspaces(tokens);
 	if (!tokens)
 		return (NULL);
 	add_token_back(tokens, new_token(CMDEND, ft_strdup("newline")));

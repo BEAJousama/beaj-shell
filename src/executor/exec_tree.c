@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 00:11:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 13:21:02 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 16:14:01 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,21 @@ int	run_or(t_cmd	*cmd)
 
 int	run_back(t_cmd	*cmd)
 {
-	close(cmd->fd);
-	if (open(cmd->file, cmd->mode, 0666) < 0)
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		printf("open %s failed\n", cmd->file);
+		runcmd(cmd->left);
 		exit(1);
 	}
-	runcmd(cmd->right);
+	if (fork() == 0)
+	{
+		if (cmd ->right && cmd->right->argv[0])
+			runcmd(cmd -> right);
+	}
+	wait(NULL);
+	wait(NULL);
 	return (0);
 }
 
