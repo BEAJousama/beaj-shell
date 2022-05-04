@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:54:49 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 04:23:25 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 15:37:29 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,8 @@ void	del_ennv(char *key)
 	}
 }
 
-void	free_glob(void)
+void	free_glob(t_venv **venv)
 {
-	t_venv	**venv;
-	t_venv	**var;
-
-	venv = g_glob.venv;
-	var = g_glob.vars;
 	while (*venv)
 	{
 		free((*venv)-> key);
@@ -88,13 +83,5 @@ void	free_glob(void)
 		free(*venv);
 		*venv = (*venv)-> next;
 	}
-	while (*var)
-	{
-		free((*var)-> key);
-		free((*var)-> value);
-		free(*var);
-		*var = (*var)-> next;
-	}
-	free(var);
 	free(venv);
 }

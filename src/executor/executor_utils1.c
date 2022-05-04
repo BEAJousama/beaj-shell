@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:46:07 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 00:05:20 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:51:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,29 @@ int	ft_pipe(int fildes[2])
 	if (ret == -1)
 		print_error("pipe", strerror(errno));
 	return (ret);
+}
+
+int	run_hdoc(t_cmd *cmd)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	close(g_glob.fd);
+	dup2(1, 1);
+	if (g_glob.buff)
+		free_glob(g_glob.buff);
+	g_glob.buff = NULL;
+	g_glob.buff = init_venv(g_glob.venv);
+	line = readline("-> ");
+	while (line)
+	{
+		if (!ft_strcmp(line, cmd ->file))
+			break ;
+		add_global_venv(ft_itoa(i), line, g_glob.buff);
+		i++;
+		line = readline("-> ");
+	}
+	runcmd(cmd -> right);
+	return (0);
 }

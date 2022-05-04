@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 04:23:45 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:48:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ typedef struct s_glob
 	t_venv	**venv;
 	t_venv	**ennv;
 	t_venv	**vars;
-	t_token	**tokens;
+	t_venv	**buff;
 	int		status;
-	int		g;
+	int		fd;
 }	t_glob;
 
 t_venv	**set_global_env(char **env, t_venv **ennv);
 t_venv	**set_global_vars(t_venv **vars);
 void	add_global_venv(char *key, char *value, t_venv **all);
 void	del_venv(char *key);
-void	free_glob(void);
+void	free_glob(t_venv **venv);
 char	*get_venv(char *key, t_venv **all);
 char	*get_venv_all(char *key);
 char	*get_var(char *key);

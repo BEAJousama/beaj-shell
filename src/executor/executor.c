@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 01:06:55 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:22:59 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@ void	run_exec(t_cmd *cmd)
 
 	if (is_builtin(cmd ->argv[0], cmd ->argv))
 		return ;
+	if (!ft_strcmp(cmd->argv[0], "cat") && !cmd->argv[1] && g_glob.buff
+		&& *g_glob.buff && (*g_glob.buff)-> value)
+	{
+		while (*g_glob.buff)
+		{
+			ft_putstr_fd((*g_glob.buff)->value, 1);
+			ft_putchar_fd('\n', 1);
+			(*g_glob.buff) = (*g_glob.buff)->next;
+		}
+		return ;
+	}
 	ret = ft_execve(cmd -> argv);
 	if (ret == 127)
 		g_glob.status = 127;
@@ -46,8 +57,6 @@ void	run_exec(t_cmd *cmd)
 
 void	run_list(t_cmd *cmd)
 {
-	int	status;
-
 	runcmd(cmd->left);
 	if (cmd ->right && (cmd->right->argv[0] || cmd->right->type & AST_NOD))
 		runcmd(cmd->right);
@@ -90,6 +99,8 @@ int	runcmd(t_cmd *cmd)
 		run_exec(root);
 	else if (root ->type & AST_SC)
 		run_list(root);
+	else if (root ->type & AST_HDOC)
+		run_hdoc(root);
 	else if (root -> type & AST_REDIR)
 		run_redir(root);
 	else if (root ->type & AST_PIPE)

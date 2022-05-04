@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:50:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 17:26:19 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:13:54 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum e_asttype{
 	AST_BG =		(1 << 12),
 	AST_SUB =		(1 << 13),
 	AST_REDIR =		(AST_HDOC | AST_LTH | AST_GTH | AST_GGTH),
+	AST_RED =		(AST_LTH | AST_GTH | AST_GGTH),
 	AST_NOD = (AST_SUB | AST_OR | AST_AND | AST_PIPE | AST_SC | AST_BG)
 }	t_asttype;
 
