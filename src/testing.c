@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 21:10:46 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 21:10:57 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/03 23:52:09 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,33 @@ int	main(int ac, char **av, char **env)
 	if (!toks)
 		return 0;
 	first = *toks;
-	// t_cmd **cmd;
-	// cmd = parsing(toks);
-	// if (!cmd)
-	// 	return 0;
-	// runcmd(*cmd);
-	// while (*cmd) 
-	// {
-	// 	printf ("%d\n", (*cmd)->type);
-	// 	// if ((*cmd)->type & AST_EXEC)
-	// 	// 	printf ("%s\n", (*cmd)->argv[0]);	
-	// 	// if ((*cmd)->type & AST_REDIR)
-	// 	// 	printf ("%s\n", (*cmd)->file);	
-	// 	*cmd = (*cmd) -> right;	
-	// }
-	// print_tree(*cmd);
-	while (first)
+	t_cmd **cmd;
+	cmd = parsing(toks);
+	if (!cmd)
+		return 0;
+	while (*cmd) 
 	{
-		printf("%s ----> %u\n", first->data, first->tok);
-		if (first -> tok & WC && first -> group)
-		{
-			while (*first -> group)
-			{
-				printf("######## %s ###########\n", (*first->group)-> data);
-				(*first -> group) = (*first -> group)-> next;
-			}
-		}
-		first = first-> next;
+		printf ("%d\n", (*cmd)->type);
+		// if ((*cmd)->type & AST_EXEC)
+		// 	printf ("%s\n", (*cmd)->argv[0]);	
+		// if ((*cmd)->type & AST_REDIR)
+		// 	printf ("%s\n", (*cmd)->file);	
+		*cmd = (*cmd) -> right;	
 	}
+	// print_tree(*cmd);
+	// while (first)
+	// {
+	// 	printf("%s ----> %u\n", first->data, first->tok);
+	// 	if (first -> tok & WC && first -> group)
+	// 	{
+	// 		while (*first -> group)
+	// 		{
+	// 			printf("######## %s ###########\n", (*first->group)-> data);
+	// 			(*first -> group) = (*first -> group)-> next;
+	// 		}
+	// 	}
+	// 	first = first-> next;
+	// }
 	// free(line);
 	// free_tokens(toks);
 	// free_glob();

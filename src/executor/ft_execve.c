@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 19:03:13 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 00:58:39 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,12 @@ int	ft_execve(char **cmd)
 	{
 		if (execve(path, cmd, env) == -1)
 			exit (127);
+		if (errno == ENOENT)
+			exit(127);
+		if (errno == EACCES)
+			exit(126);
 	}
-	wait(&status);
+	waitpid(pid, &status, WUNTRACED);
 	g_glob.status = get_status(status);
 	return (g_glob.status);
 }

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 00:11:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 18:58:04 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 01:21:18 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ int	run_redir(t_cmd	*cmd)
 		fd = open(cmd->file, cmd->mode, 0666);
 		if (fd < 0)
 		{
-			printf("open %s failed\n", cmd->file);
+			perror("minishell");
 			exit(1);
 		}
 		dup2(fd, cmd->fd);
 		runcmd(cmd->right);
 		close(fd);
-		exit(1);
+		exit(g_glob.status);
 	}
 	wait(&status);
+	g_glob.status = get_status(status);
 	return (0);
 }
 
@@ -82,6 +83,16 @@ int	run_back(t_cmd	*cmd)
 
 int	run_sub(t_cmd	*cmd)
 {
-	runcmd(cmd->right);
+	int	status;
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		runcmd(cmd->right);
+		exit(g_glob.status);
+	}
+	waitpid(pid, &status, WUNTRACED);
+	g_glob.status = get_status(status);
 	return (0);
 }

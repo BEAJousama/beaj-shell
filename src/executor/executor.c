@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 19:29:57 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 01:06:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,20 @@ void	run_exec(t_cmd *cmd)
 		g_glob.status = 127;
 	if (ret == -2)
 		return ;
-	waitpid(-1, NULL, 0);
 }
 
 void	run_list(t_cmd *cmd)
 {
 	int	status;
-	int	pid;
 
-	pid = fork();
-	if (pid == 0)
-		runcmd(cmd->left);
-	wait(&status);
+	runcmd(cmd->left);
 	if (cmd ->right && (cmd->right->argv[0] || cmd->right->type & AST_NOD))
 		runcmd(cmd->right);
 }
 
 void	run_pipe(t_cmd *cmd)
 {
-	int	status;
+	int	status[2];
 	int	pid[2];
 	int	fd[2];
 
@@ -73,8 +68,9 @@ void	run_pipe(t_cmd *cmd)
 	if (pid[1] == -1)
 		return ;
 	close_pipe(fd);
-	wait(&status);
-	wait(&status);
+	waitpid(pid[0], &status[0], WUNTRACED);
+	waitpid(pid[1], &status[1], WUNTRACED);
+	g_glob.status = get_status(status[1]);
 }
 
 int	runcmd(t_cmd *cmd)

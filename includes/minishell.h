@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 17:55:47 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 00:45:27 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdbool.h>
 # include <string.h>
 # include <errno.h>
+# include <sys/wait.h>
 # include "parser.h"
 # include "tokenizer.h"
 # include "expander.h"

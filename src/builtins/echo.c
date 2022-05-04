@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 18:14:25 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 00:45:44 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	while_norm(char **cmd, int i, int j)
 			while (cmd[i])
 			{
 				ft_putstr_fd(cmd[i++], 1);
-				if (cmd[i] != '\0')
+				if (cmd[i] != 0)
 					ft_putchar_fd(' ', 1);
 			}
 			break ;
