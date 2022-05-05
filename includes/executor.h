@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 01:19:38 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 13:40:41 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		run_and(t_cmd	*cmd);
 int		run_or(t_cmd	*cmd);
 int		run_back(t_cmd	*cmd);
 int		run_sub(t_cmd	*cmd);
-int		run_hdoc(t_cmd *cmd);
+int		run_hdoc(t_token *token);
 pid_t	run_pipe_util(t_cmd *cmd, int fd[2], int s);
 int		get_status(int status);
 void	close_pipe(int fds[2]);

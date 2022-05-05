@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:54:49 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 15:37:29 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 16:10:58 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,17 @@ void	del_ennv(char *key)
 
 void	free_glob(t_venv **venv)
 {
-	while (*venv)
+	if (*venv)
 	{
-		free((*venv)-> key);
-		free((*venv)-> value);
-		free(*venv);
-		*venv = (*venv)-> next;
+		while (*venv)
+		{
+			if ((*venv)-> key)
+				free((*venv)-> key);
+			if ((*venv)-> value)
+				free((*venv)-> value);
+			free(*venv);
+			*venv = (*venv)-> next;
+		}
 	}
 	free(venv);
 }

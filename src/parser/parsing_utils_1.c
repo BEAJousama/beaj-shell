@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 18:11:25 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 22:12:21 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 20:39:04 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_cmd	*parselist(t_token **tokens)
 	cmd = new_ast_node(sp.tok);
 	if (!cmd)
 		return (NULL);
-	cmd -> right = parseline(sp.right);
 	cmd -> left = parseline(sp.left);
+	cmd -> right = parseline(sp.right);
 	return (cmd);
 }
 
@@ -35,8 +35,8 @@ t_cmd	*parsecondition(t_token **tokens)
 	cmd = new_ast_node(sp.tok);
 	if (!cmd)
 		return (NULL);
-	cmd -> right = parseline(sp.right);
 	cmd -> left = parseline(sp.left);
+	cmd -> right = parseline(sp.right);
 	return (cmd);
 }
 
@@ -49,8 +49,8 @@ t_cmd	*parsepipe(t_token **tokens)
 	cmd = new_ast_node(PP);
 	if (!cmd)
 		return (NULL);
-	cmd -> right = parseline(sp.right);
 	cmd -> left = parseline(sp.left);
+	cmd -> right = parseline(sp.right);
 	return (cmd);
 }
 
@@ -68,19 +68,13 @@ t_cmd	*parseblock(t_token **tokens)
 	return (cmd);
 }
 
-t_cmd	*parsehdoc(t_cmd *cmd, t_token **tokens)
+void	parsehdoc(t_token **tokens, t_cmd *cmd)
 {	
-	t_cmd	*cmd1;
-	t_tok	token;
-
 	if ((*tokens)->tok & CMDEND)
-		return (cmd);
-	cmd1 = cmd;
+		return ;
 	if ((*tokens)-> tok & HDOC)
 	{
-		cmd1 = new_redir_node(cmd, tokens, HDOC);
-		if (!cmd1)
-			return (cmd);
+		g_glob.cmd = cmd;
+		run_hdoc((*tokens)-> next);
 	}
-	return (cmd1);
 }

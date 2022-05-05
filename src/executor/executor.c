@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 00:50:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 20:44:54 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,8 @@ void	run_exec(t_cmd *cmd)
 	int	ret;
 
 	if (is_builtin(cmd ->argv[0], cmd ->argv))
-		return ;
-	if (!ft_strcmp(cmd->argv[0], "cat") && ((!cmd->argv[1] && g_glob.buff
-				&& *g_glob.buff && (*g_glob.buff)-> value) || g_glob.hdoc))
 	{
-		while (*g_glob.buff)
-		{
-			ft_putstr_fd((*g_glob.buff)->value, 1);
-			ft_putchar_fd('\n', 1);
-			(*g_glob.buff) = (*g_glob.buff)->next;
-		}
+		free(g_glob.cmd);
 		return ;
 	}
 	ret = ft_execve(cmd -> argv);
@@ -99,8 +91,6 @@ int	runcmd(t_cmd *cmd)
 		run_exec(root);
 	else if (root ->type & AST_SC)
 		run_list(root);
-	else if (root ->type & AST_HDOC)
-		run_hdoc(root);
 	else if (root -> type & AST_REDIR)
 		run_redir(root);
 	else if (root ->type & AST_PIPE)
