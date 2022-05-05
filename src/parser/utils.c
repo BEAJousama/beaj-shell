@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:02:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 23:50:58 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 01:17:47 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,18 @@ int	peek(char **line, char *toks)
 
 	s = *line;
 	return (*s && ft_strchr(toks, *s));
+}
+
+void	save_io(int io[2])
+{
+	io[0] = dup(STDIN_FILENO);
+	io[1] = dup(STDOUT_FILENO);
+	if (io[0] == -1 || io[1] == -1)
+		print_error("dup", strerror(errno));
+}
+
+void	reset_io(int io[2])
+{
+	if (dup2(io[0], STDIN_FILENO) == -1 || dup2(io[1], STDOUT_FILENO) == -1)
+		print_error("dup2", strerror(errno));
 }

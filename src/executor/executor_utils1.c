@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:46:07 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 19:12:52 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 01:21:54 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	run_hdoc(t_cmd *cmd)
 	int		i;
 
 	i = 0;
+	g_glob.hdoc = 1;
+	reset_io(g_glob.io);
 	if (g_glob.buff)
 		free_glob(g_glob.buff);
 	g_glob.buff = NULL;

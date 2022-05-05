@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 13:44:01 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/04 22:09:35 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef enum s_tok
 	BFG = (BG | SC),
 	WORD = (STR | QT | DQT | WSC | VAR | WC | TLD),
 	REDIR = (HDOC | LTH | GGTH | GTH),
+	RED = (LTH | GGTH | GTH),
 	NO_EXP = (WSC | BIND | BFG | CMDBEG),
 }	t_tok;
 

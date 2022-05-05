@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 15:44:23 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 01:19:38 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ int		get_status(int status);
 void	close_pipe(int fds[2]);
 pid_t	ft_fork(void);
 int		ft_pipe(int fildes[2]);
+void	reset_io(int io[2]);
+void	save_io(int io[2]);
 
 #endif

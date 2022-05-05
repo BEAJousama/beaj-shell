@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 21:15:44 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 01:21:06 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	lets_start(env);
 	shlvl_add(&m);
+	save_io(g_glob.io);
 	line = readline("minishell-> ");
 	while (line)
 	{

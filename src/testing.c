@@ -6,12 +6,12 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 21:10:46 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 23:52:09 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 01:33:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 int	main(int ac, char **av, char **env)
 {
 	char	**line;
@@ -36,10 +36,10 @@ int	main(int ac, char **av, char **env)
 	while (*cmd) 
 	{
 		printf ("%d\n", (*cmd)->type);
-		// if ((*cmd)->type & AST_EXEC)
-		// 	printf ("%s\n", (*cmd)->argv[0]);	
-		// if ((*cmd)->type & AST_REDIR)
-		// 	printf ("%s\n", (*cmd)->file);	
+		if ((*cmd)->type & AST_EXEC)
+			printf ("%s\n", (*cmd)->argv[0]);	
+		if ((*cmd)->type & AST_REDIR)
+			printf ("%s\n", (*cmd)->file);	
 		*cmd = (*cmd) -> right;	
 	}
 	// print_tree(*cmd);
@@ -62,3 +62,4 @@ int	main(int ac, char **av, char **env)
 	// free(*cmd);
 	// free(cmd);
 }
+*/

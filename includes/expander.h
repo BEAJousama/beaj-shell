@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 19:15:14 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 01:20:35 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_glob
 	t_venv	**vars;
 	t_venv	**buff;
 	int		status;
+	int		hdoc;
+	int		io[2];
 }	t_glob;
 
 t_venv	**set_global_env(char **env, t_venv **ennv);

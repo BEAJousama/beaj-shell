@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/01 16:51:16 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 00:33:39 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ char	*get_path(char *cmd)
 	char	*path;
 	char	*p;
 	int		i;
-	char	**new_cmd;
 
+	if (!cmd)
+		cmd = ft_strdup("");
 	p = get_venv("PATH", g_glob.venv);
-	new_cmd = NULL;
 	i = 0;
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
