@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 15:40:37 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:58:17 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	**venv_export_array(t_venv	*venv)
 	m.i = 0;
 	m.len = venv_count(venv);
 	m.env = malloc(sizeof(char *) * (m.len + 1));
+	gc_add_back(new_gcnode((void *)m.env));
 	while (venv && m.i < m.len)
 	{
 		m.path = ft_strjoin(venv->key, "=");

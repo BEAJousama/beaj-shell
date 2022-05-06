@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:47:17 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:38:37 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 18:07:41 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_gc	*new_gcnode(void *str)
 
 	gc = malloc(sizeof(t_gc));
 	gc->s = str;
+	gc -> next = NULL;
 	return (gc);
 }
 
@@ -56,8 +57,12 @@ void	free_gc(t_gc **gc)
 	g = *gc;
 	while (g)
 	{
-		free(g->s);
+		if (g->s)
+			free(g->s);
 		g -> s = NULL;
+		if (g)
+			free(g);
+		g = NULL;
 		g = g ->next;
 	}
 }

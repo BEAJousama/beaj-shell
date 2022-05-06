@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:39:07 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 18:06:20 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	shlvl_add(t_m *m)
 
 void	lets_start(char **env)
 {
+	g_glob.gc = init_gc();
 	g_glob.venv = set_global_env(env, g_glob.venv);
 	g_glob.ennv = set_global_env(env, g_glob.ennv);
-	g_glob.gc = init_gc();
 }
 
 int	main(int ac, char **av, char **env)
@@ -62,5 +62,6 @@ int	main(int ac, char **av, char **env)
 		reset_io(g_glob.io);
 		free_gc(g_glob.gc);
 	}
+	free(g_glob.gc);
 	return (0);
 }
