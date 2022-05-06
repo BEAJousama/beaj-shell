@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:46:07 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 20:43:22 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 02:40:58 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,35 +69,23 @@ static void	print_glob(int p)
 	}
 }
 
-int	run_hdoc(t_token *token)
+int	run_hdoc(char *delim)
 {
 	char	*line;
 	int		i;
-	int		p[2];
+	int		fd[2];
 
 	i = 0;
-	pipe(p);
-	if (g_glob.buff)
-		free_glob(g_glob.buff);
-	g_glob.buff = NULL;
-	g_glob.buff = init_venv(g_glob.venv);
-	line = readline("-> ");
-	while (line)
+	pipe(fd);
+	while (1)
 	{
-		if (!ft_strcmp(line, token -> data))
-			break ;
-		add_global_venv(ft_itoa(i), line, g_glob.buff);
-		i++;
 		line = readline("-> ");
+		if (!ft_strcmp(line, delim))
+			break ;
+		write(fd[1], line, ft_strlen(line) + 1);
+		ft_putchar_fd('\n', fd[1]);
+		i++;
 	}
-	if (fork() == 0)
-	{
-		print_glob(p[1]);
-		dup2(p[1], 1);
-		close(p[1]);
-		close(p[0]);
-		exit(1);
-	}
-	dup2(p[0], 0);
-	return (0);
+	close(fd[1]);
+	return (fd[0]);
 }

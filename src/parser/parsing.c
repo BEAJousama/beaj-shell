@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 17:41:19 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 02:13:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd	*parseredir(t_cmd *cmd, t_token **tokens)
 	if ((*tokens)->tok & CMDEND)
 		return (cmd);
 	cmd1 = cmd;
-	if ((*tokens)-> tok & RED)
+	if ((*tokens)-> tok & REDIR)
 	{
 		token = redir_tok(*tokens);
 		cmd1 = new_redir_node(cmd, tokens, token);
@@ -61,7 +61,6 @@ t_cmd	*parsecmd(t_token **tokens)
 	first = *tokens;
 	tmp = *tokens;
 	cmd = new_exec_node(cmd, tokens);
-	cmd1 = cmd;
 	while (!(first -> tok & CMDEND))
 		first = first -> next;
 	while (first != tmp)
@@ -70,12 +69,9 @@ t_cmd	*parsecmd(t_token **tokens)
 		first = first -> prev;
 	}
 	cmd = parseredir(cmd, &first);
-	while (!(first -> tok & CMDEND))
-	{
-		parsehdoc(&first, cmd1);
-		first = first -> next;
-	}
-	return (cmd);
+	cmd1 = cmd;
+	parsehdoc(cmd);
+	return (cmd1);
 }
 
 t_cmd	*parseline(t_token **tokens)

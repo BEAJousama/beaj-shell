@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 18:51:32 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/05 23:57:00 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		line = readline("minishell-> ");
+		reset_io(g_glob.io);
 	}
 	return (0);
 }

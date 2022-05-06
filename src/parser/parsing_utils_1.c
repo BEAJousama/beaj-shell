@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 18:11:25 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 20:39:04 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 02:14:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,14 @@ t_cmd	*parseblock(t_token **tokens)
 	return (cmd);
 }
 
-void	parsehdoc(t_token **tokens, t_cmd *cmd)
+void	parsehdoc(t_cmd *cmd)
 {	
-	if ((*tokens)->tok & CMDEND)
+	if (!cmd || cmd -> type & AST_EXEC)
 		return ;
-	if ((*tokens)-> tok & HDOC)
+	while (cmd && cmd -> type != AST_EXEC)
 	{
-		g_glob.cmd = cmd;
-		run_hdoc((*tokens)-> next);
+		if (cmd ->type & AST_HDOC)
+			cmd -> out = run_hdoc(cmd -> file);
+		cmd = cmd -> right;
 	}
 }

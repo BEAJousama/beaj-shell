@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 19:11:33 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 01:52:12 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	fill_redir(t_cmd **cmd, t_tok tok)
 	else if (tok & LTH)
 		(*cmd)->fd = 0;
 	else if (tok & HDOC)
-		(*cmd)->fd = 1;
+		(*cmd)->fd = 0;
 }
 
 t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok)

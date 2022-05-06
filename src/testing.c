@@ -6,12 +6,12 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 21:10:46 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 01:33:23 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 02:09:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
+
 int	main(int ac, char **av, char **env)
 {
 	char	**line;
@@ -62,4 +62,3 @@ int	main(int ac, char **av, char **env)
 	// free(*cmd);
 	// free(cmd);
 }
-*/
