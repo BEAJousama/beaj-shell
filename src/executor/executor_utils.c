@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 00:33:39 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:42:10 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,24 @@ int	get_error(char *s)
 
 char	*get_path(char *cmd)
 {
-	char	*path;
-	char	*p;
-	int		i;
+	t_m	m;
 
 	if (!cmd)
 		cmd = ft_strdup("");
-	p = get_venv("PATH", g_glob.venv);
-	i = 0;
+	m.val = get_venv("PATH", g_glob.venv);
+	m.i = 0;
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
-	path = ft_strtok(p, ':');
-	while (path)
+	m.path = ft_strtok(m.val, ':');
+	while (m.path)
 	{
-		path = ft_strjoin(path, "/");
-		path = ft_strjoin(path, cmd);
-		if (access(path, X_OK) == 0)
-			return (path);
-		free(path);
-		path = ft_strtok(NULL, ':');
-		i++;
+		m.path = ft_strjoin(m.path, "/");
+		m.path = ft_strjoin(m.path, cmd);
+		if (access(m.path, X_OK) == 0)
+			return (m.path);
+		free(m.path);
+		m.path = ft_strtok(NULL, ':');
+		m.i++;
 	}
 	get_error(cmd);
 	return (0);

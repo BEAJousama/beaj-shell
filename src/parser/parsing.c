@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 02:13:23 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:35:05 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_cmd	**parsing(t_token **tokens)
 	if (!tokens || !*tokens)
 		return (NULL);
 	cmd = malloc(sizeof(t_cmd *));
+	gc_add_back(new_gcnode((void *)cmd));
 	if (!cmd)
 		return (NULL);
 	tok = *tokens;

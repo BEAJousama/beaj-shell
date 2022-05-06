@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:47 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/01 16:52:22 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 13:05:31 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	exit_err(char *arg)
 	exit(ft_atoi(arg));
 }
 
-void	exit_num(char **args)
+void	check_num(char **args)
 {
 	int	i;
 
 	i = 0;
 	while (args[1][i])
 	{
-		if (!ft_isdigit(args[1][i]))
+		if (!ft_isdigit(args[1][i]) && args[1][0] != '-')
 		{
 			print_error_("exit: ", args[1],
 				": numeric argument required\n");
@@ -48,11 +48,11 @@ void	exit_cmd(char **args)
 		exit(0);
 	if (args[1])
 	{
-		exit_num(args);
+		check_num(args);
 	}
 	if (args[2])
 	{
 		g_glob.status = 1;
-		print_error_("exit", ": too many arguments", "\n");
+		print_error_("exit", ": too many argument", "\n");
 	}
 }

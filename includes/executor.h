@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 01:40:20 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:35:35 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,15 @@
 
 typedef struct s_m
 {
-	char		**cmd;
-	char		*path;
-	char		**env;
-	char		**env_g;
-	int			f1;
-	int			f2;
-	int			a;
-	int			aca;
-	int			fd[2];
-	int			i;
-	char		*line;
-	char		**paths;
-	char		**cmd1;
-	char		*path1;
-	char		**echo;
-	char		**args;
-	int			status;
 	char		*key;
 	char		*cokey;
+	char		*path;
+	int			len;
+	int			i;
+	char		**env;
 	char		*val;
 	char		*v;
 	int			shlvl;
-	int			fshlvl;
 }	t_m;
 
 void	pwd_cmd(void);
@@ -70,6 +56,7 @@ int		run_or(t_cmd	*cmd);
 int		run_back(t_cmd	*cmd);
 int		run_sub(t_cmd	*cmd);
 int		run_hdoc(char *delim);
+void	run_hdoc_util(t_cmd *cmd);
 pid_t	run_pipe_util(t_cmd *cmd, int fd[2], int s);
 int		get_status(int status);
 void	close_pipe(int fds[2]);

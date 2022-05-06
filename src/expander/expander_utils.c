@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:28:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/02 00:41:10 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:32:31 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_group	**init_group(void)
 	t_group	**group;
 
 	group = malloc(sizeof(t_group *));
+	gc_add_back(new_gcnode((void *)group));
 	*group = NULL;
 	if (!group)
 		return (NULL);
@@ -43,6 +44,7 @@ t_group	*new_gnode(char *data)
 	t_group	*group;
 
 	group = malloc(sizeof(t_group));
+	gc_add_back(new_gcnode((void *)group));
 	if (!group)
 		return (NULL);
 	group -> data = ft_strdup(data);

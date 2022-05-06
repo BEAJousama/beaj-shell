@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   gc.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 15:00:52 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 14:06:48 by obeaj            ###   ########.fr       */
+/*   Created: 2022/05/06 17:09:57 by obeaj             #+#    #+#             */
+/*   Updated: 2022/05/06 17:38:47 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GC_H
+# define GC_H
 
-char	*ft_strjoin(char *s1, char const *s2)
+typedef struct s_gc
 {
-	int		len_tot;
-	char	*s;
+	void		*s;
+	struct s_gc	*next;
+}	t_gc;
 
-	if (!s1 || !s2)
-		return (NULL);
-	len_tot = ft_strlen(s1) + ft_strlen(s2) + 1;
-	s = (char *)malloc(len_tot * sizeof(char));
-	if (!s)
-		return (NULL);
-	while (*s1)
-		*s++ = *s1++;
-	while (*s2)
-		*s++ = *s2++;
-	*s = '\0';
-	return (s - len_tot + 1);
-}
+t_gc	**init_gc(void);
+t_gc	*new_gcnode(void *str);
+void	gc_add_back(t_gc *new);
+void	free_gc(t_gc **gc);
+
+#endif

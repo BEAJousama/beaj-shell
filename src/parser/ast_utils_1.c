@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:51:48 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 01:52:12 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:31:20 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_cmd	*new_ast_node(t_tok tok)
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
+	gc_add_back(new_gcnode((void *)cmd));
 	if (!cmd)
 		return (NULL);
 	if (tok & BG)
@@ -70,6 +71,7 @@ t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens)
 	ac = 0;
 	first = *tokens;
 	cmd = malloc(sizeof(t_cmd));
+	gc_add_back(new_gcnode((void *)cmd));
 	if (!cmd)
 		return (NULL);
 	cmd -> type = AST_EXEC;
@@ -101,6 +103,7 @@ t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok)
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
+	gc_add_back(new_gcnode((void *)cmd));
 	if (!cmd)
 		return (cmd1);
 	cmd -> mode = O_RDONLY;

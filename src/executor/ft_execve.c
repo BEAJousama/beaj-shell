@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 00:58:39 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:40:37 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,22 @@ static int	venv_count(t_venv *venv)
 
 char	**venv_export_array(t_venv	*venv)
 {
-	int		i;
-	int		len;
-	char	*str;
-	char	**env;
+	t_m	m;
 
-	i = 0;
-	len = venv_count(venv);
-	env = malloc(sizeof(char *) * (len + 1));
-	while (venv && i < len)
-	{	
-		str = ft_strjoin(venv->key, "=");
-		str = ft_strjoin(str, venv->value);
-		env[len - i++ - 1] = str;
+	m.i = 0;
+	m.len = venv_count(venv);
+	m.env = malloc(sizeof(char *) * (m.len + 1));
+	while (venv && m.i < m.len)
+	{
+		m.path = ft_strjoin(venv->key, "=");
+		m.val = m.path;
+		m.path = ft_strjoin(m.path, venv->value);
+		free(m.val);
+		m.env[m.len - m.i++ - 1] = m.path;
 		venv = venv->next;
 	}
-	env[len] = NULL;
-	return (env);
+	m.env[m.len] = NULL;
+	return (m.env);
 }
 
 int	ft_execve(char **cmd)
@@ -55,6 +54,8 @@ int	ft_execve(char **cmd)
 
 	env = venv_export_array(*g_glob.venv);
 	path = get_path(*cmd);
+	if (!path)
+		return (127);
 	pid = fork();
 	if (pid == -1)
 		return (-2);
@@ -69,5 +70,7 @@ int	ft_execve(char **cmd)
 	}
 	waitpid(pid, &status, WUNTRACED);
 	g_glob.status = get_status(status);
+	free(path);
+	free_tab(env);
 	return (g_glob.status);
 }

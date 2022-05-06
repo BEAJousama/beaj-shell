@@ -6,12 +6,13 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 00:11:32 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:24:18 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_H
 # define EXPANDER_H
+# include "gc.h"
 
 typedef struct s_venv
 {
@@ -27,10 +28,8 @@ typedef struct s_glob
 	t_venv	**vars;
 	t_venv	**buff;
 	int		status;
-	int		hdoc;
 	int		io[2];
-	t_cmd	*cmd;
-	int		fd[2];
+	t_gc	**gc;
 }	t_glob;
 
 t_venv	**set_global_env(char **env, t_venv **ennv);

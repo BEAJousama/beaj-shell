@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 16:55:57 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:31:48 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	addto_key(char *arg)
 	m.key = get_key(arg);
 	m.val = get_value(arg);
 	m.key = malloc(ft_strlen(m.key));
+	gc_add_back(new_gcnode((void *)m.key));
 	check_plusegal(arg, &m);
 	m.v = get_venv(m.key, g_glob.venv);
 	if (m.v)

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:52:23 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 18:11:51 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 13:53:19 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,17 @@ void	free_tree(t_cmd *cmd)
 		free_tree(cmd->left);
 		free(cmd);
 	}
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

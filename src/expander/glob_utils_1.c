@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:25:05 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/27 04:12:30 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:33:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*get_value(char *env)
 t_venv	**init_venv(t_venv **venv)
 {
 	venv = malloc(sizeof(t_venv *));
+	gc_add_back(new_gcnode((void *)venv));
 	if (!venv)
 		return (NULL);
 	*venv = NULL;
@@ -46,6 +47,7 @@ t_venv	*new_venv(char *key, char *value)
 	t_venv	*venv;
 
 	venv = malloc(sizeof(t_venv) * 1);
+	gc_add_back(new_gcnode((void *)venv));
 	if (!venv)
 		return (NULL);
 	venv -> key = key;

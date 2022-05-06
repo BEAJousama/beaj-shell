@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:31:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 22:30:10 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:34:35 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	del_token_0(t_token *token)
 t_token	**token_init(t_token **token)
 {
 	token = malloc(sizeof(t_token **));
+	gc_add_back(new_gcnode((void *)token));
 	if (!token)
 		return (NULL);
 	*token = NULL;
@@ -73,6 +74,7 @@ t_token	*new_token(t_tok tok, char *data)
 	t_token	*token;
 
 	token = malloc(sizeof(t_token) * 1);
+	gc_add_back(new_gcnode((void *)token));
 	if (!token)
 		return (NULL);
 	token -> data = data;

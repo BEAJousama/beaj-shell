@@ -5,6 +5,7 @@
     "files.associations": {
         "minishell.h": "c",
         "libft.h": "c",
-        "dirent.h": "c"
+        "dirent.h": "c",
+        "readline.h": "c"
     }
 }

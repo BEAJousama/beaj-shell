@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 00:11:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 02:33:15 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 12:48:42 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,7 @@ int	run_redir(t_cmd	*cmd)
 			close(fd);
 		}
 		else
-		{
-			close(cmd ->fd);
-			dup2(cmd->out, cmd->fd);
-			runcmd(cmd->right);
-			close(cmd->out);
-		}
+			run_hdoc_util(cmd);
 		exit(g_glob.status);
 	}
 	wait(&status);

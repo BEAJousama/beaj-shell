@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:46:07 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 02:40:58 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 12:49:36 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,12 @@ int	ft_pipe(int fildes[2])
 	return (ret);
 }
 
-static void	print_glob(int p)
+void	run_hdoc_util(t_cmd *cmd)
 {
-	if (((!g_glob.cmd->argv[1]
-				&& g_glob.buff && *g_glob.buff && (*g_glob.buff)-> value)))
-	{
-		while (*g_glob.buff)
-		{
-			ft_putstr_fd((*g_glob.buff)->value, p);
-			ft_putchar_fd('\n', p);
-			(*g_glob.buff) = (*g_glob.buff)->next;
-		}
-	}
+	close(cmd ->fd);
+	dup2(cmd->out, cmd->fd);
+	runcmd(cmd->right);
+	close(cmd->out);
 }
 
 int	run_hdoc(char *delim)
@@ -82,7 +76,7 @@ int	run_hdoc(char *delim)
 		line = readline("-> ");
 		if (!ft_strcmp(line, delim))
 			break ;
-		write(fd[1], line, ft_strlen(line) + 1);
+		write(fd[1], line, ft_strlen(line));
 		ft_putchar_fd('\n', fd[1]);
 		i++;
 	}
