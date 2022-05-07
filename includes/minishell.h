@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:13:02 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 20:43:51 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@
 # include "expander.h"
 # include "executor.h"
 # include "gc.h"
+# include <curses.h>
+# include <term.h>
 
 extern t_glob	g_glob;
 
-void	free_tab(char **tab);
+void	ctrl_d(void);
+// void	free_tab(char **tab);
 
 #endif

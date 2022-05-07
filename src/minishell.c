@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 16:44:26 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 20:47:50 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@ void	lets_start(char **env)
 {
 	g_glob.venv = set_global_env(env, g_glob.venv);
 	g_glob.ennv = set_global_env(env, g_glob.ennv);
+}
+
+int    ft_putchar(int c)
+{
+    write(1, &c, 1);
+    return (1);
+}
+
+void	ctrl_d(void)
+{
+	char	*sr_cap;
+
+	sr_cap = tgetstr("sr", NULL);
+	tputs(sr_cap, 0, ft_putchar);
+	ft_putstr_fd("minishell$ exit\n",1);
+	exit(0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -44,6 +60,8 @@ int	main(int ac, char **av, char **env)
 	{
 		line = readline("minishell-> ");
 		gc_add_back(new_gcnode((void *)line));
+		if (!line)
+			ctrl_d();
 		toks = lexer(&line, env);
 		if (toks)
 		{
