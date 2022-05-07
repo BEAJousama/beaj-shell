@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 01:14:12 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 16:25:15 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_venv	**set_global_vars(t_venv **vars)
 	vars = init_venv(vars);
 	add_global_venv(ft_strdup("?"), ft_itoa(g_glob.status), vars);
 	add_global_venv(ft_strdup("$"), ft_itoa(g_glob.status), vars);
-	add_global_venv(ft_strdup("0"), "minishell", vars);
+	add_global_venv(ft_strdup("0"), ft_strdup("minishell"), vars);
 	return (vars);
 }
 

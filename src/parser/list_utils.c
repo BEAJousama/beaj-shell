@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:31:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 01:45:40 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 13:22:18 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ t_token	**del_token(t_token **tok, t_token *token)
 	}
 	first -> prev -> next = first -> next;
 	first -> next -> prev = first -> prev;
-	// free(first -> data);
-	// free(first);
 	return (tok);
 }
 
@@ -55,8 +53,6 @@ void	del_token_0(t_token *token)
 {
 	token -> prev -> next = token -> next;
 	token -> next -> prev = token -> prev;
-	// free(token -> data);
-	// free(token);
 }
 
 t_token	**token_init(t_token **token)

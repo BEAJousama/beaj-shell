@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:50 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:31:48 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 16:33:22 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	addto_key(char *arg)
 
 	m.key = get_key(arg);
 	m.val = get_value(arg);
+	gc_add_back(new_gcnode((void *)m.key));
+	gc_add_back(new_gcnode((void *)m.val));
 	m.key = malloc(ft_strlen(m.key));
 	gc_add_back(new_gcnode((void *)m.key));
 	check_plusegal(arg, &m);
@@ -50,15 +52,14 @@ void	addto_key(char *arg)
 	if (m.v)
 	{
 		m.cokey = ft_strjoin(get_venv(m.key, g_glob.venv), m.val);
-		add_global_venv(m.key, m.cokey, g_glob.ennv);
-		add_global_venv(m.key, m.cokey, g_glob.venv);
+		add_global_venv(ft_strdup(m.key), m.cokey, g_glob.ennv);
+		add_global_venv(ft_strdup(m.key), ft_strdup(m.cokey), g_glob.venv);
 	}
 	else
 	{
-		add_global_venv(m.key, m.val, g_glob.ennv);
-		add_global_venv(m.key, m.val, g_glob.venv);
+		add_global_venv(ft_strdup(m.key), ft_strdup(m.val), g_glob.ennv);
+		add_global_venv(ft_strdup(m.key), ft_strdup(m.val), g_glob.venv);
 	}
-	free(m.key);
 }
 
 void	check_args(char **args)

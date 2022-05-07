@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/30 18:15:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 15:56:44 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ void	print_error_(char *f, char *m, char *l)
 void	old_pwd(void)
 {
 	char	*val;
+	char	*s;
 
-	if (getcwd(NULL, 0))
+	s = getcwd(NULL, 0);
+	if (s)
 		val = getcwd(NULL, 0);
 	else
 		val = get_venv("PWD", g_glob.ennv);
-	add_global_venv("OLDPWD", val, g_glob.ennv);
-	add_global_venv("OLDPWD", val, g_glob.venv);
+	add_global_venv(ft_strdup("OLDPWD"), ft_strdup(val), g_glob.ennv);
+	add_global_venv(ft_strdup("OLDPWD"), ft_strdup(val), g_glob.venv);
+	free(val);
+	free(s);
 }
 
 void	pwd_pwd(void)
@@ -36,8 +40,9 @@ void	pwd_pwd(void)
 	char	*val;
 
 	val = getcwd(NULL, 0);
-	add_global_venv("PWD", val, g_glob.ennv);
-	add_global_venv("PWD", val, g_glob.venv);
+	add_global_venv(ft_strdup("PWD"), ft_strdup(val), g_glob.ennv);
+	add_global_venv(ft_strdup("PWD"), ft_strdup(val), g_glob.venv);
+	free(val);
 }
 
 void	cd_cmd(char **args)
@@ -56,7 +61,7 @@ void	cd_cmd(char **args)
 			g_glob.status = 1;
 			return ;
 		}
-		args[1] = ft_strdup(get_venv("HOME", g_glob.venv));
+		args[1] = get_venv("HOME", g_glob.venv);
 	}
 	if (chdir(args[1]) == -1)
 	{

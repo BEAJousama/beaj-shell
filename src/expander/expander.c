@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/03 14:04:25 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 14:03:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_group	**expand_group(t_token *token)
 				gnode_add_back(token -> group, new_gnode(s));
 		}
 		de = readdir(dr);
-		free(s);
+		gc_add_back(new_gcnode((void *)s));
 	}
 	closedir(dr);
 	return (token -> group);
@@ -90,14 +90,14 @@ static t_token	**expand_dollar(t_token **tokens)
 		if (first -> tok & VAR)
 		{
 			data = get_venv_all(first -> data);
-			free(first -> data);
 			first -> data = ft_strdup(data);
+			gc_add_back(new_gcnode((void *)first -> data));
 			first -> tok = STR;
 		}
 		else if (first -> tok & TLD)
 		{
-			free(first -> data);
 			first -> data = ft_strdup(get_venv("HOME", g_glob.venv));
+			gc_add_back(new_gcnode((void *)first -> data));
 			first -> tok = STR;
 		}
 		if (!first -> data)

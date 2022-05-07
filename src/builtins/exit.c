@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:47 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 23:20:33 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 15:43:49 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	exit_err(char *arg)
 	if (!ft_isdigit(arg[0]) && arg[0] != '-')
 	{
 		g_glob.status = 255;
+		free_gc();
 		exit(255);
 	}
+	free_gc();
 	exit(ft_atoi(arg));
 }
 

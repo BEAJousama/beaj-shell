@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 01:06:39 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 16:44:26 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,16 @@ int	main(int ac, char **av, char **env)
 	lets_start(env);
 	shlvl_add(&m);
 	save_io(g_glob.io);
-	line = readline("minishell-> ");
-	while (line)
+	while (1)
 	{
-		toks = lexer(&line, env);
-		if (!toks)
-		{
-			line = readline("minishell-> ");
-			continue ;
-		}
-		cmd = parsing(toks);
-		if (runcmd(*cmd) || !cmd)
-		{
-			line = readline("minishell-> ");
-			continue ;
-		}
 		line = readline("minishell-> ");
+		gc_add_back(new_gcnode((void *)line));
+		toks = lexer(&line, env);
+		if (toks)
+		{
+			cmd = parsing(toks);
+			runcmd(*cmd);
+		}
 		reset_io(g_glob.io);
 	}
 	return (0);

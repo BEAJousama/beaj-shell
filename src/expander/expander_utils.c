@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:28:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:32:31 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 13:26:44 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_group	*new_gnode(char *data)
 	if (!group)
 		return (NULL);
 	group -> data = ft_strdup(data);
+	gc_add_back(new_gcnode((void *)group -> data));
 	group -> next = NULL;
 	return (group);
 }

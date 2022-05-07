@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 23:51:16 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 15:33:01 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	**venv_export_array(t_venv	*venv)
 		gc_add_back(new_gcnode((void *)m.path));
 		m.path = ft_strjoin(m.path, venv->value);
 		m.env[m.len - m.i++ - 1] = m.path;
+		gc_add_back(new_gcnode((void *)m.path));
 		venv = venv->next;
 	}
 	m.env[m.len] = NULL;
@@ -70,7 +71,5 @@ int	ft_execve(char **cmd)
 	}
 	waitpid(pid, &status, WUNTRACED);
 	g_glob.status = get_status(status);
-	free(path);
-	free_tab(env);
 	return (g_glob.status);
 }

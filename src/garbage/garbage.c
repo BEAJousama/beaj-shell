@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:47:17 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 00:35:20 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 14:01:35 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,13 @@ void	free_gc(void)
 	while (g)
 	{
 		t = g -> next;
-		if (g -> s)
+		if (g -> s != NULL)
 			free(g->s);
-		if (g)
-			free(g);
+		g -> s = NULL;
+		free(g);
+		g = NULL;
 		g = t;
 	}
-	if (g_glob.gc)
-		free(g_glob.gc);
+	free(g_glob.gc);
+	g_glob.gc = NULL;
 }
