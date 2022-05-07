@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 16:55:56 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 01:14:12 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,19 @@ t_venv	**set_global_env(char **env, t_venv **ennv)
 {
 	int		len;
 	t_venv	*new;
+	char	*key;
+	char	*value;
 
 	ennv = init_venv(ennv);
 	len = 0;
 	while (*(env + len))
 	{
-		new = new_venv(get_key(*(env + len)), get_value(*(env + len)));
+		key = get_key(*(env + len));
+		value = get_value(*(env + len));
+		new = new_venv(key, value);
 		venv_add_back(ennv, new);
+		gc_add_back(new_gcnode((void *)key));
+		gc_add_back(new_gcnode((void *)value));
 		len++;
 	}
 	return (ennv);
@@ -34,9 +40,9 @@ t_venv	**set_global_env(char **env, t_venv **ennv)
 t_venv	**set_global_vars(t_venv **vars)
 {
 	vars = init_venv(vars);
-	add_global_venv("?", ft_itoa(g_glob.status), vars);
-	add_global_venv("$", ft_itoa(g_glob.status), vars);
-	add_global_venv("0", "minishell", vars);
+	add_global_venv(ft_strdup("?"), ft_itoa(g_glob.status), vars);
+	add_global_venv(ft_strdup("$"), ft_itoa(g_glob.status), vars);
+	add_global_venv(ft_strdup("0"), "minishell", vars);
 	return (vars);
 }
 
@@ -63,6 +69,8 @@ void	add_global_venv(char *key, char *value, t_venv **all)
 			venv = venv -> next;
 		}		
 	}
+	gc_add_back(new_gcnode((void *)key));
+	gc_add_back(new_gcnode((void *)value));
 }
 
 char	*get_venv(char *key, t_venv **all)

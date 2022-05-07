@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:47:17 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 18:07:41 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 00:35:20 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ t_gc	*new_gcnode(void *str)
 	return (gc);
 }
 
-void	gc_add_back(t_gc *new)
+char	*gc_add_back(t_gc *new)
 {
 	t_gc	*first;
 	t_gc	**gc;
 
 	gc = g_glob.gc;
 	if (!gc)
-		return ;
+		return (NULL);
 	if (*gc)
 	{
 		first = *gc;
@@ -48,21 +48,24 @@ void	gc_add_back(t_gc *new)
 	}
 	else
 		*gc = new;
+	return ((char *)new -> s);
 }
 
-void	free_gc(t_gc **gc)
+void	free_gc(void)
 {
 	t_gc	*g;
+	t_gc	*t;
 
-	g = *gc;
+	g = *g_glob.gc;
 	while (g)
 	{
-		if (g->s)
+		t = g -> next;
+		if (g -> s)
 			free(g->s);
-		g -> s = NULL;
 		if (g)
 			free(g);
-		g = NULL;
-		g = g ->next;
+		g = t;
 	}
+	if (g_glob.gc)
+		free(g_glob.gc);
 }

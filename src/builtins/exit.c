@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:47 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 13:05:31 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 23:20:33 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	exit_cmd(char **args)
 {
 	ft_putstr_fd("exit\n", 1);
 	if (!args[1])
+	{
+		free_gc();
 		exit(0);
+	}
 	if (args[1])
 	{
 		check_num(args);

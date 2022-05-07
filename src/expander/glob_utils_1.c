@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:25:05 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:33:16 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 01:08:31 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,31 @@
 
 char	*get_key(char *env)
 {
-	int	len;
+	int		len;
+	char	*s;
 
 	len = 0;
 	while (env[len] && env[len] != '=')
 		len++;
-	return (ft_strndup(env, len + 1));
+	s = ft_strndup(env, len + 1);
+	return (s);
 }
 
 char	*get_value(char *env)
 {
-	int	len;
+	int		len;
+	char	*s;
 
 	len = 0;
 	while (env[len] && env[len] != '=')
 		len++;
-	return (ft_strdup(env + len + 1));
+	s = ft_strdup(env + len + 1);
+	return (s);
 }
 
 t_venv	**init_venv(t_venv **venv)
 {
-	venv = malloc(sizeof(t_venv *));
+	venv = malloc(sizeof(t_venv));
 	gc_add_back(new_gcnode((void *)venv));
 	if (!venv)
 		return (NULL);

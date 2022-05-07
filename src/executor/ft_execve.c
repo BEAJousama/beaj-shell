@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:58:17 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 23:51:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ char	**venv_export_array(t_venv	*venv)
 	while (venv && m.i < m.len)
 	{
 		m.path = ft_strjoin(venv->key, "=");
-		m.val = m.path;
+		gc_add_back(new_gcnode((void *)m.path));
 		m.path = ft_strjoin(m.path, venv->value);
-		free(m.val);
 		m.env[m.len - m.i++ - 1] = m.path;
 		venv = venv->next;
 	}
@@ -53,10 +52,10 @@ int	ft_execve(char **cmd)
 	int		pid;
 	int		status;
 
-	env = venv_export_array(*g_glob.venv);
 	path = get_path(*cmd);
 	if (!path)
 		return (127);
+	env = venv_export_array(*g_glob.venv);
 	pid = fork();
 	if (pid == -1)
 		return (-2);

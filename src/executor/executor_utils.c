@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:55:56 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/06 23:02:35 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ char	*get_path(char *cmd)
 	m.path = ft_strtok(m.val, ':');
 	while (m.path)
 	{
-		// m.key = m.path;
+		gc_add_back(new_gcnode((void *)m.path));
 		m.path = ft_strjoin(m.path, "/");
-		// free(m.key);
-		// m.cokey = m.path;
+		gc_add_back(new_gcnode((void *)m.path));
 		m.path = ft_strjoin(m.path, cmd);
-		// free(m.cokey);
 		if (access(m.path, X_OK) == 0)
 			return (m.path);
 		free(m.path);
