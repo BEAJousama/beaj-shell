@@ -3,51 +3,158 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: obeaj <obeaj@student.42.fr>                +#+  +:+       +#+         #
+#    By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/28 12:34:40 by obeaj             #+#    #+#              #
-#    Updated: 2022/03/02 16:07:56 by obeaj            ###   ########.fr        #
+#    Updated: 2022/05/08 18:59:24 by obeaj            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Name of the final executable
 NAME = minishell
 
-SRCS =  minishell.c \
-		pwd.c \
+# Project's directories
+SOURCEDIR := ./src
+HEADERSDIR := ./includes
+OBJECTSDIR := ./objects
+EXEC_FOLDER = executor
+BN_FOLDER = builtins
+PARS_FOLDER = parser
+GC_FOLDER = garbage
+EXPA_FOLDER = expander
+READ_FOLDER = readline
+LIBFT_HEADER = ./libft
+LIBFT_FOLDER = libft
 
-SRCS_B = 
 
-OBJS  = ${addprefix src/,${SRCS:.c=.o}}
+# Name of variables
+LIBFT_LIB = libft.a
+LIBS = -lncurses
+LIBFT = libft
+FLAGS = 
 
-OBJS_B  = ${addprefix src/bonus/,${SRCS_B:.c=.o}}
 
-LD_FLAGS = -lft -L libft -lreadline
+# Execution files variable
+EXEC_FILES =  exec_tree.c \
+executor_utils.c \
+executor_utils1.c \
+executor.c \
+ft_execve.c \
 
-HEAD  = -I includes -I libft
+# garbage collector files variable
 
-CC = cc
+GC_FILES = garbage.c \
 
-CFLAGS = -Wall -Werror -Wextra
+# Parse files variable
 
-.c.o :
-	${CC} ${CFLAGS} ${HEAD} -c $< -o ${<:.c=.o}
+PARS_FILES = ast_utils_1.c \
+lexer_utils.c \
+lexer.c \
+list_utils.c \
+parsing.c \
+parsing_utils.c \
+parsing_utils_1.c \
+syntax_analyzer_utils.c \
+syntax_analyzer.c \
+tokenizer_utils.c \
+tokenizer_utils_1.c \
+tokenizer.c \
+utils.c \
 
-$(NAME) : ${OBJS}
-	make -C libft
-	${CC} ${CFLAGS} ${LD_FLAGS} ${OBJS} -o $@
+# Readline files variable
 
-all : ${NAME}
+READ_FILES = chars_list_rest.c \
+chars_list.c \
+get_input.c \
+history.c \
+line_nodes.c \
+readline.c \
+terminal_config.c
 
-bonus : ${OBJS_B}
-	make -C libft
-	${CC} ${CFLAGS} ${LD_FLAGS} ${OBJS_B} -o ${NAME} 
+# Expansion files variable
 
-clean :
-	make clean -C libft
-	@rm -rf ${OBJS} ${OBJS_B}
+EXPA_FILES = expander_utils.c \
+expander.c \
+glob_utils_1.c \
+glob_utils_2.c \
+glob_utils.c \
 
-fclean : clean
-	make fclean -C libft
-	@rm -rf ${NAME}
+# Builtins files variable
 
-re : fclean all
+BN_FILES = cd.c \
+echo.c \
+env.c \
+exit.c \
+export_utils.c \
+export.c \
+pwd.c \
+unset.c \
+
+# Main file variable
+
+MAIN_FILE = minishell.c \
+
+# Define objects for all sources
+OBJ_EXEC = $(addprefix $(OBJECTSDIR)/$(EXEC_FOLDER)/, $(EXEC_FILES:.c=.o))
+OBJ_BN = $(addprefix $(OBJECTSDIR)/$(BN_FOLDER)/, $(BN_FILES:.c=.o))
+OBJ_EXPA = $(addprefix $(OBJECTSDIR)/$(EXPA_FOLDER)/, $(EXPA_FILES:.c=.o))
+OBJ_PARS = $(addprefix $(OBJECTSDIR)/$(PARS_FOLDER)/, $(PARS_FILES:.c=.o))
+OBJ_GC = $(addprefix $(OBJECTSDIR)/$(GC_FOLDER)/, $(GC_FILES:.c=.o))
+OBJ_MAIN = $(addprefix $(OBJECTSDIR)/, $(MAIN_FILE:.c=.o))
+OBJS := $(OBJ_EXEC) $(OBJ_BN) $(OBJ_EXPA) $(OBJ_PARS) $(OBJ_MAIN) $(OBJ_GC)
+LIBFT_FILE := $(LIBFT_FOLDER)/$(LIBFT_LIB)
+
+# Name the compiler
+CC = gcc
+
+# OS specific part
+RM = rm -rf
+RMDIR = rm -rf
+MKDIR = mkdir -p
+MAKE = make -C
+ECHO = /bin/echo
+ERRIGNORE = 2>/dev/null
+
+.PHONY: all fclean
+
+
+all: credit $(NAME)
+
+$(NAME): $(LIBFT) $(OBJS)
+	@$(CC) -I $(HEADERSDIR) -I $(LIBFT_FOLDER) $(OBJS) $(LIBFT_FOLDER)/$(LIBFT_LIB) $(LIBS) -o $@ -lreadline
+	@echo "███████████████████████ Compiling is DONE ██████████████████████"
+
+$(LIBFT):
+	@echo "█████████████████████████ Making LIBFT █████████████████████████"
+	make -C $(LIBFT_FOLDER)
+	@echo "███████████████████████ Making minishell ███████████████████████"
+
+$(OBJECTSDIR)/%.o : $(SOURCEDIR)/%.c $(HEADERSDIR)/*.h
+	@$(MKDIR) $(dir $@)
+	@echo "Compiling $<: {DONE}"
+	@$(CC) $(FLAGS) -I $(HEADERSDIR) -I $(LIBFT_HEADER) -o $@ -c $<
+
+# Remove all objects, dependencies and executable files generated during the build
+
+clean:
+	@echo "deleting: " $(OBJECTSDIR)
+	@$(RMDIR) $(OBJECTSDIR) $(ERRIGNORE)
+	@echo "deleting: " "libft objects"
+	@$(MAKE) $(LIBFT_FOLDER) clean
+
+fclean: clean
+	@echo "$(RED)deleting$(RESET): " $(LIBFT_FOLDER)/$(LIBFT_LIB)
+	@$(RM) $(LIBFT_FOLDER)/$(LIBFT_LIB) $(ERRIGNORE)
+	@echo "$(RED)deleting$(RESET): " $(NAME)
+	@$(RM) $(NAME) $(ERRIGNORE)
+
+re: fclean $(NAME)
+
+credit:
+	@echo "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
+	@echo "████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
+	@echo "██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
+	@echo "██║╚██╔╝██║██║██║╚█f█╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
+	@echo "██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
+	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
+	@echo "         Made with love by : obeaj and imabid"
