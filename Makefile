@@ -6,7 +6,7 @@
 #    By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/28 12:34:40 by obeaj             #+#    #+#              #
-#    Updated: 2022/05/08 18:59:24 by obeaj            ###   ########.fr        #
+#    Updated: 2022/05/08 20:57:04 by obeaj            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ LIBFT_FOLDER = libft
 
 # Name of variables
 LIBFT_LIB = libft.a
-LIBS = -lncurses
+LIBS = -lncurses -L /goinfre/obeaj/.brew/opt/readline/lib
+RD_INCLUDE = /goinfre/obeaj/.brew/opt/readline/include/
 LIBFT = libft
 FLAGS = 
 
@@ -89,6 +90,7 @@ export_utils.c \
 export.c \
 pwd.c \
 unset.c \
+signal_handlers.c \
 
 # Main file variable
 
@@ -120,19 +122,16 @@ ERRIGNORE = 2>/dev/null
 
 all: credit $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	@$(CC) -I $(HEADERSDIR) -I $(LIBFT_FOLDER) $(OBJS) $(LIBFT_FOLDER)/$(LIBFT_LIB) $(LIBS) -o $@ -lreadline
-	@echo "███████████████████████ Compiling is DONE ██████████████████████"
-
-$(LIBFT):
+$(NAME): $(OBJS)
 	@echo "█████████████████████████ Making LIBFT █████████████████████████"
 	make -C $(LIBFT_FOLDER)
-	@echo "███████████████████████ Making minishell ███████████████████████"
+	@$(CC) -I $(HEADERSDIR) -I $(LIBFT_FOLDER) $(OBJS) $(LIBFT_FOLDER)/$(LIBFT_LIB) $(LIBS) -o $@ -lreadline
+	@echo "███████████████████████ Compiling is DONE ██████████████████████"
 
 $(OBJECTSDIR)/%.o : $(SOURCEDIR)/%.c $(HEADERSDIR)/*.h
 	@$(MKDIR) $(dir $@)
 	@echo "Compiling $<: {DONE}"
-	@$(CC) $(FLAGS) -I $(HEADERSDIR) -I $(LIBFT_HEADER) -o $@ -c $<
+	@$(CC) $(FLAGS) -I $(HEADERSDIR) -I $(LIBFT_HEADER) -I $(RD_INCLUDE) -o $@ -c $<
 
 # Remove all objects, dependencies and executable files generated during the build
 
@@ -148,13 +147,14 @@ fclean: clean
 	@echo "$(RED)deleting$(RESET): " $(NAME)
 	@$(RM) $(NAME) $(ERRIGNORE)
 
-re: fclean $(NAME)
+re: fclean credit $(NAME)
 
 credit:
 	@echo "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
 	@echo "████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
 	@echo "██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
-	@echo "██║╚██╔╝██║██║██║╚█f█╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
+	@echo "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
 	@echo "██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
 	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
 	@echo "         Made with love by : obeaj and imabid"
+	@echo "███████████████████████ Making minishell ███████████████████████"

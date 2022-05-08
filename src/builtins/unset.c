@@ -6,13 +6,13 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:56 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 15:54:03 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 20:57:58 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	unvalid_arg(char *arg)
+int	unvalid_arg(char *arg)
 {
 	int	i;
 
@@ -41,15 +41,11 @@ void	unset_cmd(char **args)
 	{
 		if (!unvalid_arg(args[i]))
 		{
-			ind = -1;
-			break ;
+			print_error_("unset: `", args[i], "': not a valid identifier\n");
+			g_glob.status = 1;
+			continue ;
 		}
 		del_venv(args[i]);
 		del_ennv(args[i]);
-	}
-	if (ind == -1)
-	{
-		print_error_("unset: `", args[i], "': not a valid identifier\n");
-		g_glob.status = 1;
 	}
 }

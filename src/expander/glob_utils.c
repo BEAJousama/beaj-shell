@@ -6,14 +6,14 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 22:37:46 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 21:01:56 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_glob	g_glob = {.venv = NULL, .ennv = NULL, .vars = NULL,
-	.status = 0, .io = {0}, .gc = NULL};
+	.status = 0, .io = {0}, .gc = NULL, .g = 0};
 
 t_venv	**set_global_env(char **env, t_venv **ennv)
 {

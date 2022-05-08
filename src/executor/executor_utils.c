@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/08 01:46:16 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 21:06:14 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ char	*get_path(char *cmd)
 int	get_status(int status)
 {
 	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 3)
+			write(2, "Quit: 3\n", 8);
+		if (WTERMSIG(status) == 2)
+			write(2, "\n", 1);
 		return (128 + WTERMSIG(status));
+	}
 	else if (WIFSTOPPED(status))
 		return (128 + WSTOPSIG(status));
 	else if (WIFEXITED(status))
