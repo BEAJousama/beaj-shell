@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:02:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 20:44:40 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 00:10:03 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,6 @@ void	print_error(char *str, char *data)
 	ft_putstr_fd(data, 2);
 	ft_putchar_fd('\n', 2);
 }
-
-// void	freetab(char **tab)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (tab[++i])
-// 	{
-// 		free(tab[i]);
-// 	}
-// 	free(tab);
-// }
 
 int	peek(char **line, char *toks)
 {

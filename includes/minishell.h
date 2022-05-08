@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:29:51 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 20:43:51 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 00:09:52 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@
 extern t_glob	g_glob;
 
 void	ctrl_d(void);
-// void	free_tab(char **tab);
 
 #endif

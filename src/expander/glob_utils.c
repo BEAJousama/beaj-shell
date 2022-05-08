@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 16:25:15 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 22:37:46 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_venv	**set_global_env(char **env, t_venv **ennv)
 	char	*value;
 
 	ennv = init_venv(ennv);
+	if (!env || !*env)
+		return (ennv);
 	len = 0;
 	while (*(env + len))
 	{
@@ -77,6 +79,8 @@ char	*get_venv(char *key, t_venv **all)
 {
 	t_venv	*venv;
 
+	if (!*all)
+		return (NULL);
 	venv = *all;
 	while (venv)
 	{

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:47 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 15:43:49 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 03:02:45 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	exit_err(char *arg)
 		free_gc();
 		exit(255);
 	}
-	free_gc();
 	exit(ft_atoi(arg));
 }
 
@@ -49,7 +48,7 @@ void	exit_cmd(char **args)
 	if (!args[1])
 	{
 		free_gc();
-		exit(0);
+		exit(g_glob.status);
 	}
 	if (args[1])
 	{

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 15:42:33 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 01:46:16 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	*get_path(char *cmd)
 {
 	t_m	m;
 
-	if (!cmd)
-		cmd = gc_add_back(new_gcnode((void *)ft_strdup("")));
 	m.val = get_venv("PATH", g_glob.venv);
 	m.i = 0;
 	if (access(cmd, X_OK) == 0)

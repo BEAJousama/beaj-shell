@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:28:10 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 13:26:44 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 00:10:53 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,6 @@ t_group	*new_gnode(char *data)
 	gc_add_back(new_gcnode((void *)group -> data));
 	group -> next = NULL;
 	return (group);
-}
-
-void	free_group(t_group **group)
-{
-	if (!group)
-		return ;
-	if (group && *group == NULL)
-	{
-		free(group);
-		return ;
-	}
-	while (*group != NULL)
-	{
-		if ((*group)->data)
-			free((*group)->data);
-		free(*group);
-		(*group) = (*group)->next;
-	}
-	free(group);
 }
 
 void	gnode_add_back(t_group **group, t_group *new)

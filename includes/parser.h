@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 01:47:42 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 23:03:13 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_cmd	*parseline(t_token **tokens);
 t_cmd	*parselist(t_token **tokens);
 t_cmd	*parsecmd(t_token **tokens);
 t_cmd	*parseredir(t_cmd *cmd, t_token **tokens);
-t_cmd	*parsecondition(t_token **tokens);
+t_cmd	*parsecondition(t_token **tokens, t_tok tok);
 t_cmd	*parsepipe(t_token **tokens);
 t_cmd	*parseblock(t_token **tokens);
 t_cmd	*parseback(t_token **tokens);

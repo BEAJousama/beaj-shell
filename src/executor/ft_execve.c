@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:33:18 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 15:33:01 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 01:37:42 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ int	ft_execve(char **cmd)
 		return (-2);
 	else if (pid == 0)
 	{
-		if (execve(path, cmd, env) == -1)
-			exit (127);
+		execve(path, cmd, env);
 		if (errno == ENOENT)
 			exit(127);
 		if (errno == EACCES)

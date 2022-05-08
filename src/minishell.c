@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 20:47:50 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 22:47:39 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	lets_start(char **env)
 	g_glob.ennv = set_global_env(env, g_glob.ennv);
 }
 
-int    ft_putchar(int c)
+int	ft_putchar(int c)
 {
-    write(1, &c, 1);
-    return (1);
+	write(1, &c, 1);
+	return (1);
 }
 
 void	ctrl_d(void)
@@ -38,7 +38,7 @@ void	ctrl_d(void)
 
 	sr_cap = tgetstr("sr", NULL);
 	tputs(sr_cap, 0, ft_putchar);
-	ft_putstr_fd("minishell$ exit\n",1);
+	ft_putstr_fd("minishell$ exit\n", 1);
 	exit(0);
 }
 

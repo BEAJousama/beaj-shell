@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:46:07 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 20:49:00 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 23:35:39 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ int	run_hdoc(char *delim)
 	while (1)
 	{
 		line = readline("-> ");
+		gc_add_back(new_gcnode((void *)line));
 		if (!line)
-			ctrl_d();
+			break ;
 		if (!ft_strcmp(line, delim))
 			break ;
 		write(fd[1], line, ft_strlen(line));

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:14 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 20:25:20 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/08 01:45:15 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	run_exec(t_cmd *cmd)
 	int	ret;
 
 	if (is_builtin(cmd ->argv[0], cmd ->argv))
+		return ;
+	if (!cmd ->argv[0])
 		return ;
 	ret = ft_execve(cmd -> argv);
 	if (ret == 127)

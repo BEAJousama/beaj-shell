@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 18:11:25 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 13:32:56 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 23:02:05 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_cmd	*parselist(t_token **tokens)
 	return (cmd);
 }
 
-t_cmd	*parsecondition(t_token **tokens)
+t_cmd	*parsecondition(t_token **tokens, t_tok tok)
 {
 	t_cmd	*cmd;
 	t_split	sp;
 
-	sp = find(tokens, OR | AND, 0);
+	sp = find(tokens, tok, 0);
 	cmd = new_ast_node(sp.tok);
 	if (!cmd)
 		return (NULL);

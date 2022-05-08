@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 12:32:11 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 17:35:05 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/07 23:02:52 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,17 @@ t_cmd	*parseline(t_token **tokens)
 	t_cmd	*cmd;
 
 	if (is_there(tokens, SC | BG, 0))
-	{
 		cmd = parselist(tokens);
-	}
-	else if (is_there(tokens, OR | AND, 0))
-	{
-		cmd = parsecondition(tokens);
-	}
+	else if (is_there(tokens, AND, 0))
+		cmd = parsecondition(tokens, AND);
+	else if (is_there(tokens, OR, 0))
+		cmd = parsecondition(tokens, OR);
 	else if (is_there(tokens, PP, 0))
-	{
 		cmd = parsepipe(tokens);
-	}
 	else if (is_there(tokens, OPR, 1))
-	{
 		cmd = parseblock(tokens);
-	}
 	else
-	{
 		cmd = parsecmd(tokens);
-	}
 	return (cmd);
 }
 
