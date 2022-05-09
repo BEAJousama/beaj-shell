@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 10:28:27 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/08 21:23:50 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:19:01 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,27 @@ void	lets_start(char **env)
 	g_glob.ennv = set_global_env(env, g_glob.ennv);
 }
 
-int	main(int ac, char **av, char **env)
+void	init_minishell(char **env)
 {
-	char	*line;
-	t_cmd	**cmd;
-	t_token	**toks;
 	t_m		m;
 
-	(void)av;
-	if (ac >= 3 && !ft_strncmp(av[1], "-c", 3))
-	{
-		g_glob.g = 0;
-		if (!av[2])
-			ctrl_d();
-		toks = lexer(&av[2], env);
-		if (toks)
-		{
-			cmd = parsing(toks);
-			g_glob.g = 1;
-			runcmd(*cmd);
-		}
-		reset_io(g_glob.io);	
-		exit(g_glob.status);
-	}
 	g_glob.gc = init_gc();
 	rl_catch_signals = 0;
 	lets_start(env);
 	shlvl_add(&m);
 	signal_handl();
 	save_io(g_glob.io);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	char	*line;
+	t_cmd	**cmd;
+	t_token	**toks;
+
+	(void)av;
+	(void)ac;
+	init_minishell(env);
 	while (1)
 	{
 		g_glob.g = 0;

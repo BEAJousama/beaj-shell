@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 00:11:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/08 18:16:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:14:41 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	run_redir(t_cmd	*cmd)
 
 int	run_and(t_cmd	*cmd)
 {
-	int	status;
-
 	runcmd(cmd->left);
 	if (cmd ->right && (cmd->right->argv[0] || cmd->right->type & AST_NOD)
 		&& g_glob.status == 0)
@@ -54,8 +52,6 @@ int	run_and(t_cmd	*cmd)
 
 int	run_or(t_cmd	*cmd)
 {
-	int	status;
-
 	runcmd(cmd->left);
 	if (cmd ->right && (cmd->right->argv[0] || cmd->right->type & AST_NOD)
 		&& g_glob.status != 0)

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:56 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/08 20:57:58 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:32:10 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	unvalid_arg(char *arg)
 void	unset_cmd(char **args)
 {
 	int	i;
-	int	ind;
 
-	ind = 0;
 	i = 0;
 	g_glob.status = 0;
 	while (args[++i])

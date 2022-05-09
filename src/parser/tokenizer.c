@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 14:11:02 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:18:38 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,19 @@ void	tokenize_5(char **line, t_token **tok)
 
 	s = *line;
 	len = 0;
-	copy = ft_strdup(*line);
-	while (*s)
+	while (*s && !ft_strchr("<>()|;\'\"$& ", *s))
 	{
-		if (ft_strchr("<>()|;\'\"$& ", *s))
-			break ;
 		s++;
 		len++;
 	}
-	copy[len] = '\0';
+	copy = ft_strndup(*line, len + 1);
 	if (copy[0] == '~' && (copy[1] == '/' || !copy[1]))
+	{
 		add_token_back(tok, new_token(TLD,
 				ft_strndup(copy, 1 + (copy[1] == '/'))));
+		*line += 1;
+		return ;
+	}
 	else if (ft_strchr(copy, '*') || ft_strchr(copy, '?'))
 		add_token_back(tok, new_token(WC, ft_strdup(copy)));
 	else
@@ -102,9 +103,7 @@ void	tokenize_5(char **line, t_token **tok)
 t_token	**tokenizer(char **line, char *charset)
 {
 	t_token	**token;
-	char	*s;
 
-	s = NULL;
 	token = NULL;
 	token = token_init(token);
 	*token = new_token(CMDBEG, ft_strdup(""));

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 20:51:09 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/08 21:12:06 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:05:12 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ctrl_d(void)
 
 	sr_cap = tgetstr("sr", NULL);
 	tputs(sr_cap, 0, ft_putchar);
-	ft_putstr_fd("minishell$ exit\n",1);
+	ft_putstr_fd("minishell$ exit\n", 1);
 	exit(g_glob.status);
 }
 

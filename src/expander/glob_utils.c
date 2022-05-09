@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:26:41 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/08 21:01:56 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:16:23 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,15 @@ t_venv	**set_global_vars(t_venv **vars)
 {
 	vars = init_venv(vars);
 	add_global_venv(ft_strdup("?"), ft_itoa(g_glob.status), vars);
-	add_global_venv(ft_strdup("$"), ft_itoa(g_glob.status), vars);
 	add_global_venv(ft_strdup("0"), ft_strdup("minishell"), vars);
 	return (vars);
 }
 
 void	add_global_venv(char *key, char *value, t_venv **all)
 {
-	int		len;
 	t_venv	*venv;
 	char	*tmp;
 
-	len = 0;
 	tmp = get_venv(key, all);
 	if (!tmp)
 	{

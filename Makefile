@@ -6,7 +6,7 @@
 #    By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/28 12:34:40 by obeaj             #+#    #+#              #
-#    Updated: 2022/05/08 20:57:04 by obeaj            ###   ########.fr        #
+#    Updated: 2022/05/09 01:14:07 by obeaj            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LIBFT_LIB = libft.a
 LIBS = -lncurses -L /goinfre/obeaj/.brew/opt/readline/lib
 RD_INCLUDE = /goinfre/obeaj/.brew/opt/readline/include/
 LIBFT = libft
-FLAGS = 
+FLAGS = -Wall -Wextra -Werror
 
 
 # Execution files variable

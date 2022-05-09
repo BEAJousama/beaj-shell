@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:31:42 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 13:22:18 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:17:33 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	add_token_back(t_token **tok, t_token *newtok)
 t_token	**del_token(t_token **tok, t_token *token)
 {
 	t_token	*first;
-	int		len;
 
 	first = *tok;
-	len = ft_strlen(token -> data);
 	while (first)
 	{
 		if (first -> tok == token -> tok)

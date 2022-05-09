@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:45 by obeaj             #+#    #+#             */
-/*   Updated: 2022/04/29 15:55:41 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:15:31 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ void	env_go(char *arg)
 
 void	env_cmd(char **args)
 {
-	int	i;
-
-	i = 1;
 	if (args[1])
 	{
 		print_error_("env: ", args[1], ": No such file or directory\n");

@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:20:15 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 13:30:49 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:18:08 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_split	find(t_token **tokens, t_tok tok, int isbloc)
 	t_split	sp;
 
 	first = *tokens;
+	sp.right = NULL;
+	sp.left = NULL;
 	sp.right = token_init(sp.right);
 	sp.left = token_init(sp.left);
 	while (first && first -> tok != CMDEND)
