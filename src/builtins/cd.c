@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: imabid <imabid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:38 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 15:56:44 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 18:23:19 by imabid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,26 @@ void	print_error_(char *f, char *m, char *l)
 
 void	old_pwd(void)
 {
-	char	*val;
-	char	*s;
+	char	path[1024];
 
-	s = getcwd(NULL, 0);
-	if (s)
-		val = getcwd(NULL, 0);
-	else
-		val = get_venv("PWD", g_glob.ennv);
-	add_global_venv(ft_strdup("OLDPWD"), ft_strdup(val), g_glob.ennv);
-	add_global_venv(ft_strdup("OLDPWD"), ft_strdup(val), g_glob.venv);
-	free(val);
-	free(s);
+	if (!getcwd(path, 1024))
+		g_glob.status = 0;
+	add_global_venv(ft_strdup("OLDPWD"), ft_strdup(path), g_glob.ennv);
+	add_global_venv(ft_strdup("OLDPWD"), ft_strdup(path), g_glob.venv);
 }
 
 void	pwd_pwd(void)
 {
-	char	*val;
+	char	path[1024];
 
-	val = getcwd(NULL, 0);
-	add_global_venv(ft_strdup("PWD"), ft_strdup(val), g_glob.ennv);
-	add_global_venv(ft_strdup("PWD"), ft_strdup(val), g_glob.venv);
-	free(val);
+	if (!getcwd(path, 1024))
+	{
+		perror("cd: error retrieving current directory: "
+			"getcwd: cannot access parent directories");
+		return ;
+	}
+	add_global_venv(ft_strdup("PWD"), ft_strdup(path), g_glob.ennv);
+	add_global_venv(ft_strdup("PWD"), ft_strdup(path), g_glob.venv);
 }
 
 void	cd_cmd(char **args)

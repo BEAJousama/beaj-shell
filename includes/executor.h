@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:30 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/06 15:35:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:46:25 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_m
 }	t_m;
 
 void	pwd_cmd(void);
-char	*find_path(char **str);
 char	*get_path(char *cmd);
 void	echo_cmd(char **cmd);
 void	cd_cmd(char **args);
@@ -37,7 +36,6 @@ void	exit_num(char **args);
 void	exit_cmd(char **args);
 void	unset_cmd(char **args);
 void	del_venv(char *key);
-void	del_ennv(char *key);
 void	show_vars(void);
 void	print_error_(char *f, char *m, char *l);
 int		if_egal(char *arg);
@@ -47,7 +45,6 @@ void	export_print(t_venv **ve);
 void	sort_env( t_venv **venv);
 void	env_go(char *arg);
 int		runcmd(t_cmd *cmd);
-char	*get_path(char *cmd);
 int		ft_execve(char **cmd);
 void	run_exec(t_cmd *cmd);
 int		run_redir(t_cmd	*cmd);

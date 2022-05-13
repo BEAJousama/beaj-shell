@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:45:33 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/07 23:03:13 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:27:00 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_cmd
 	int				out;
 }	t_cmd;
 
-char	*ft_strjoin1(char *s1, char *s2);
 t_split	find(t_token **tokens, t_tok tok, int isbloc);
 int		is_there(t_token **tokens, t_tok tok, int isbloc);
 t_cmd	**parsing(t_token **tokens);
@@ -43,7 +42,6 @@ t_cmd	*parseback(t_token **tokens);
 void	parsehdoc(t_cmd *cmd);
 t_cmd	*new_exec_node(t_cmd *cmd, t_token **tokens);
 t_cmd	*new_ast_node(t_tok tok);
-void	free_tree(t_cmd *cmd);
 t_cmd	*new_redir_node(t_cmd *cmd1, t_token **toks, t_tok tok);
 
 #endif

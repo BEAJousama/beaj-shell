@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:46:21 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/09 01:18:38 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:29:33 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	tokenize_5(char **line, t_token **tok)
 		len++;
 	}
 	copy = ft_strndup(*line, len + 1);
+	gc_add_back(new_gcnode((void *)copy));
 	if (copy[0] == '~' && (copy[1] == '/' || !copy[1]))
 	{
 		add_token_back(tok, new_token(TLD,
@@ -97,7 +98,6 @@ void	tokenize_5(char **line, t_token **tok)
 	else
 		add_token_back(tok, new_token(STR, ft_strdup(copy)));
 	*line = s;
-	gc_add_back(new_gcnode((void *)copy));
 }
 
 t_token	**tokenizer(char **line, char *charset)
@@ -107,7 +107,7 @@ t_token	**tokenizer(char **line, char *charset)
 	token = NULL;
 	token = token_init(token);
 	*token = new_token(CMDBEG, ft_strdup(""));
-	while (**line)
+	while (**line && **line != '#')
 	{
 		if (peek(line, SPACES))
 			tokenize_0(line, token);

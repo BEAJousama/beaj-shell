@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:32:16 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/04 22:09:35 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:25:55 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,9 @@ typedef struct s_tok_util
 t_token	**tokenizer(char **line, char *charset);
 void	print_error(char *str, char *data);
 void	add_token_back(t_token **tok, t_token *newtok);
-void	insert_token(t_token **tok, t_token *newtok, int pos);
-void	add_token_front(t_token **tok, t_token *newtok);
 t_token	**del_token(t_token **tok, t_token *token);
 void	del_token_0(t_token *token);
 t_token	*new_token(t_tok tok, char *data);
-void	free_tokens(t_token **tokens);
 t_token	**token_init(t_token **token);
 int		peek(char **line, char *toks);
 void	tokenize_0(char **line, t_token **tok);
@@ -109,7 +106,6 @@ char	*tokenize_6(char **line, t_token **tok);
 char	*tokenize_4(char **line, t_token **tok, int q);
 void	tokenize_5(char **line, t_token **tok);
 t_token	**concat_words(t_token **tokens);
-void	data_filtering(t_token **token, char *charset);
 t_token	**tokens(char **line, char *charset);
 int		check_par_match(t_token **tokens);
 int		check_quotes_match(t_token **tokens);

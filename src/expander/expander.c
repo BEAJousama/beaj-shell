@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:31:39 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/09 00:49:34 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 13:00:48 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_group	**expand_group(t_token *token)
 	while (de != NULL)
 	{
 		s = ft_strdup(de -> d_name);
-		if (ft_strcmp(s, ".") && ft_strcmp(s, ".."))
+		if (ft_strcmp(s, ".") && ft_strcmp(s, "..") && s[0] != '.')
 		{
 			if (char_matching(token -> data, s) == true)
 				gnode_add_back(token -> group, new_gnode(s));

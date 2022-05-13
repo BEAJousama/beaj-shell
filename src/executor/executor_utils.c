@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:25:54 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/09 01:15:09 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:42:14 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ int	get_error(char *s)
 char	*get_path(char *cmd)
 {
 	t_m	m;
+	DIR	*directory;
 
+	directory = opendir(cmd);
 	m.val = get_venv("PATH", g_glob.venv);
 	m.i = 0;
-	if (access(cmd, X_OK) == 0)
+	if (access(cmd, X_OK) == 0 && !directory)
 		return (cmd);
+	if (directory)
+		closedir(directory);
 	m.path = ft_strtok(m.val, ':');
 	gc_add_back(new_gcnode((void *)m.path));
 	while (m.path)

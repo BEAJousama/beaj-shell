@@ -6,7 +6,7 @@
 /*   By: obeaj <obeaj@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 17:36:00 by obeaj             #+#    #+#             */
-/*   Updated: 2022/05/05 00:38:05 by obeaj            ###   ########.fr       */
+/*   Updated: 2022/05/09 12:47:48 by obeaj            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	check_parethesis(t_token **tokens)
 		}
 		if (t.first -> tok == OPR)
 		{
-			if (!(t.left -> tok & (OPR | CMDBEG | BIND | BFG)))
+			if (!(t.left -> tok & (OPR | CMDBEG | BIND | BFG | WSC)))
 				return (print_error(UNEXPECTED_TOK, "("), 1);
 			else if (!(t.right -> tok & (WORD | REDIR | OPR)))
 				return (print_error(UNEXPECTED_TOK, t.right -> data), 1);
